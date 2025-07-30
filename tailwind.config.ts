@@ -75,12 +75,14 @@ export default {
 			backgroundImage: {
 				'gradient-primary': 'var(--gradient-primary)',
 				'gradient-secondary': 'var(--gradient-secondary)',
-				'gradient-success': 'var(--gradient-success)'
+				'gradient-success': 'var(--gradient-success)',
+				'gradient-teal': 'var(--gradient-teal)'
 			},
 			boxShadow: {
 				'elegant': 'var(--shadow-elegant)',
 				'card': 'var(--shadow-card)',
-				'premium': 'var(--shadow-premium)'
+				'premium': 'var(--shadow-premium)',
+				'teal': 'var(--shadow-teal)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
