@@ -1,12 +1,14 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { ArrowUpRight, ArrowDownLeft, ShoppingBag, Coffee, Car, Home, Smartphone, CreditCard } from "lucide-react";
+import { motion } from "framer-motion";
 
 /**
  * TransactionItem Component
  * 
  * Displays individual transaction information with appropriate icons,
  * categories, and styling based on transaction type.
+ * Enhanced with smooth hover animations and click feedback.
  * 
  * Props:
  * - transaction: Transaction object containing all transaction details
@@ -74,45 +76,74 @@ export const TransactionItem = ({ transaction, onClick }: TransactionItemProps) 
   };
 
   return (
-    <div 
+    <motion.div 
       className="flex items-center gap-4 p-4 hover:bg-muted/50 transition-colors cursor-pointer rounded-lg"
       onClick={onClick}
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      whileHover={{ 
+        scale: 1.02, 
+        backgroundColor: "rgba(255, 255, 255, 0.05)",
+        transition: { duration: 0.2 }
+      }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ duration: 0.3 }}
     >
       {/* Transaction Icon/Avatar */}
       <div className="relative">
-        {transaction.merchantImage ? (
-          <Avatar className="h-10 w-10">
-            <AvatarImage src={transaction.merchantImage} />
-            <AvatarFallback>
+        <motion.div
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.2 }}
+        >
+          {transaction.merchantImage ? (
+            <Avatar className="h-10 w-10">
+              <AvatarImage src={transaction.merchantImage} />
+              <AvatarFallback>
+                <CategoryIcon size={20} />
+              </AvatarFallback>
+            </Avatar>
+          ) : (
+            <div className={`h-10 w-10 rounded-full flex items-center justify-center ${categoryColors[transaction.category]}`}>
               <CategoryIcon size={20} />
-            </AvatarFallback>
-          </Avatar>
-        ) : (
-          <div className={`h-10 w-10 rounded-full flex items-center justify-center ${categoryColors[transaction.category]}`}>
-            <CategoryIcon size={20} />
-          </div>
-        )}
+            </div>
+          )}
+        </motion.div>
         
         {/* Transaction Direction Indicator */}
-        <div className={`absolute -bottom-1 -right-1 h-5 w-5 rounded-full flex items-center justify-center ${
-          isIncoming ? 'bg-success' : 'bg-primary'
-        }`}>
+        <motion.div 
+          className={`absolute -bottom-1 -right-1 h-5 w-5 rounded-full flex items-center justify-center ${
+            isIncoming ? 'bg-success' : 'bg-primary'
+          }`}
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.1, duration: 0.3, type: "spring" }}
+        >
           {isIncoming ? (
             <ArrowDownLeft size={12} className="text-white" />
           ) : (
             <ArrowUpRight size={12} className="text-white" />
           )}
-        </div>
+        </motion.div>
       </div>
 
       {/* Transaction Details */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between">
           <div className="min-w-0 flex-1">
-            <p className="font-medium text-foreground truncate">
+            <motion.p 
+              className="font-medium text-foreground truncate"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.1 }}
+            >
               {transaction.merchantName || transaction.description}
-            </p>
-            <div className="flex items-center gap-2 mt-1">
+            </motion.p>
+            <motion.div 
+              className="flex items-center gap-2 mt-1"
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
               <p className="text-sm text-muted-foreground">
                 {formatDate(transaction.date)}
               </p>
@@ -130,19 +161,24 @@ export const TransactionItem = ({ transaction, onClick }: TransactionItemProps) 
                   {transaction.status}
                 </Badge>
               )}
-            </div>
+            </motion.div>
           </div>
           
           {/* Amount */}
-          <div className="text-right">
+          <motion.div 
+            className="text-right"
+            initial={{ opacity: 0, x: 10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.15 }}
+          >
             <p className={`font-semibold ${
               isIncoming ? 'text-success' : 'text-foreground'
             }`}>
               {formatAmount(transaction.amount, transaction.currency)}
             </p>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
