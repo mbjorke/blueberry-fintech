@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AccountCard } from "@/components/fintech/AccountCard";
 import { TransactionItem, Transaction } from "@/components/fintech/TransactionItem";
+import { TransactionDetailsModal } from "@/components/fintech/TransactionDetailsModal";
 import { QuickActions } from "@/components/fintech/QuickActions";
 import { SpendingInsights } from "@/components/fintech/SpendingInsights";
 import { Card } from "@/components/ui/card";
@@ -171,6 +172,8 @@ const mockSpendingCategories = [
 const Dashboard = () => {
   const { toast } = useToast();
   const [accountBalance] = useState(3456.78);
+  const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleQuickAction = (action: string) => {
     toast({
@@ -180,10 +183,8 @@ const Dashboard = () => {
   };
 
   const handleTransactionClick = (transaction: Transaction) => {
-    toast({
-      title: "Transaction Details",
-      description: `Viewing details for ${transaction.description}`,
-    });
+    setSelectedTransaction(transaction);
+    setIsModalOpen(true);
   };
 
   return (
@@ -291,6 +292,13 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Transaction Details Modal */}
+      <TransactionDetailsModal 
+        transaction={selectedTransaction}
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+      />
     </div>
   );
 };

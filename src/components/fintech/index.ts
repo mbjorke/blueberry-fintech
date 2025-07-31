@@ -11,6 +11,7 @@
 // Core fintech components
 export { AccountCard } from './AccountCard';
 export { TransactionItem } from './TransactionItem';
+export { TransactionDetailsModal } from './TransactionDetailsModal';
 export { QuickActions } from './QuickActions';
 export { SpendingInsights } from './SpendingInsights';
 
