@@ -31,7 +31,7 @@ interface AccountCardProps {
 
 export const AccountCard = ({ 
   balance, 
-  currency = "£", 
+  currency = "€", 
   accountName = "Main Account",
   onAddMoney,
   onSendMoney,

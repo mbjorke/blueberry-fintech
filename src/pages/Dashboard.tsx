@@ -13,59 +13,103 @@ const mockTransactions: Transaction[] = [
   {
     id: '1',
     type: 'outgoing',
-    amount: 4.50,
-    currency: '£',
-    description: 'Coffee',
+    amount: 5.20,
+    currency: '€',
+    description: 'Morning cappuccino and croissant',
     category: 'food',
-    date: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2 hours ago
+    date: new Date(Date.now() - 1000 * 60 * 45), // 45 minutes ago
     status: 'completed',
-    merchantName: 'Starbucks',
+    merchantName: 'Café de Flore',
   },
   {
     id: '2',
     type: 'incoming',
-    amount: 2500.00,
-    currency: '£',
-    description: 'Salary',
+    amount: 2850.00,
+    currency: '€',
+    description: 'Monthly salary payment',
     category: 'other',
-    date: new Date(Date.now() - 1000 * 60 * 60 * 24), // 1 day ago
+    date: new Date(Date.now() - 1000 * 60 * 60 * 18), // 18 hours ago
     status: 'completed',
-    merchantName: 'Acme Corp',
+    merchantName: 'TechNova Solutions',
   },
   {
     id: '3',
     type: 'outgoing',
-    amount: 45.99,
-    currency: '£',
-    description: 'Groceries',
+    amount: 67.45,
+    currency: '€',
+    description: 'Weekly grocery shopping',
     category: 'shopping',
-    date: new Date(Date.now() - 1000 * 60 * 60 * 48), // 2 days ago
+    date: new Date(Date.now() - 1000 * 60 * 60 * 26), // 26 hours ago
     status: 'completed',
-    merchantName: 'Tesco',
+    merchantName: 'Carrefour Market',
   },
   {
     id: '4',
     type: 'outgoing',
-    amount: 12.50,
-    currency: '£',
-    description: 'Bus fare',
+    amount: 89.99,
+    currency: '€',
+    description: 'New wireless headphones',
+    category: 'technology',
+    date: new Date(Date.now() - 1000 * 60 * 60 * 32), // 32 hours ago
+    status: 'completed',
+    merchantName: 'Amazon',
+  },
+  {
+    id: '5',
+    type: 'outgoing',
+    amount: 15.80,
+    currency: '€',
+    description: 'Metro weekly pass',
     category: 'transport',
+    date: new Date(Date.now() - 1000 * 60 * 60 * 48), // 2 days ago
+    status: 'completed',
+    merchantName: 'RATP',
+  },
+  {
+    id: '6',
+    type: 'outgoing',
+    amount: 28.50,
+    currency: '€',
+    description: 'Lunch with colleagues',
+    category: 'food',
+    date: new Date(Date.now() - 1000 * 60 * 60 * 50), // 2 days ago
+    status: 'completed',
+    merchantName: 'Le Comptoir',
+  },
+  {
+    id: '7',
+    type: 'incoming',
+    amount: 45.00,
+    currency: '€',
+    description: 'Freelance project payment',
+    category: 'other',
     date: new Date(Date.now() - 1000 * 60 * 60 * 72), // 3 days ago
     status: 'completed',
-    merchantName: 'TfL',
+    merchantName: 'StartupXYZ',
+  },
+  {
+    id: '8',
+    type: 'outgoing',
+    amount: 125.00,
+    currency: '€',
+    description: 'Monthly gym membership',
+    category: 'other',
+    date: new Date(Date.now() - 1000 * 60 * 60 * 96), // 4 days ago
+    status: 'completed',
+    merchantName: 'FitLife Gym',
   },
 ];
 
 const mockSpendingCategories = [
-  { name: 'Food & Dining', amount: 450, budget: 600, color: '#ff6b6b' },
-  { name: 'Shopping', amount: 320, budget: 400, color: '#4ecdc4' },
-  { name: 'Transport', amount: 180, budget: 250, color: '#45b7d1' },
-  { name: 'Entertainment', amount: 120, budget: 200, color: '#96ceb4' },
+  { name: 'Food & Dining', amount: 385, budget: 500, color: '#ff6b6b' },
+  { name: 'Shopping & Technology', amount: 295, budget: 400, color: '#4ecdc4' },
+  { name: 'Transport', amount: 142, budget: 200, color: '#45b7d1' },
+  { name: 'Entertainment', amount: 89, budget: 150, color: '#96ceb4' },
 ];
 
 const Dashboard = () => {
   const { toast } = useToast();
-  const [accountBalance] = useState(3247.82);
+  const [accountBalance] = useState(3456.78);
 
   const handleQuickAction = (action: string) => {
     toast({
@@ -107,6 +151,7 @@ const Dashboard = () => {
             {/* Account Card */}
             <AccountCard 
               balance={accountBalance}
+              currency="€"
               onAddMoney={() => handleQuickAction('Add Money')}
               onSendMoney={() => handleQuickAction('Send Money')}
               onRequestMoney={() => handleQuickAction('Request Money')}
@@ -153,10 +198,10 @@ const Dashboard = () => {
           {/* Right Column - Insights */}
           <div className="space-y-6">
             <SpendingInsights 
-              monthlyBudget={2000}
-              spent={1070}
+              monthlyBudget={1250}
+              spent={911}
               categories={mockSpendingCategories}
-              trend={{ percentage: 12, direction: 'up' }}
+              trend={{ percentage: 8, direction: 'up' }}
               onViewDetails={() => handleQuickAction('View Analytics')}
             />
 
@@ -166,19 +211,19 @@ const Dashboard = () => {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">This week's spending</span>
-                  <span className="font-medium text-foreground">£234.50</span>
+                  <span className="font-medium text-foreground">€186.75</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Average daily spend</span>
-                  <span className="font-medium text-foreground">£33.50</span>
+                  <span className="font-medium text-foreground">€26.68</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Transactions this month</span>
-                  <span className="font-medium text-foreground">47</span>
+                  <span className="font-medium text-foreground">52</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Savings goal progress</span>
-                  <span className="font-medium text-success">68%</span>
+                  <span className="font-medium text-success">73%</span>
                 </div>
               </div>
             </Card>
