@@ -26,6 +26,20 @@ export interface Transaction {
   status: 'completed' | 'pending' | 'failed';
   merchantName?: string;
   merchantImage?: string;
+  // Enhanced Revolut-style fields
+  merchantDetails?: string;
+  expenseStatus: 'submitted' | 'info_required' | 'approved' | 'rejected' | 'none';
+  spendProgram?: string;
+  cardholder: string;
+  receiptStatus: 'uploaded' | 'required' | 'none';
+  accountingCategory?: string;
+  taxRate?: string;
+  transactionId: string;
+  cardLast4?: string;
+  location?: string;
+  exchangeRate?: number;
+  originalAmount?: number;
+  originalCurrency?: string;
 }
 
 interface TransactionItemProps {
@@ -67,12 +81,14 @@ export const TransactionItem = ({ transaction, onClick }: TransactionItemProps) 
   const formatDate = (date: Date) => {
     const now = new Date();
     const diffTime = Math.abs(now.getTime() - date.getTime());
+    const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     
-    if (diffDays === 1) return 'Today';
-    if (diffDays === 2) return 'Yesterday';
-    if (diffDays <= 7) return date.toLocaleDateString('en-GB', { weekday: 'long' });
-    return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+    if (diffHours < 1) return 'Just now';
+    if (diffHours < 24) return `${diffHours}h ago`;
+    if (diffDays === 1) return 'Yesterday';
+    if (diffDays <= 7) return date.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+    return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: '2-digit' });
   };
 
   return (
@@ -136,7 +152,7 @@ export const TransactionItem = ({ transaction, onClick }: TransactionItemProps) 
               animate={{ opacity: 1 }}
               transition={{ delay: 0.1 }}
             >
-              {transaction.merchantName || transaction.description}
+              {transaction.merchantDetails || transaction.merchantName || transaction.description}
             </motion.p>
             <motion.div 
               className="flex items-center gap-2 mt-1"
@@ -153,13 +169,23 @@ export const TransactionItem = ({ transaction, onClick }: TransactionItemProps) 
               >
                 {transaction.category}
               </Badge>
-              {transaction.status !== 'completed' && (
+              {transaction.expenseStatus !== 'none' && (
                 <Badge 
-                  variant={transaction.status === 'pending' ? 'outline' : 'destructive'}
+                  variant={
+                    transaction.expenseStatus === 'approved' ? 'default' :
+                    transaction.expenseStatus === 'submitted' ? 'outline' :
+                    transaction.expenseStatus === 'info_required' ? 'destructive' :
+                    'secondary'
+                  }
                   className="text-xs"
                 >
-                  {transaction.status}
+                  {transaction.expenseStatus.replace('_', ' ')}
                 </Badge>
+              )}
+              {transaction.cardLast4 && (
+                <span className="text-xs text-muted-foreground">
+                  •••• {transaction.cardLast4}
+                </span>
               )}
             </motion.div>
           </div>
@@ -176,6 +202,14 @@ export const TransactionItem = ({ transaction, onClick }: TransactionItemProps) 
             }`}>
               {formatAmount(transaction.amount, transaction.currency)}
             </p>
+            {transaction.status !== 'completed' && (
+              <Badge 
+                variant={transaction.status === 'pending' ? 'outline' : 'destructive'}
+                className="text-xs mt-1"
+              >
+                {transaction.status}
+              </Badge>
+            )}
           </motion.div>
         </div>
       </div>

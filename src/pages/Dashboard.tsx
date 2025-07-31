@@ -20,6 +20,13 @@ const mockTransactions: Transaction[] = [
     date: new Date(Date.now() - 1000 * 60 * 45), // 45 minutes ago
     status: 'completed',
     merchantName: 'Café de Flore',
+    merchantDetails: 'Café de Flore* Paris FR',
+    expenseStatus: 'none',
+    cardholder: 'Emma Sofia Martinez',
+    receiptStatus: 'none',
+    transactionId: 'TXN-CF-240731-001',
+    cardLast4: '2847',
+    location: 'Paris, France',
   },
   {
     id: '2',
@@ -31,6 +38,11 @@ const mockTransactions: Transaction[] = [
     date: new Date(Date.now() - 1000 * 60 * 60 * 18), // 18 hours ago
     status: 'completed',
     merchantName: 'TechNova Solutions',
+    merchantDetails: 'TechNova Solutions SEPA',
+    expenseStatus: 'none',
+    cardholder: 'Emma Sofia Martinez',
+    receiptStatus: 'none',
+    transactionId: 'TXN-SAL-240730-001',
   },
   {
     id: '3',
@@ -42,6 +54,14 @@ const mockTransactions: Transaction[] = [
     date: new Date(Date.now() - 1000 * 60 * 60 * 26), // 26 hours ago
     status: 'completed',
     merchantName: 'Carrefour Market',
+    merchantDetails: 'Carrefour Market* 3847',
+    expenseStatus: 'info_required',
+    spendProgram: 'Business Expenses',
+    cardholder: 'Emma Sofia Martinez',
+    receiptStatus: 'required',
+    transactionId: 'TXN-CAR-240730-002',
+    cardLast4: '2847',
+    location: 'Lyon, France',
   },
   {
     id: '4',
@@ -53,6 +73,16 @@ const mockTransactions: Transaction[] = [
     date: new Date(Date.now() - 1000 * 60 * 60 * 32), // 32 hours ago
     status: 'completed',
     merchantName: 'Amazon',
+    merchantDetails: 'Amazon.fr* Digital Services',
+    expenseStatus: 'submitted',
+    spendProgram: 'Office Equipment',
+    cardholder: 'Emma Sofia Martinez',
+    receiptStatus: 'uploaded',
+    accountingCategory: 'Technology & Equipment',
+    taxRate: '20%',
+    transactionId: 'TXN-AMZ-240729-001',
+    cardLast4: '2847',
+    location: 'Online Purchase',
   },
   {
     id: '5',
@@ -64,6 +94,15 @@ const mockTransactions: Transaction[] = [
     date: new Date(Date.now() - 1000 * 60 * 60 * 48), // 2 days ago
     status: 'completed',
     merchantName: 'RATP',
+    merchantDetails: 'RATP Navigo* Weekly',
+    expenseStatus: 'approved',
+    spendProgram: 'Transport Allowance',
+    cardholder: 'Emma Sofia Martinez',
+    receiptStatus: 'uploaded',
+    accountingCategory: 'Transport',
+    transactionId: 'TXN-RAT-240729-003',
+    cardLast4: '2847',
+    location: 'Paris Metro',
   },
   {
     id: '6',
@@ -75,6 +114,16 @@ const mockTransactions: Transaction[] = [
     date: new Date(Date.now() - 1000 * 60 * 60 * 50), // 2 days ago
     status: 'completed',
     merchantName: 'Le Comptoir',
+    merchantDetails: 'Le Comptoir du 7ème* Paris',
+    expenseStatus: 'submitted',
+    spendProgram: 'Meals & Entertainment',
+    cardholder: 'Emma Sofia Martinez',
+    receiptStatus: 'uploaded',
+    accountingCategory: 'Business Meals',
+    taxRate: '10%',
+    transactionId: 'TXN-LCP-240729-002',
+    cardLast4: '2847',
+    location: 'Paris, France',
   },
   {
     id: '7',
@@ -86,6 +135,11 @@ const mockTransactions: Transaction[] = [
     date: new Date(Date.now() - 1000 * 60 * 60 * 72), // 3 days ago
     status: 'completed',
     merchantName: 'StartupXYZ',
+    merchantDetails: 'StartupXYZ SAS Bank Transfer',
+    expenseStatus: 'none',
+    cardholder: 'Emma Sofia Martinez',
+    receiptStatus: 'none',
+    transactionId: 'TXN-SUP-240728-001',
   },
   {
     id: '8',
@@ -97,6 +151,13 @@ const mockTransactions: Transaction[] = [
     date: new Date(Date.now() - 1000 * 60 * 60 * 96), // 4 days ago
     status: 'completed',
     merchantName: 'FitLife Gym',
+    merchantDetails: 'FitLife Gym* Monthly DD',
+    expenseStatus: 'none',
+    cardholder: 'Emma Sofia Martinez',
+    receiptStatus: 'none',
+    transactionId: 'TXN-FIT-240727-001',
+    cardLast4: '2847',
+    location: 'Lyon, France',
   },
 ];
 

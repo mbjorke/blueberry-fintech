@@ -17,6 +17,20 @@ export interface Transaction {
   status: TransactionStatus;
   merchantName?: string;
   merchantImage?: string;
+  // Enhanced Revolut-style fields
+  merchantDetails?: string;
+  expenseStatus: 'submitted' | 'info_required' | 'approved' | 'rejected' | 'none';
+  spendProgram?: string;
+  cardholder: string;
+  receiptStatus: 'uploaded' | 'required' | 'none';
+  accountingCategory?: string;
+  taxRate?: string;
+  transactionId: string;
+  cardLast4?: string;
+  location?: string;
+  exchangeRate?: number;
+  originalAmount?: number;
+  originalCurrency?: string;
 }
 
 export type TransactionCategory = 
