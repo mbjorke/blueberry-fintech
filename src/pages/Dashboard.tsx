@@ -227,17 +227,10 @@ const Dashboard = () => {
             {/* Transactions List */}
             <Card className="shadow-card">
               <div className="p-6">
-                <div className="flex items-center justify-between mb-4">
+                <div className="mb-4">
                   <h3 className="text-lg font-semibold text-foreground">Transactions</h3>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => handleQuickAction('View All Transactions')}
-                  >
-                    View All
-                  </Button>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-1 mb-4">
                   {mockTransactions.map((transaction) => (
                     <TransactionItem 
                       key={transaction.id}
@@ -245,6 +238,15 @@ const Dashboard = () => {
                       onClick={() => handleTransactionClick(transaction)}
                     />
                   ))}
+                </div>
+                <div className="flex justify-center">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => handleQuickAction('View All Transactions')}
+                  >
+                    View All
+                  </Button>
                 </div>
               </div>
             </Card>
