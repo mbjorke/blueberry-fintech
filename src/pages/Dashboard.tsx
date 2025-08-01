@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { AccountCard } from "@/components/fintech/AccountCard";
 import { TransactionItem, Transaction } from "@/components/fintech/TransactionItem";
 import { TransactionDetailsModal } from "@/components/fintech/TransactionDetailsModal";
-import { QuickActions } from "@/components/fintech/QuickActions";
 import { SpendingInsights } from "@/components/fintech/SpendingInsights";
+import { DashboardHeader } from "@/components/fintech/DashboardHeader";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -189,7 +188,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
+      {/* Hero Section with integrated header */}
       <div 
         className="relative h-64 bg-gradient-primary flex items-center justify-center overflow-hidden"
         style={{
@@ -208,34 +207,28 @@ const Dashboard = () => {
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8 -mt-20 relative z-20">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column - Main Account & Quick Actions */}
+          {/* Left Column - Integrated Header and Transactions */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Account Card */}
-            <AccountCard 
+            {/* Integrated Dashboard Header */}
+            <DashboardHeader 
               balance={accountBalance}
               currency="€"
+              accountName="Personal Account"
               onAddMoney={() => handleQuickAction('Add Money')}
               onSendMoney={() => handleQuickAction('Send Money')}
-              onRequestMoney={() => handleQuickAction('Request Money')}
-            />
-
-            {/* Quick Actions */}
-            <QuickActions 
+              onManageCards={() => handleQuickAction('Manage Cards')}
               onTransfer={() => handleQuickAction('Transfer')}
               onTopUp={() => handleQuickAction('Top Up')}
               onPayBills={() => handleQuickAction('Pay Bills')}
-              onCards={() => handleQuickAction('Manage Cards')}
               onSavings={() => handleQuickAction('Savings')}
               onInvesting={() => handleQuickAction('Investing')}
-              onSplitBill={() => handleQuickAction('Split Bill')}
-              onReceipts={() => handleQuickAction('Receipts')}
             />
 
-            {/* Recent Transactions */}
+            {/* Transactions List */}
             <Card className="shadow-card">
               <div className="p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-lg font-semibold text-foreground">Recent Transactions</h3>
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-foreground">Transactions</h3>
                   <Button 
                     variant="outline" 
                     size="sm"

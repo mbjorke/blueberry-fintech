@@ -14,6 +14,7 @@ export { TransactionItem } from './TransactionItem';
 export { TransactionDetailsModal } from './TransactionDetailsModal';
 export { QuickActions } from './QuickActions';
 export { SpendingInsights } from './SpendingInsights';
+export { DashboardHeader } from './DashboardHeader';
 
 // Type exports
 export type { Transaction } from './TransactionItem';
