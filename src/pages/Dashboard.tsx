@@ -5,6 +5,8 @@ import { SpendingInsights } from "@/components/fintech/SpendingInsights";
 import { DashboardHeader } from "@/components/fintech/DashboardHeader";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Plus, Send, CreditCard } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import heroImage from "@/assets/fintech-hero.jpg";
 
@@ -207,26 +209,60 @@ const Dashboard = () => {
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8 -mt-20 relative z-20">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column - Integrated Header and Transactions */}
+          {/* Unified Account and Transactions Card */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Integrated Dashboard Header */}
-            <DashboardHeader 
-              balance={accountBalance}
-              currency="€"
-              accountName="Personal Account"
-              onAddMoney={() => handleQuickAction('Add Money')}
-              onSendMoney={() => handleQuickAction('Send Money')}
-              onManageCards={() => handleQuickAction('Manage Cards')}
-              onTransfer={() => handleQuickAction('Transfer')}
-              onTopUp={() => handleQuickAction('Top Up')}
-              onPayBills={() => handleQuickAction('Pay Bills')}
-              onSavings={() => handleQuickAction('Savings')}
-              onInvesting={() => handleQuickAction('Investing')}
-            />
+            <Card className="bg-gradient-primary text-white border-0 shadow-none overflow-hidden">
+              {/* Account Header */}
+              <div className="p-6 space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-1">
+                    <p className="text-white/80 text-sm">Personal Account</p>
+                    <Badge variant="secondary" className="bg-white/20 text-white border-0 text-xs">
+                      Main Account
+                    </Badge>
+                  </div>
+                </div>
 
-            {/* Transactions List */}
-            <Card className="shadow-card">
-              <div className="p-6">
+                {/* Balance and Actions */}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-4xl font-bold tracking-tight">
+                      €{accountBalance.toFixed(2)}
+                    </div>
+                    <p className="text-white/70 text-sm">Available balance</p>
+                  </div>
+                  
+                  <div className="flex items-center gap-3">
+                    <Button
+                      variant="default"
+                      onClick={() => handleQuickAction('Add Money')}
+                      className="bg-white text-primary hover:bg-white/90 shadow-lg"
+                    >
+                      <Plus className="mr-2 h-4 w-4" />
+                      Add
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => handleQuickAction('Send Money')}
+                      className="border-white/30 text-white hover:bg-white/20 hover:border-white/50"
+                    >
+                      <Send className="mr-2 h-4 w-4" />
+                      Send
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => handleQuickAction('Manage Cards')}
+                      className="border-white/30 text-white hover:bg-white/20 hover:border-white/50"
+                    >
+                      <CreditCard className="mr-2 h-4 w-4" />
+                      Cards
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Transactions Section */}
+              <div className="bg-background text-foreground p-6 rounded-t-lg">
                 <div className="mb-4">
                   <h3 className="text-lg font-semibold text-foreground">Transactions</h3>
                 </div>
