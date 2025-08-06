@@ -139,7 +139,7 @@ export const QuickActions = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <Card className="p-6 shadow-card">
+      <Card className="bg-card/80 backdrop-blur-lg border border-border text-foreground p-6 shadow-card">
         <motion.div 
           className="mb-4"
           initial={{ opacity: 0 }}
@@ -173,7 +173,7 @@ export const QuickActions = ({
                 <Button
                   variant="ghost"
                   onClick={handleClick}
-                  className="h-auto p-4 flex flex-col gap-2 text-left hover:bg-muted/50 transition-all duration-200 group w-full"
+                  className="h-auto p-4 flex flex-col gap-2 text-left hover:bg-card/10 transition-all duration-200 group w-full"
                 >
                   <motion.div 
                     className={`${action.color}`}

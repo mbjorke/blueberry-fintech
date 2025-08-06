@@ -66,19 +66,17 @@ export const AccountCard = ({
       transition={{ duration: 0.5 }}
       whileHover={{ y: -2 }}
     >
-      <Card className="bg-gradient-primary text-white p-6 shadow-premium border-0 cursor-pointer">
+      <Card className="bg-[#23272b]/80 backdrop-blur-lg border border-white/10 text-white p-6 shadow-card border-0 cursor-pointer">
+        {/* Account Labels - fixed position and style */}
+        <div className="mb-2 flex gap-2">
+          <span className="inline-block text-xs font-semibold px-2 py-1 rounded bg-white/10 text-white/80">Personal Account</span>
+          <span className="inline-block text-xs font-medium px-2 py-1 rounded bg-white/5 text-white/60">Main Account</span>
+        </div>
         <div className="space-y-6">
           {/* Account Header */}
           <div className="flex items-center justify-between">
             <div>
-              <motion.p 
-                className="text-white/80 text-sm font-medium"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-              >
-                {accountName}
-              </motion.p>
+              {/* Remove duplicate accountName, already shown above */}
                 <div className="flex items-center gap-3 mt-2">
                   <AnimatePresence mode="wait">
                     <motion.div 
@@ -135,7 +133,7 @@ export const AccountCard = ({
                 variant="secondary" 
                 size="sm" 
                 onClick={onAddMoney}
-                className="w-full bg-white/20 text-white border-0 hover:bg-white/30"
+                className="w-full bg-[#23272b]/60 text-white border border-white/10 hover:bg-[#23272b]/80"
               >
                 <Plus size={16} />
                 Add
@@ -146,7 +144,7 @@ export const AccountCard = ({
                 variant="secondary" 
                 size="sm" 
                 onClick={onSendMoney}
-                className="w-full bg-white/20 text-white border-0 hover:bg-white/30"
+                className="w-full bg-[#23272b]/60 text-white border border-white/10 hover:bg-[#23272b]/80"
               >
                 <Send size={16} />
                 Send
@@ -157,7 +155,7 @@ export const AccountCard = ({
                 variant="secondary" 
                 size="sm" 
                 onClick={onRequestMoney}
-                className="w-full bg-white/20 text-white border-0 hover:bg-white/30"
+                className="w-full bg-[#23272b]/60 text-white border border-white/10 hover:bg-[#23272b]/80"
               >
                 <ArrowDownLeft size={16} />
                 Request

@@ -8,72 +8,31 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 200 15% 8%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 200 15% 8%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 200 15% 8%;
-
-    --primary: 183 100% 32%;
-    --primary-foreground: 0 0% 100%;
-    --primary-glow: 174 100% 45%;
-
-    --secondary: 200 40% 12%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 210 40% 96%;
-    --muted-foreground: 200 8% 46%;
-
-    --accent: 174 100% 45%;
-    --accent-foreground: 0 0% 100%;
-
-    --success: 142 71% 45%;
-    --success-foreground: 0 0% 100%;
-
-    --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 100%;
-
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 183 100% 32%;
-
-    /* Blueberry Bank inspired tokens */
-    --gradient-primary: linear-gradient(135deg, hsl(183 100% 32%), hsl(174 100% 45%));
-    --gradient-secondary: linear-gradient(135deg, hsl(200 40% 12%), hsl(200 15% 8%));
-    --gradient-success: linear-gradient(135deg, hsl(142 71% 45%), hsl(120 60% 50%));
-    --gradient-teal: linear-gradient(135deg, hsl(174 100% 45%), hsl(183 80% 60%));
-    --shadow-elegant: 0 10px 30px -10px hsl(183 100% 32% / 0.3);
-    --shadow-card: 0 4px 12px -2px hsl(183 100% 32% / 0.08);
-    --shadow-premium: 0 20px 40px -12px hsl(174 100% 45% / 0.25);
-    --shadow-teal: 0 8px 25px -8px hsl(174 100% 45% / 0.4);
-    
-    /* Animation tokens */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-spring: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --background: 240 15% 8%;
+    --foreground: 240 5% 98%;
+    --card: 240 12% 11%;
+    --card-foreground: 240 5% 98%;
+    --popover: 240 15% 8%;
+    --popover-foreground: 240 5% 98%;
+    --primary: 240 5% 98%;
+    --primary-foreground: 240 15% 8%;
+    --secondary: 240 8% 15%;
+    --secondary-foreground: 240 5% 98%;
+    --muted: 240 6% 18%;
+    --muted-foreground: 240 5% 65%;
+    --accent: 260 85% 68%;
+    --accent-foreground: 240 5% 98%;
+    --success: 150 80% 55%;
+    --success-foreground: 240 15% 8%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 240 5% 98%;
+    --border: 240 8% 20%;
+    --input: 240 8% 15%;
+    --ring: 260 85% 68%;
+    --radius: 0.75rem;
+    --gradient-primary: linear-gradient(135deg, hsl(260 85% 68%), hsl(280 90% 72%));
+    --gradient-bg: linear-gradient(135deg, hsl(240 15% 8%), hsl(240 12% 11%));
+    --gradient-berry: linear-gradient(135deg, hsl(260 85% 68%), hsl(230 80% 65%));
   }
 
   .dark {

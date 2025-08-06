@@ -77,7 +77,7 @@ export const SpendingInsights = ({
   const budgetStatus = getBudgetStatus();
 
   return (
-    <Card className="p-6 shadow-card">
+    <Card className="bg-card/80 backdrop-blur-lg border border-border text-foreground p-6 shadow-card">
       <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -86,7 +86,7 @@ export const SpendingInsights = ({
             <p className="text-sm text-muted-foreground">This month's overview</p>
           </div>
           <div className="flex items-center gap-2">
-            <div className={`flex items-center gap-1 ${trend.direction === 'up' ? 'text-destructive' : 'text-success'}`}>
+            <div className={`flex items-center gap-1 ${trend.direction === 'up' ? 'text-error' : 'text-success'}`}>
               {trend.direction === 'up' ? <TrendingUp size={16} /> : <TrendingDown size={16} />}
               <span className="text-sm font-medium">{trend.percentage}%</span>
             </div>
@@ -105,7 +105,7 @@ export const SpendingInsights = ({
               </p>
             </div>
             <div className="text-right">
-              <p className={`text-sm font-medium ${statusColors[budgetStatus]}`}>
+              <p className={`text-sm font-medium ${budgetStatus === 'good' ? 'text-success' : budgetStatus === 'warning' ? 'text-warning' : 'text-error'}`}>
                 {currency}{formatAmount(Math.abs(remainingBudget))} {remainingBudget >= 0 ? 'left' : 'over'}
               </p>
               <Badge 
@@ -119,7 +119,7 @@ export const SpendingInsights = ({
           
           <Progress 
             value={Math.min(budgetProgress, 100)} 
-            className="h-2"
+            className="h-2 bg-background"
           />
         </div>
 
@@ -135,7 +135,7 @@ export const SpendingInsights = ({
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div 
-                        className="w-3 h-3 rounded-full"
+                        className="w-3 h-3 rounded-full bg-background"
                         style={{ backgroundColor: category.color }}
                       />
                       <span className="text-sm font-medium text-foreground">{category.name}</span>
@@ -151,7 +151,7 @@ export const SpendingInsights = ({
                   </div>
                   <Progress 
                     value={Math.min(categoryProgress, 100)} 
-                    className="h-1.5"
+                    className="h-1.5 bg-background"
                   />
                 </div>
               );
@@ -163,7 +163,7 @@ export const SpendingInsights = ({
         {onViewDetails && (
           <button
             onClick={onViewDetails}
-            className="w-full flex items-center justify-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors py-2"
+            className="w-full flex items-center justify-center gap-2 text-sm text-primary hover:bg-card/20 hover:text-primary/80 transition-colors py-2"
           >
             View detailed analytics
             <ArrowRight size={16} />

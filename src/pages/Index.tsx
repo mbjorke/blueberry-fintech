@@ -2,20 +2,29 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import Dashboard from './Dashboard';
+import { SidebarNav } from '@/components/ui/SidebarNav';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-row">
+      <SidebarNav />
+      <div className="flex-1 flex flex-col min-h-screen">
       {/* Design System Navigation */}
-      <div className="bg-gradient-primary text-white p-4">
+      <div className="bg-popover/90 backdrop-blur-md border-b border-border text-foreground p-4 shadow-lg sticky top-0 z-10">
         <div className="container mx-auto flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-bold">Fintech App</h1>
-            <p className="text-white/80 text-sm">Modern banking experience</p>
+            <h1 className="text-xl font-bold">        
+              <div className="text-xl font-semibold flex items-center gap-2">
+                Blueberry Bank
+                <div className="w-2 h-2 bg-gradient-to-br from-accent to-purple-400 rounded-full"></div>
+              </div>
+            </h1>
+            <p className="text-white/80 text-sm">Banking experience by Marcus Björke
+          </p>
           </div>
           <Link to="/components">
-            <Button variant="secondary" size="sm" className="bg-white/20 text-white border-0 hover:bg-white/30">
-              📖 Design System
+            <Button variant="outline" size="sm" className="bg-popover/30 text-foreground border-0 hover:bg-popover/40">
+              Design System
             </Button>
           </Link>
         </div>
@@ -23,6 +32,7 @@ const Index = () => {
       
       {/* Main Dashboard */}
       <Dashboard />
+      </div>
     </div>
   );
 };

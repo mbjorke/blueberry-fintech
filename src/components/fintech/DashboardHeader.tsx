@@ -82,13 +82,13 @@ export const DashboardHeader = ({
   ];
 
   return (
-    <Card className="bg-gradient-primary text-white border-0 shadow-none">
+    <Card className="bg-card shadow-lg border border-border">
       <div className="p-6 space-y-4">
         {/* Account Header */}
         <div className="flex items-center justify-between">
           <div className="space-y-1">
-            <p className="text-white/80 text-sm">{accountName}</p>
-            <Badge variant="secondary" className="bg-white/20 text-white border-0 text-xs">
+            <p className="text-foreground text-sm">{accountName}</p>
+            <Badge variant="secondary" className="bg-card/10 text-foreground border-0 text-xs">
               Main Account
             </Badge>
           </div>
@@ -100,7 +100,7 @@ export const DashboardHeader = ({
             <div className="text-4xl font-bold tracking-tight">
               {currency}{formatBalance(balance)}
             </div>
-            <p className="text-white/70 text-sm">Available balance</p>
+            <p className="text-foreground/70 text-sm">Available balance</p>
           </div>
           
           <div className="flex items-center gap-3">
@@ -118,7 +118,7 @@ export const DashboardHeader = ({
                     className={
                       action.variant === "default"
                         ? "bg-white text-primary hover:bg-white/90 shadow-lg"
-                        : "border-white/30 text-white hover:bg-white/20 hover:border-white/50"
+                        : "border-white/30 text-foreground hover:bg-card/20 hover:border-white/50"
                     }
                   >
                     <Icon className="mr-2 h-4 w-4" />
@@ -134,7 +134,7 @@ export const DashboardHeader = ({
                 <Button
                   variant="outline"
                   size="default"
-                  className="border-white/30 text-white hover:bg-white/20 hover:border-white/50"
+                  className="border-white/30 text-foreground hover:bg-card/20 hover:border-white/50"
                 >
                   <MoreHorizontal className="h-4 w-4" />
                 </Button>

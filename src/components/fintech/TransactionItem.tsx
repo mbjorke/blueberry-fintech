@@ -1,7 +1,8 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { ArrowUpRight, ArrowDownLeft, ShoppingBag, Coffee, Car, Home, Smartphone, CreditCard } from "lucide-react";
+import { ArrowUpRight, ArrowDownLeft, ShoppingBag, Coffee, Car, Home, Smartphone, CreditCard, Sparkles, Pencil } from "lucide-react";
 import { motion } from "framer-motion";
+import { Transaction } from "./types";
 
 /**
  * TransactionItem Component
@@ -14,33 +15,6 @@ import { motion } from "framer-motion";
  * - transaction: Transaction object containing all transaction details
  * - onClick: Optional callback when transaction is clicked
  */
-
-export interface Transaction {
-  id: string;
-  type: 'incoming' | 'outgoing';
-  amount: number;
-  currency: string;
-  description: string;
-  category: 'food' | 'transport' | 'shopping' | 'housing' | 'technology' | 'other';
-  date: Date;
-  status: 'completed' | 'pending' | 'failed';
-  merchantName?: string;
-  merchantImage?: string;
-  // Enhanced Revolut-style fields
-  merchantDetails?: string;
-  expenseStatus: 'submitted' | 'info_required' | 'approved' | 'rejected' | 'none';
-  spendProgram?: string;
-  cardholder: string;
-  receiptStatus: 'uploaded' | 'required' | 'none';
-  accountingCategory?: string;
-  taxRate?: string;
-  transactionId: string;
-  cardLast4?: string;
-  location?: string;
-  exchangeRate?: number;
-  originalAmount?: number;
-  originalCurrency?: string;
-}
 
 interface TransactionItemProps {
   transaction: Transaction;
@@ -66,6 +40,7 @@ const categoryColors = {
 };
 
 export const TransactionItem = ({ transaction, onClick }: TransactionItemProps) => {
+  const isUnmapped = transaction.category === 'unmapped';
   const CategoryIcon = categoryIcons[transaction.category];
   const isIncoming = transaction.type === 'incoming';
   
@@ -93,13 +68,14 @@ export const TransactionItem = ({ transaction, onClick }: TransactionItemProps) 
 
   return (
     <motion.div 
-      className="flex items-center gap-4 p-4 hover:bg-muted/50 transition-colors cursor-pointer rounded-lg"
-      onClick={onClick}
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
+      className={`flex items-center p-4 rounded-lg border ${
+        isUnmapped 
+          ? 'border-warning/50 bg-warning/10 hover:bg-warning/15' 
+          : 'border-border bg-card hover:bg-card/80'
+      } transition-colors cursor-pointer`}
       whileHover={{ 
         scale: 1.02, 
-        backgroundColor: "rgba(255, 255, 255, 0.05)",
+        backgroundColor: isUnmapped ? "rgba(234, 179, 8, 0.15)" : "rgba(255, 255, 255, 0.05)",
         transition: { duration: 0.2 }
       }}
       whileTap={{ scale: 0.98 }}
@@ -160,15 +136,39 @@ export const TransactionItem = ({ transaction, onClick }: TransactionItemProps) 
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <p className="text-sm text-muted-foreground">
-                {formatDate(transaction.date)}
-              </p>
-              <Badge 
-                variant="secondary" 
-                className="text-xs capitalize"
-              >
-                {transaction.category}
-              </Badge>
+              <div className="flex items-center gap-2">
+                <p className="text-sm text-muted-foreground">
+                  {formatDate(transaction.date)}
+                </p>
+                {isUnmapped && (
+                  <Badge variant="destructive" className="text-xs bg-amber-500 hover:bg-amber-600">
+                    Needs Attention
+                  </Badge>
+                )}
+              </div>
+              <div className="flex items-center gap-1">
+                <Badge 
+                  variant="secondary" 
+                  className="text-xs capitalize"
+                >
+                  {transaction.category}
+                </Badge>
+                <Badge 
+                  variant={transaction.categorySource === 'manual' ? 'default' : 'outline'}
+                  className="h-4 px-1.5 text-[10px] flex items-center gap-0.5"
+                  title={transaction.categorySource === 'manual' ? 'Manually categorized' : 'Automatically categorized'}
+                >
+                  {transaction.categorySource === 'manual' ? (
+                    <>
+                      <Pencil size={10} /> Manual
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles size={10} /> Auto
+                    </>
+                  )}
+                </Badge>
+              </div>
               {transaction.expenseStatus !== 'none' && (
                 <Badge 
                   variant={

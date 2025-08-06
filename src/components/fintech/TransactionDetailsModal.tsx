@@ -18,10 +18,15 @@ import {
   User,
   Calendar,
   MapPin,
-  CreditCard as CardIcon
+  CreditCard as CardIcon,
+  Sparkles,
+  Pencil,
+  AlertTriangle,
+  AlertCircle
 } from "lucide-react";
-import { Transaction } from "./TransactionItem";
+import { Transaction } from "./types";
 import { motion } from "framer-motion";
+import { MerchantAvatar } from "./MerchantAvatar";
 
 interface TransactionDetailsModalProps {
   transaction: Transaction | null;
@@ -39,12 +44,13 @@ const categoryIcons = {
 };
 
 const categoryColors = {
-  food: "bg-orange-100 text-orange-700 dark:bg-orange-900/20 dark:text-orange-400",
-  transport: "bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400",
-  shopping: "bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400",
-  housing: "bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400",
-  technology: "bg-gray-100 text-gray-700 dark:bg-gray-900/20 dark:text-gray-400",
-  other: "bg-gray-100 text-gray-700 dark:bg-gray-900/20 dark:text-gray-400",
+  food: "bg-background text-foreground",
+  transport: "bg-card text-foreground",
+  shopping: "bg-popover text-foreground",
+  housing: "bg-background text-foreground",
+  technology: "bg-card text-foreground",
+  other: "bg-background text-foreground",
+  unmapped: "bg-amber-500/10 text-amber-500 border-amber-500/30",
 };
 
 export const TransactionDetailsModal = ({ 
@@ -54,8 +60,10 @@ export const TransactionDetailsModal = ({
 }: TransactionDetailsModalProps) => {
   if (!transaction) return null;
 
-  const CategoryIcon = categoryIcons[transaction.category];
   const isIncoming = transaction.type === 'incoming';
+  const isUnmapped = transaction.category === 'unmapped';
+  const CategoryIcon = categoryIcons[transaction.category] || categoryIcons.other;
+  const formattedMerchantName = transaction.merchantName || 'Unknown Merchant';
 
   const formatAmount = (amount: number, currency: string) => {
     const formatted = new Intl.NumberFormat('en-GB', {
@@ -85,32 +93,33 @@ export const TransactionDetailsModal = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md mx-auto">
-        <DialogHeader className="space-y-4">
+      <DialogContent className={`bg-card/80 backdrop-blur-lg border ${isUnmapped ? 'border-amber-500/50' : 'border-border'} text-foreground max-w-md mx-auto`}>
+        <DialogHeader>
+          {isUnmapped && (
+            <div className="bg-amber-500/10 text-amber-500 p-3 rounded-lg mb-4 flex items-center gap-2">
+              <AlertTriangle className="h-4 w-4" />
+              <span className="text-sm">This transaction needs your attention</span>
+            </div>
+          )}
           <div className="flex items-center gap-4">
-            {/* Transaction Icon */}
+            {/* Merchant Avatar */}
             <div className="relative">
-              {transaction.merchantImage ? (
-                <Avatar className="h-12 w-12">
-                  <AvatarImage src={transaction.merchantImage} />
-                  <AvatarFallback>
-                    <CategoryIcon size={24} />
-                  </AvatarFallback>
-                </Avatar>
-              ) : (
-                <div className={`h-12 w-12 rounded-full flex items-center justify-center ${categoryColors[transaction.category]}`}>
-                  <CategoryIcon size={24} />
-                </div>
-              )}
-              
-              {/* Direction Indicator */}
+              <MerchantAvatar 
+                merchantImage={transaction.merchantImage}
+                category={transaction.category}
+                CategoryIcon={CategoryIcon}
+                categoryColors={categoryColors}
+                isIncoming={isIncoming}
+                size={48}
+                className={isUnmapped ? 'bg-amber-500/20' : ''}
+              />
               <div className={`absolute -bottom-1 -right-1 h-6 w-6 rounded-full flex items-center justify-center ${
-                isIncoming ? 'bg-success' : 'bg-primary'
+                isIncoming ? 'bg-success' : isUnmapped ? 'bg-amber-500' : 'bg-primary'
               }`}>
                 {isIncoming ? (
-                  <ArrowDownLeft size={14} className="text-white" />
+                  <ArrowDownLeft size={12} className="text-white" />
                 ) : (
-                  <ArrowUpRight size={14} className="text-white" />
+                  <ArrowUpRight size={12} className="text-white" />
                 )}
               </div>
             </div>
@@ -132,8 +141,24 @@ export const TransactionDetailsModal = ({
           </div>
         </DialogHeader>
 
-        <div className="space-y-6 pt-4">
-          {/* Status Section */}
+          {isUnmapped && (
+            <div className="bg-amber-50 dark:bg-amber-900/30 p-4 rounded-lg mb-6">
+              <h3 className="font-medium text-amber-800 dark:text-amber-200 mb-2 flex items-center gap-2">
+                <AlertCircle className="h-4 w-4" />
+                Help us understand this transaction
+              </h3>
+              <p className="text-sm text-amber-700 dark:text-amber-300 mb-4">
+                We couldn't automatically identify this transaction. Please provide more details to help us categorize it correctly.
+              </p>
+              <Button className="w-full bg-amber-500 hover:bg-amber-600 text-white">
+                <Pencil className="mr-2 h-4 w-4" />
+                Add Details
+              </Button>
+            </div>
+          )}
+          
+          <div className="space-y-6 pt-4">
+            {/* Status Section */}
           {transaction.expenseStatus !== 'none' && (
             <motion.div 
               className="space-y-3"
@@ -196,7 +221,7 @@ export const TransactionDetailsModal = ({
               {transaction.cardLast4 && (
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <CardIcon size={16} className="text-muted-foreground" />
+                    <CardIcon size={16} className="text-foreground/60" />
                     <span className="text-muted-foreground">Card</span>
                   </div>
                   <span>•••• {transaction.cardLast4}</span>
@@ -226,9 +251,26 @@ export const TransactionDetailsModal = ({
                   <Calendar size={16} className="text-muted-foreground" />
                   <span className="text-muted-foreground">Category</span>
                 </div>
-                <Badge variant="secondary" className="capitalize">
-                  {transaction.category}
-                </Badge>
+                <div className="flex items-center gap-1">
+                  <Badge variant="secondary" className="capitalize">
+                    {transaction.category}
+                  </Badge>
+                  <Badge 
+                    variant={transaction.categorySource === 'manual' ? 'default' : 'outline'}
+                    className="h-4 px-1.5 text-[10px] flex items-center gap-0.5"
+                    title={transaction.categorySource === 'manual' ? 'Manually categorized' : 'Automatically categorized'}
+                  >
+                    {transaction.categorySource === 'manual' ? (
+                      <>
+                        <Pencil size={10} /> Manual
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles size={10} /> Auto
+                      </>
+                    )}
+                  </Badge>
+                </div>
               </div>
             </div>
           </motion.div>

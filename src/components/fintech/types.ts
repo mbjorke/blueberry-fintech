@@ -6,13 +6,17 @@
  */
 
 // Transaction related types
+export type CategorySource = 'manual' | 'automatic';
+
 export interface Transaction {
+  accountId: string;  // Reference to the account this transaction belongs to
   id: string;
   type: 'incoming' | 'outgoing';
   amount: number;
   currency: string;
   description: string;
   category: TransactionCategory;
+  categorySource: CategorySource;
   date: Date;
   status: TransactionStatus;
   merchantName?: string;
@@ -39,7 +43,8 @@ export type TransactionCategory =
   | 'shopping' 
   | 'housing' 
   | 'technology' 
-  | 'other';
+  | 'other'
+  | 'unmapped';
 
 export type TransactionStatus = 
   | 'completed' 
@@ -61,13 +66,24 @@ export interface SpendingTrend {
 }
 
 // Account types
+export type AccountType = 'checking' | 'savings' | 'investment' | 'credit_card' | 'business';
+
 export interface Account {
   id: string;
   name: string;
+  displayName: string;
   balance: number;
+  availableBalance?: number;
   currency: string;
-  type: 'checking' | 'savings' | 'investment';
+  type: AccountType;
   isVisible: boolean;
+  lastFour?: string;
+  icon?: string;
+  color?: string;
+  isDefault?: boolean;
+  status?: 'active' | 'inactive' | 'pending';
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 // Quick action types
