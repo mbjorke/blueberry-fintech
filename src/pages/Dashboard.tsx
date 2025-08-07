@@ -260,6 +260,7 @@ const mockTransactions: Transaction[] = [
   },
   {
     id: '10',
+    accountId: 'acc_1',  // Current Account
     type: 'outgoing',
     amount: 149.99,
     currency: '€',
@@ -320,7 +321,7 @@ const categories = Object.keys(CATEGORY_BUDGETS).map(cat => {
   };
 });
 
-const Dashboard = () => {
+const Dashboard: React.FC = () => {
   const [selectedAccount, setSelectedAccount] = useState<Account>(() => {
     // Set the default account (first visible one or explicitly marked as default)
     return mockAccounts.find(acc => acc.isDefault) || mockAccounts[0];
@@ -379,116 +380,121 @@ const Dashboard = () => {
     });
   };
 
-  const handleQuickAction = (action: string) => {
-    toast({
-      title: `${action} Feature`,
-      description: `${action} functionality would be implemented here`,
-    });
-  };
+  return (
+    <div className="container mx-auto p-4 space-y-6">
+      {/* Header with Account Selector */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Dashboard</h1>
+        <AccountSelector 
+          accounts={mockAccounts}
+          selectedAccount={selectedAccount}
+          onSelectAccount={handleAccountSelect}
+        />
+      </div>
 
-          {/* Recent Transactions */}
-          <div className="space-y-4">
-            <h2 className="text-xl font-semibold">Recent Transactions</h2>
-            {filteredTransactions.length > 0 ? (
-              filteredTransactions.map((transaction) => (
-                <div
-                  key={transaction.id}
-                  className="flex items-center p-3 rounded-lg hover:bg-muted/50 cursor-pointer transition-colors"
-                  onClick={() => handleTransactionClick(transaction)}
-                >
-                  <MerchantAvatar 
-                    merchantName={transaction.merchantName} 
-                    category={transaction.category} 
-                    className="mr-3"
-                  />
-                  <div className="flex-1 min-w-0">
-                    <div className="flex justify-between">
-                      <div className="flex items-center gap-2">
-                        <p className="font-medium truncate">
-                          {transaction.merchantName || transaction.description}
-                        </p>
-                        {transaction.category === 'unmapped' && (
-                          <Badge variant="warning" className="text-xs">
-                            <AlertTriangle className="h-3 w-3 mr-1" />
-                            Needs attention
-                          </Badge>
-                        )}
-                      </div>
-                      <div className="flex items-center ml-2">
-                        <span className={cn(
-                          "font-medium",
-                          transaction.type === 'incoming' ? 'text-green-500' : 'text-foreground'
-                        )}>
-                          {transaction.type === 'incoming' ? (
-                            <ArrowDownLeft className="inline h-3.5 w-3.5 mr-1" />
-                          ) : (
-                            <ArrowUpRight className="inline h-3.5 w-3.5 mr-1" />
-                          )}
-                          {transaction.currency}{transaction.amount.toFixed(2)}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="flex justify-between text-sm text-muted-foreground">
-                      <p className="truncate">
-                        {CATEGORY_LABELS[transaction.category] || transaction.category}
-                        {transaction.categorySource === 'manual' && (
-                          <Badge variant="outline" className="ml-2 text-xs">
-                            Manual
-                          </Badge>
-                        )}
-                      </p>
-                      <p>{transaction.date.toLocaleDateString()}</p>
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="text-center py-8 text-muted-foreground">
-                No transactions found for this account
-              </div>
-            )}
-          </div>
-                      technology: "bg-gray-100 text-gray-700 dark:bg-gray-900/20 dark:text-gray-400",
-                      other: "bg-gray-100 text-gray-700 dark:bg-gray-900/20 dark:text-gray-400",
-                    };
-                    const CategoryIcon = categoryIcons[transaction.category] || CreditCard;
-                    const categoryColor = categoryColors[transaction.category] || categoryColors.other;
-                    const isIncoming = transaction.type === 'incoming';
-                    const formatAmount = (amount, currency) => {
-                      const formatted = new Intl.NumberFormat('en-GB', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      }).format(Math.abs(amount));
-                      return `${isIncoming ? '+' : '-'}${currency}${formatted}`;
-                    };
-                    const formatDate = (date) => {
-                      const now = new Date();
-                      const diffTime = Math.abs(now.getTime() - date.getTime());
-                      const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
-                      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                      if (diffHours < 1) return 'Just now';
-                      if (diffHours < 24) return `${diffHours}h ago`;
-                      if (diffDays === 1) return 'Yesterday';
-                      if (diffDays <= 7) return date.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
-                      return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: '2-digit' });
-                    };
-                    const isUnmapped = transaction.category === 'unmapped';
-          </Card>
-
-          {/* Spending Insights */}
-          <SpendingInsights
-            categories={categories}
-            totalSpent={spent}
+      {/* Account Summary */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="md:col-span-2">
+          <AccountCard 
             accountName={selectedAccount.displayName}
+            balance={selectedAccount.balance}
+            currency={selectedAccount.currency}
+            onAddMoney={() => handleQuickAction('Add Money')}
+            onSendMoney={() => handleQuickAction('Send Money')}
+            onRequestMoney={() => handleQuickAction('Request Money')}
           />
         </div>
-      </main>
+        
+        <div className="md:col-span-1">
+          <SpendingInsights 
+            monthlyBudget={3000}
+            spent={spent}
+            currency="€"
+            categories={categories}
+            trend={{
+              percentage: 12.5,
+              direction: 'up'
+            }}
+            onViewDetails={() => handleQuickAction('View Spending Details')}
+          />
+        </div>
+      </div>
+
+      {/* Recent Transactions */}
+      <Card className="p-6">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold">Recent Transactions</h2>
+          <div className="flex space-x-2">
+            <Button variant="outline" size="sm" onClick={() => handleQuickAction('Export')}>
+              Export
+            </Button>
+            <Button variant="outline" size="sm" onClick={() => handleQuickAction('Filter')}>
+              Filter
+            </Button>
+          </div>
+        </div>
+        
+        <div className="space-y-4">
+          {filteredTransactions.length > 0 ? (
+            filteredTransactions.map((transaction) => (
+              <div
+                key={transaction.id}
+                className="flex items-center p-3 rounded-lg hover:bg-muted/50 cursor-pointer transition-colors"
+                onClick={() => handleTransactionClick(transaction)}
+              >
+                <div className="mr-3 w-10 h-10 rounded-full bg-muted flex items-center justify-center">
+                  {transaction.merchantName ? (
+                    <span className="text-sm font-medium">
+                      {transaction.merchantName.charAt(0).toUpperCase()}
+                    </span>
+                  ) : (
+                    <ShoppingBag className="w-5 h-5 text-muted-foreground" />
+                  )}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex justify-between items-center">
+                    <p className="font-medium truncate">
+                      {transaction.merchantName || transaction.description}
+                    </p>
+                    <span className={`font-medium ${transaction.type === 'incoming' ? 'text-green-500' : 'text-foreground'}`}>
+                      {transaction.type === 'incoming' ? '+' : '-'}
+                      {transaction.currency}{transaction.amount.toFixed(2)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-sm text-muted-foreground mt-1">
+                    <span>
+                      {new Date(transaction.date).toLocaleDateString('en-US', {
+                        weekday: 'short',
+                        month: 'short',
+                        day: 'numeric',
+                      })}
+                      {' • '}
+                      {transaction.category}
+                    </span>
+                    <span>
+                      {transaction.type === 'incoming' ? (
+                        <ArrowDownLeft className="inline w-4 h-4 text-green-500" />
+                      ) : (
+                        <ArrowUpRight className="inline w-4 h-4 text-foreground" />
+                      )}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="text-center py-8 text-muted-foreground">
+              <p>No transactions found for this account.</p>
+            </div>
+          )}
+        </div>
+      </Card>
 
       {/* Transaction Details Modal */}
       {selectedTransaction && (
         <TransactionDetailsModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
+          open={isModalOpen}
+          onOpenChange={setIsModalOpen}
           transaction={selectedTransaction}
         />
       )}
