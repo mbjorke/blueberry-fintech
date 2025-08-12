@@ -77,7 +77,7 @@ export const SpendingInsights = ({
   const budgetStatus = getBudgetStatus();
 
   return (
-    <Card className="bg-card/80 backdrop-blur-lg border border-border text-foreground p-6 shadow-card">
+    <Card className="bg-card/80 backdrop-blur-lg text-foreground p-6 shadow-card">
       <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">

@@ -1,8 +1,9 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { ArrowUpRight, ArrowDownLeft, ShoppingBag, Coffee, Car, Home, Smartphone, CreditCard, Sparkles, Pencil } from "lucide-react";
+import { Sparkles, Pencil, ArrowUpRight, ArrowDownLeft, AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { Transaction } from "./types";
+import { MerchantAvatar } from "./MerchantAvatar";
+import { categoryIcons, getCategoryColorClasses } from "./constants";
 
 /**
  * TransactionItem Component
@@ -13,35 +14,18 @@ import { Transaction } from "./types";
  * 
  * Props:
  * - transaction: Transaction object containing all transaction details
+ * - isUnmapped: Optional boolean indicating if transaction is unmapped
+ * - isOdd: Optional boolean indicating if transaction is odd
  * - onClick: Optional callback when transaction is clicked
  */
 
 interface TransactionItemProps {
   transaction: Transaction;
+  isUnmapped?: boolean;
   onClick?: () => void;
 }
 
-const categoryIcons = {
-  food: Coffee,
-  transport: Car,
-  shopping: ShoppingBag,
-  housing: Home,
-  technology: Smartphone,
-  other: CreditCard,
-};
-
-const categoryColors = {
-  food: "bg-orange-100 text-orange-700 dark:bg-orange-900/20 dark:text-orange-400",
-  transport: "bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400",
-  shopping: "bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400",
-  housing: "bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400",
-  technology: "bg-gray-100 text-gray-700 dark:bg-gray-900/20 dark:text-gray-400",
-  other: "bg-gray-100 text-gray-700 dark:bg-gray-900/20 dark:text-gray-400",
-};
-
-export const TransactionItem = ({ transaction, onClick }: TransactionItemProps) => {
-  const isUnmapped = transaction.category === 'unmapped';
-  const CategoryIcon = categoryIcons[transaction.category];
+export function TransactionItem({ transaction, isUnmapped = false, onClick }: TransactionItemProps) {
   const isIncoming = transaction.type === 'incoming';
   
   const formatAmount = (amount: number, currency: string) => {
@@ -66,56 +50,26 @@ export const TransactionItem = ({ transaction, onClick }: TransactionItemProps) 
     return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: '2-digit' });
   };
 
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
+  };
+
   return (
-    <motion.div 
-      className={`flex items-center p-4 rounded-lg border ${
-        isUnmapped 
-          ? 'border-warning/50 bg-warning/10 hover:bg-warning/15' 
-          : 'border-border bg-card hover:bg-card/80'
-      } transition-colors cursor-pointer`}
-      whileHover={{ 
-        scale: 1.02, 
-        backgroundColor: isUnmapped ? "rgba(234, 179, 8, 0.15)" : "rgba(255, 255, 255, 0.05)",
-        transition: { duration: 0.2 }
-      }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ duration: 0.3 }}
+    <div 
+      className="flex items-start gap-4 p-4 rounded-lg transition-all duration-200 cursor-pointer
+        transform hover:scale-[1.01] active:scale-100 odd:bg-accent/10 even:bg-accent/20 hover:bg-accent/5"
+      onClick={handleClick}
     >
-      {/* Transaction Icon/Avatar */}
-      <div className="relative">
-        <motion.div
-          whileHover={{ scale: 1.1 }}
-          transition={{ duration: 0.2 }}
-        >
-          {transaction.merchantImage ? (
-            <Avatar className="h-10 w-10">
-              <AvatarImage src={transaction.merchantImage} />
-              <AvatarFallback>
-                <CategoryIcon size={20} />
-              </AvatarFallback>
-            </Avatar>
-          ) : (
-            <div className={`h-10 w-10 rounded-full flex items-center justify-center ${categoryColors[transaction.category]}`}>
-              <CategoryIcon size={20} />
-            </div>
-          )}
-        </motion.div>
-        
-        {/* Transaction Direction Indicator */}
-        <motion.div 
-          className={`absolute -bottom-1 -right-1 h-5 w-5 rounded-full flex items-center justify-center ${
-            isIncoming ? 'bg-success' : 'bg-primary'
-          }`}
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 0.1, duration: 0.3, type: "spring" }}
-        >
-          {isIncoming ? (
-            <ArrowDownLeft size={12} className="text-white" />
-          ) : (
-            <ArrowUpRight size={12} className="text-white" />
-          )}
-        </motion.div>
+      {/* Avatar */}
+      <div className="flex-shrink-0 w-10 h-10 transition-all duration-200">
+        <MerchantAvatar 
+          merchantImage={transaction.merchantImage}
+          category={isUnmapped ? 'unmapped' : transaction.category}
+          CategoryIcon={categoryIcons[transaction.category] || categoryIcons.other}
+          categoryColors={getCategoryColorClasses(transaction.category, isUnmapped).bg}
+        />
       </div>
 
       {/* Transaction Details */}
@@ -140,11 +94,6 @@ export const TransactionItem = ({ transaction, onClick }: TransactionItemProps) 
                 <p className="text-sm text-muted-foreground">
                   {formatDate(transaction.date)}
                 </p>
-                {isUnmapped && (
-                  <Badge variant="destructive" className="text-xs bg-amber-500 hover:bg-amber-600">
-                    Needs Attention
-                  </Badge>
-                )}
               </div>
               <div className="flex items-center gap-1">
                 <Badge 
@@ -174,7 +123,7 @@ export const TransactionItem = ({ transaction, onClick }: TransactionItemProps) 
                   variant={
                     transaction.expenseStatus === 'approved' ? 'default' :
                     transaction.expenseStatus === 'submitted' ? 'outline' :
-                    transaction.expenseStatus === 'info_required' ? 'destructive' :
+                    transaction.expenseStatus === 'info_required' ? 'warning' :
                     'secondary'
                   }
                   className="text-xs"
@@ -191,12 +140,7 @@ export const TransactionItem = ({ transaction, onClick }: TransactionItemProps) 
           </div>
           
           {/* Amount */}
-          <motion.div 
-            className="text-right"
-            initial={{ opacity: 0, x: 10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.15 }}
-          >
+          <div className="text-right">
             <p className={`font-semibold ${
               isIncoming ? 'text-success' : 'text-foreground'
             }`}>
@@ -210,9 +154,9 @@ export const TransactionItem = ({ transaction, onClick }: TransactionItemProps) 
                 {transaction.status}
               </Badge>
             )}
-          </motion.div>
+          </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };

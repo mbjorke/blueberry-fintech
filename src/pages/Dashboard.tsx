@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { Transaction, Account } from "@/components/fintech/types";
 import { TransactionDetailsModal } from "@/components/fintech/TransactionDetailsModal";
+import { TransactionItem } from "@/components/fintech/TransactionItem";
 import { SpendingInsights } from "@/components/fintech/SpendingInsights";
 import { DashboardHeader } from "@/components/fintech/DashboardHeader";
 import { AccountCard } from "@/components/fintech/AccountCard";
@@ -469,66 +470,11 @@ const Dashboard: React.FC = () => {
               <div className="space-y-4">
                 {filteredTransactions.length > 0 ? (
                   filteredTransactions.map((transaction) => (
-                    <div
+                    <TransactionItem
                       key={transaction.id}
+                      transaction={transaction}
                       onClick={() => handleTransactionClick(transaction)}
-                      className="p-4 rounded-lg hover:ring-2 hover:ring-offset-2 hover:ring-offset-primary hover:ring-primary cursor-pointer"
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className="flex items-start gap-3">
-                          <div className="w-10 h-10">
-                            <MerchantAvatar 
-                              merchantImage={transaction.merchantImage}
-                              category={transaction.category}
-                              CategoryIcon={categoryIcons[transaction.category] || categoryIcons.other}
-                              categoryColors={{
-                                food: 'bg-orange-900',
-                                transport: 'bg-blue-900',
-                                shopping: 'bg-purple-500',
-                                undefined: 'bg-orange-500',
-                                housing: 'bg-green-900',
-                                technology: 'bg-blue-500',
-                                other: 'bg-gray-500',
-                              }}
-                              isIncoming={transaction.type === 'incoming'}
-                              className="text-foreground"
-                            />
-                          </div>
-                          <div>
-                            <div className="font-medium">
-                              {transaction.merchantName || transaction.description}
-                            </div>
-                            <div className="text-sm text-muted-foreground">
-                              {new Date(transaction.date).toLocaleDateString('en-US', {
-                                month: 'short',
-                                day: 'numeric',
-                                weekday: 'short',
-                              })}
-                              {' • '}
-                              {transaction.category}
-                            </div>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <div className={`font-medium ${
-                            transaction.type === 'incoming' ? 'text-green-500' : 'text-foreground'
-                          }`}>
-                            {transaction.type === 'incoming' ? '+' : '-'}
-                            {transaction.currency}
-                            {Math.abs(transaction.amount).toFixed(2)}
-                          </div>
-                          <div className="text-xs text-muted-foreground">
-                            {transaction.status === 'pending' && (
-                              <span className="inline-flex items-center text-amber-500">
-                                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1"></span>
-                                Pending
-                              </span>
-                            )}
-                            {transaction.status === 'completed' && 'Completed'}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    />
                   ))
                 ) : (
                   <div className="text-center py-8 text-muted-foreground">

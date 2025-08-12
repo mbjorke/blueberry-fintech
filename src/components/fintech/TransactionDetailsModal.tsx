@@ -1,31 +1,35 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { 
   ArrowUpRight, 
   ArrowDownLeft, 
-  ShoppingBag, 
-  Coffee, 
-  Car, 
-  Home, 
-  Smartphone, 
-  CreditCard,
-  Receipt,
+  Calendar, 
+  Clock, 
+  X, 
+  Pencil, 
+  Sparkles, 
+  Loader2,
+  User,
+  MapPin,
+  AlertTriangle,
+  AlertCircle,
   Upload,
   FileText,
-  User,
-  Calendar,
-  MapPin,
-  CreditCard as CardIcon,
-  Sparkles,
-  Pencil,
-  AlertTriangle,
-  AlertCircle
+  Receipt,
+  CreditCard as CardIcon
 } from "lucide-react";
 import { Transaction } from "./types";
 import { motion } from "framer-motion";
+import { format } from "date-fns";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { formatCurrency } from "@/lib/format-currency";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { categoryIcons, getCategoryColorClasses } from "./constants";
 import { MerchantAvatar } from "./MerchantAvatar";
 
 interface TransactionDetailsModalProps {
@@ -34,24 +38,7 @@ interface TransactionDetailsModalProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const categoryIcons = {
-  food: Coffee,
-  transport: Car,
-  shopping: ShoppingBag,
-  housing: Home,
-  technology: Smartphone,
-  other: CreditCard,
-};
 
-const categoryColors = {
-  food: "bg-background text-foreground",
-  transport: "bg-card text-foreground",
-  shopping: "bg-popover text-foreground",
-  housing: "bg-background text-foreground",
-  technology: "bg-card text-foreground",
-  other: "bg-background text-foreground",
-  unmapped: "bg-amber-500/10 text-amber-500 border-amber-500/30",
-};
 
 export const TransactionDetailsModal = ({ 
   transaction, 
@@ -62,7 +49,9 @@ export const TransactionDetailsModal = ({
 
   const isIncoming = transaction.type === 'incoming';
   const isUnmapped = transaction.category === 'unmapped';
-  const CategoryIcon = categoryIcons[transaction.category] || categoryIcons.other;
+  const category = transaction.category || 'other';
+  const CategoryIcon = categoryIcons[category] || categoryIcons.other;
+  const colors = getCategoryColorClasses(category, isUnmapped);
   const formattedMerchantName = transaction.merchantName || 'Unknown Merchant';
 
   const formatAmount = (amount: number, currency: string) => {
@@ -95,33 +84,16 @@ export const TransactionDetailsModal = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className={`bg-card/80 backdrop-blur-lg border ${isUnmapped ? 'border-amber-500/50' : 'border-border'} text-foreground max-w-md mx-auto`}>
         <DialogHeader>
-          {isUnmapped && (
-            <div className="bg-amber-500/10 text-amber-500 p-3 rounded-lg mb-4 flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4" />
-              <span className="text-sm">This transaction needs your attention</span>
-            </div>
-          )}
           <div className="flex items-center gap-4">
             {/* Merchant Avatar */}
             <div className="relative">
               <MerchantAvatar 
                 merchantImage={transaction.merchantImage}
-                category={transaction.category}
+                category={isUnmapped ? 'unmapped' : transaction.category}
                 CategoryIcon={CategoryIcon}
-                categoryColors={categoryColors}
-                isIncoming={isIncoming}
+                categoryColors={colors.bg}
                 size={48}
-                className={isUnmapped ? 'bg-amber-500/20' : ''}
               />
-              <div className={`absolute -bottom-1 -right-1 h-6 w-6 rounded-full flex items-center justify-center ${
-                isIncoming ? 'bg-success' : isUnmapped ? 'bg-amber-500' : 'bg-primary'
-              }`}>
-                {isIncoming ? (
-                  <ArrowDownLeft size={12} className="text-white" />
-                ) : (
-                  <ArrowUpRight size={12} className="text-white" />
-                )}
-              </div>
             </div>
 
             {/* Amount and Title */}
@@ -172,7 +144,7 @@ export const TransactionDetailsModal = ({
                   variant={
                     transaction.expenseStatus === 'approved' ? 'default' :
                     transaction.expenseStatus === 'submitted' ? 'outline' :
-                    transaction.expenseStatus === 'info_required' ? 'destructive' :
+                    transaction.expenseStatus === 'info_required' ? 'warning' :
                     'secondary'
                   }
                   className="capitalize"

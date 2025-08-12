@@ -44,13 +44,12 @@ export function AccountCard({
   const glowClass = primaryGlow;
 
   return (
-    <motion.div 
+    <div 
       className={cn(
-        "relative overflow-hidden rounded-xl cursor-pointer transition-all duration-300",
+        "relative overflow-hidden rounded-xl cursor-pointer transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.01] active:scale-100",
         isSelected ? 'ring-2 ring-offset-2 ring-offset-primary ring-primary' : '',
         className
       )}
-      whileHover={{ y: -4, scale: 1.01 }}
       onClick={onClick}
     >
       <div className={cn(
@@ -96,6 +95,6 @@ export function AccountCard({
           </Button>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
