@@ -8,11 +8,27 @@ import { AccountSelector } from "@/components/fintech/AccountSelector";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Send, CreditCard, Coffee, Car, ShoppingBag, Home, Smartphone, ArrowDownLeft, ArrowUpRight, AlertTriangle } from "lucide-react";
+import { 
+  Plus, 
+  Send, 
+  Coffee, 
+  Car, 
+  ShoppingBag, 
+  Home, 
+  Smartphone, 
+  AlertTriangle,
+  Wallet, 
+  PiggyBank, 
+  Briefcase, 
+  ArrowUpRight, 
+  ArrowDownLeft, 
+  CreditCard, 
+  Filter, 
+  Download 
+} from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { MerchantAvatar } from "@/components/fintech/MerchantAvatar";
 import { cn } from "@/lib/utils";
-import { Wallet, PiggyBank, Briefcase } from "lucide-react";
 
 // Account color mapping for the selector
 const accountColors = {
@@ -22,6 +38,16 @@ const accountColors = {
   'default': 'bg-gray-500'
 } as const;
 
+
+// Category icons mapping
+const categoryIcons = {
+  food: Coffee,
+  transport: Car,
+  shopping: ShoppingBag,
+  housing: Home,
+  technology: Smartphone,
+  other: CreditCard,
+} as const;
 
 // Mock accounts data
 const mockAccounts: Account[] = [
@@ -382,113 +408,155 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4 space-y-6">
-      {/* Header with Account Selector */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
-        <AccountSelector 
-          accounts={mockAccounts}
-          selectedAccount={selectedAccount}
-          onSelectAccount={handleAccountSelect}
-        />
+      {/* Header */}
+      <div className="flex justify-between items-center mb-2">
+        <h1 className="text-2xl font-bold">Accounts</h1>
       </div>
 
-      {/* Account Summary */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="md:col-span-2">
-          <AccountCard 
-            accountName={selectedAccount.displayName}
-            balance={selectedAccount.balance}
-            currency={selectedAccount.currency}
-            onAddMoney={() => handleQuickAction('Add Money')}
-            onSendMoney={() => handleQuickAction('Send Money')}
-            onRequestMoney={() => handleQuickAction('Request Money')}
-          />
-        </div>
-        
-        <div className="md:col-span-1">
-          <SpendingInsights 
-            monthlyBudget={3000}
-            spent={spent}
-            currency="€"
-            categories={categories}
-            trend={{
-              percentage: 12.5,
-              direction: 'up'
-            }}
-            onViewDetails={() => handleQuickAction('View Spending Details')}
-          />
+      {/* Account Cards */}
+      <div className="mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {mockAccounts.map((account) => (
+            <AccountCard
+              key={account.id}
+              balance={account.balance}
+              currency={account.currency}
+              accountName={account.displayName}
+              accountType={account.type as 'checking' | 'savings' | 'investment' | 'credit'}
+              availableBalance={account.availableBalance}
+              isSelected={selectedAccount.id === account.id}
+              color={account.color || 'blue'}
+              onClick={() => handleAccountSelect(account)}
+            />
+          ))}
         </div>
       </div>
 
-      {/* Recent Transactions */}
-      <Card className="p-6">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Recent Transactions</h2>
-          <div className="flex space-x-2">
-            <Button variant="outline" size="sm" onClick={() => handleQuickAction('Export')}>
-              Export
-            </Button>
-            <Button variant="outline" size="sm" onClick={() => handleQuickAction('Filter')}>
-              Filter
-            </Button>
+      {/* Main Content */}
+      <div className="flex flex-col lg:flex-row gap-6">
+        {/* Transactions Section */}
+        <div className="flex-1">
+          <div className="space-y-4">
+
+            {/* Recent Transactions */}
+            <Card className="p-6">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-semibold">Recent Transactions</h2>
+                <div className="flex gap-2">
+                  {/* Quick Actions */}
+                  <Button variant="outline" size="sm" onClick={() => handleQuickAction('Transfer')}>
+                    <ArrowUpRight className="h-4 w-4 mr-2" />
+                    Transfer
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => handleQuickAction('Request')}>
+                    <ArrowDownLeft className="h-4 w-4 mr-2" />
+                    Request
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => handleQuickAction('Pay Bill')}>
+                    <CreditCard className="h-4 w-4 mr-2" />
+                    Pay Bill
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => handleQuickAction('Filter')}>
+                    <Filter className="h-4 w-4 mr-2" />
+                    Filter
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => handleQuickAction('Export')}>
+                    <Download className="h-4 w-4 mr-2" />
+                    Export
+                  </Button>
+                </div>
+              </div>
+              <div className="space-y-4">
+                {filteredTransactions.length > 0 ? (
+                  filteredTransactions.map((transaction) => (
+                    <div
+                      key={transaction.id}
+                      onClick={() => handleTransactionClick(transaction)}
+                      className="p-4 rounded-lg hover:ring-2 hover:ring-offset-2 hover:ring-offset-primary hover:ring-primary cursor-pointer"
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-start gap-3">
+                          <div className="w-10 h-10">
+                            <MerchantAvatar 
+                              merchantImage={transaction.merchantImage}
+                              category={transaction.category}
+                              CategoryIcon={categoryIcons[transaction.category] || categoryIcons.other}
+                              categoryColors={{
+                                food: 'bg-orange-900',
+                                transport: 'bg-blue-900',
+                                shopping: 'bg-purple-500',
+                                undefined: 'bg-orange-500',
+                                housing: 'bg-green-900',
+                                technology: 'bg-blue-500',
+                                other: 'bg-gray-500',
+                              }}
+                              isIncoming={transaction.type === 'incoming'}
+                              className="text-foreground"
+                            />
+                          </div>
+                          <div>
+                            <div className="font-medium">
+                              {transaction.merchantName || transaction.description}
+                            </div>
+                            <div className="text-sm text-muted-foreground">
+                              {new Date(transaction.date).toLocaleDateString('en-US', {
+                                month: 'short',
+                                day: 'numeric',
+                                weekday: 'short',
+                              })}
+                              {' • '}
+                              {transaction.category}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className={`font-medium ${
+                            transaction.type === 'incoming' ? 'text-green-500' : 'text-foreground'
+                          }`}>
+                            {transaction.type === 'incoming' ? '+' : '-'}
+                            {transaction.currency}
+                            {Math.abs(transaction.amount).toFixed(2)}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            {transaction.status === 'pending' && (
+                              <span className="inline-flex items-center text-amber-500">
+                                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1"></span>
+                                Pending
+                              </span>
+                            )}
+                            {transaction.status === 'completed' && 'Completed'}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-8 text-muted-foreground">
+                    <p>No transactions found for this account.</p>
+                  </div>
+                )}
+              </div>
+            </Card>
           </div>
         </div>
         
-        <div className="space-y-4">
-          {filteredTransactions.length > 0 ? (
-            filteredTransactions.map((transaction) => (
-              <div
-                key={transaction.id}
-                className="flex items-center p-3 rounded-lg hover:bg-muted/50 cursor-pointer transition-colors"
-                onClick={() => handleTransactionClick(transaction)}
-              >
-                <div className="mr-3 w-10 h-10 rounded-full bg-muted flex items-center justify-center">
-                  {transaction.merchantName ? (
-                    <span className="text-sm font-medium">
-                      {transaction.merchantName.charAt(0).toUpperCase()}
-                    </span>
-                  ) : (
-                    <ShoppingBag className="w-5 h-5 text-muted-foreground" />
-                  )}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex justify-between items-center">
-                    <p className="font-medium truncate">
-                      {transaction.merchantName || transaction.description}
-                    </p>
-                    <span className={`font-medium ${transaction.type === 'incoming' ? 'text-green-500' : 'text-foreground'}`}>
-                      {transaction.type === 'incoming' ? '+' : '-'}
-                      {transaction.currency}{transaction.amount.toFixed(2)}
-                    </span>
-                  </div>
-                  <div className="flex justify-between text-sm text-muted-foreground mt-1">
-                    <span>
-                      {new Date(transaction.date).toLocaleDateString('en-US', {
-                        weekday: 'short',
-                        month: 'short',
-                        day: 'numeric',
-                      })}
-                      {' • '}
-                      {transaction.category}
-                    </span>
-                    <span>
-                      {transaction.type === 'incoming' ? (
-                        <ArrowDownLeft className="inline w-4 h-4 text-green-500" />
-                      ) : (
-                        <ArrowUpRight className="inline w-4 h-4 text-foreground" />
-                      )}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="text-center py-8 text-muted-foreground">
-              <p>No transactions found for this account.</p>
-            </div>
-          )}
+        {/* Spending Insights */}
+        <div className="lg:w-80 flex-shrink-0">
+          <div className="sticky top-4">
+            <SpendingInsights 
+              monthlyBudget={3000}
+              spent={spent}
+              currency="€"
+              categories={categories}
+              trend={{
+                percentage: 12.5,
+                direction: 'up'
+              }}
+              onViewDetails={() => handleQuickAction('View Spending Details')}
+            />
+          </div>
         </div>
-      </Card>
+      </div>
 
       {/* Transaction Details Modal */}
       {selectedTransaction && (

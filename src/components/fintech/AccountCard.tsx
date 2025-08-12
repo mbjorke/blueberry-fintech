@@ -1,169 +1,101 @@
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff, Plus, Send, ArrowDownLeft } from "lucide-react";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-
-/**
- * AccountCard Component
- * 
- * Displays the user's main account balance with quick action buttons.
- * Features balance visibility toggle and primary financial actions.
- * Enhanced with Framer Motion animations for smooth interactions.
- * 
- * Props:
- * - balance: Account balance (number)
- * - currency: Currency symbol (string, default: "£")
- * - accountName: Display name for the account (string, default: "Main Account")
- * - onAddMoney: Callback for add money action
- * - onSendMoney: Callback for send money action
- * - onRequestMoney: Callback for request money action
- */
+import { ChevronRight, Wallet, PiggyBank, Briefcase, CreditCard } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 interface AccountCardProps {
   balance: number;
   currency?: string;
   accountName?: string;
-  onAddMoney?: () => void;
-  onSendMoney?: () => void;
-  onRequestMoney?: () => void;
+  accountType?: 'checking' | 'savings' | 'investment' | 'credit';
+  availableBalance?: number;
+  isSelected?: boolean;
+  className?: string;
+  onClick?: () => void;
+  color?: string;
 }
 
-export const AccountCard = ({ 
+// Using the design token's primary gradient
+const primaryGradient = 'bg-gradient-primary';
+const primaryGlow = 'shadow-lg shadow-primary/20';
+
+// Use a single icon for all account types for consistency
+const AccountIcon = Wallet;
+
+export function AccountCard({ 
   balance, 
-  currency = "€", 
-  accountName = "Main Account",
-  onAddMoney,
-  onSendMoney,
-  onRequestMoney
-}: AccountCardProps) => {
-  const [showBalance, setShowBalance] = useState(true);
-
-  const formatBalance = (amount: number) => {
-    return new Intl.NumberFormat('en-GB', {
+  currency = "€",
+  accountName = "Account",
+  accountType = 'checking',
+  availableBalance = 0,
+  isSelected = false,
+  className,
+  onClick,
+  color = 'blue'
+}: AccountCardProps) {
+  const formatCurrency = (amount: number) => {
+    return `${currency}${amount.toLocaleString('en-US', { 
       minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(amount);
+      maximumFractionDigits: 2 
+    })}`;
   };
 
-  const buttonVariants = {
-    hover: { 
-      scale: 1.05,
-      backgroundColor: "rgba(255, 255, 255, 0.25)",
-      transition: { duration: 0.2 }
-    },
-    tap: { 
-      scale: 0.95,
-      transition: { duration: 0.1 }
-    }
-  };
-
+  const gradientClass = primaryGradient;
+  const glowClass = primaryGlow;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      whileHover={{ y: -2 }}
+    <motion.div 
+      className={cn(
+        "relative overflow-hidden rounded-xl cursor-pointer transition-all duration-300",
+        isSelected ? 'ring-2 ring-offset-2 ring-offset-primary ring-primary' : '',
+        className
+      )}
+      whileHover={{ y: -4, scale: 1.01 }}
+      onClick={onClick}
     >
-      <Card className="bg-[#23272b]/80 backdrop-blur-lg border border-white/10 text-white p-6 shadow-card border-0 cursor-pointer">
-        {/* Account Labels - fixed position and style */}
-        <div className="mb-2 flex gap-2">
-          <span className="inline-block text-xs font-semibold px-2 py-1 rounded bg-white/10 text-white/80">Personal Account</span>
-          <span className="inline-block text-xs font-medium px-2 py-1 rounded bg-white/5 text-white/60">Main Account</span>
+      <div className={cn(
+        "p-6 text-white transition-all duration-300",
+        gradientClass,
+        glowClass
+      )}>
+        {/* Account Type Icon */}
+        <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-accent flex items-center justify-center opacity-90">
+          <AccountIcon className="w-10 h-10 text-white/90" />
         </div>
-        <div className="space-y-6">
-          {/* Account Header */}
-          <div className="flex items-center justify-between">
-            <div>
-              {/* Remove duplicate accountName, already shown above */}
-                <div className="flex items-center gap-3 mt-2">
-                  <AnimatePresence mode="wait">
-                    <motion.div 
-                      key={showBalance ? 'visible' : 'hidden'}
-                      className="text-3xl font-bold"
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {showBalance ? (
-                        `${currency}${formatBalance(balance)}`
-                      ) : (
-                        "••••••"
-                      )}
-                    </motion.div>
-                  </AnimatePresence>
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setShowBalance(!showBalance)}
-                    className="text-white hover:bg-white/10 h-8 w-8"
-                  >
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={showBalance ? 'hide' : 'show'}
-                        initial={{ rotate: -90, opacity: 0 }}
-                        animate={{ rotate: 0, opacity: 1 }}
-                        exit={{ rotate: 90, opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        {showBalance ? <EyeOff size={16} /> : <Eye size={16} />}
-                      </motion.div>
-                    </AnimatePresence>
-                  </Button>
-                </motion.div>
+        
+        <div className="relative z-10">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div>
+                <div className="font-medium text-white/90">{accountName}</div>
+                <div className="text-xs text-white/70">
+                  {accountType.charAt(0).toUpperCase() + accountType.slice(1)}
+                </div>
               </div>
             </div>
           </div>
-
-          {/* Quick Actions */}
-          <motion.div 
-            className="flex gap-3"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.3 }}
+          
+          <div className="mt-6">
+            <div className="text-sm font-medium text-white/80 mb-1">Available Balance</div>
+            <div className="text-2xl font-bold tracking-tight">
+              {formatCurrency(balance)}
+            </div>
+          </div>
+          
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="absolute bottom-4 right-4 h-8 px-3 text-white/80 hover:text-white hover:bg-white/10"
+            onClick={(e) => {
+              e.stopPropagation();
+              onClick?.();
+            }}
           >
-            <motion.div className="flex-1" variants={buttonVariants} whileHover="hover" whileTap="tap">
-              <Button 
-                variant="secondary" 
-                size="sm" 
-                onClick={onAddMoney}
-                className="w-full bg-[#23272b]/60 text-white border border-white/10 hover:bg-[#23272b]/80"
-              >
-                <Plus size={16} />
-                Add
-              </Button>
-            </motion.div>
-            <motion.div className="flex-1" variants={buttonVariants} whileHover="hover" whileTap="tap">
-              <Button 
-                variant="secondary" 
-                size="sm" 
-                onClick={onSendMoney}
-                className="w-full bg-[#23272b]/60 text-white border border-white/10 hover:bg-[#23272b]/80"
-              >
-                <Send size={16} />
-                Send
-              </Button>
-            </motion.div>
-            <motion.div className="flex-1" variants={buttonVariants} whileHover="hover" whileTap="tap">
-              <Button 
-                variant="secondary" 
-                size="sm" 
-                onClick={onRequestMoney}
-                className="w-full bg-[#23272b]/60 text-white border border-white/10 hover:bg-[#23272b]/80"
-              >
-                <ArrowDownLeft size={16} />
-                Request
-              </Button>
-            </motion.div>
-          </motion.div>
+            View Details
+            <ChevronRight size={16} className="ml-1" />
+          </Button>
         </div>
-      </Card>
+      </div>
     </motion.div>
   );
 };

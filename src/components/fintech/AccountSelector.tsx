@@ -5,20 +5,48 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { ChevronDown, Wallet, PiggyBank, Briefcase } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// Account icon mapping
+// Safely format currency values
+const formatCurrency = (amount: number, currency: string): string => {
+  try {
+    // If the currency is a symbol (like €), just prepend it
+    if (currency.length <= 3) {
+      return `${currency} ${amount.toFixed(2)}`;
+    }
+    // Otherwise, try to format it as a currency code
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: currency.length === 3 ? currency : 'USD',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(amount);
+  } catch (error) {
+    // Fallback to a simple format if there's an error
+    return `${currency} ${amount.toFixed(2)}`;
+  }
+};
+
+// Account icon mapping with consistent styling
 const accountIcons = {
-  'wallet': <Wallet className="h-4 w-4" />,
-  'piggy-bank': <PiggyBank className="h-4 w-4" />,
-  'briefcase': <Briefcase className="h-4 w-4" />,
-  'default': <Wallet className="h-4 w-4" />
+  'wallet': <Wallet className="h-5 w-5 text-white" />,
+  'piggy-bank': <PiggyBank className="h-5 w-5 text-white" />,
+  'briefcase': <Briefcase className="h-5 w-5 text-white" />,
+  'default': <Wallet className="h-5 w-5 text-white" />
 } as const;
 
-// Account color mapping
-const accountColors = {
-  'blue': 'bg-blue-500',
-  'green': 'bg-green-500',
-  'purple': 'bg-purple-500',
-  'default': 'bg-gray-500'
+// Account type to gradient mapping using design system's gradient system
+const accountTypeGradients = {
+  'checking': 'bg-gradient-to-br from-primary to-primary/80', // Primary gradient for checking accounts
+  'savings': 'bg-gradient-to-br from-accent to-accent/80',    // Accent gradient for savings accounts
+  'investment': 'bg-gradient-to-br from-secondary to-secondary/80', // Secondary gradient for investments
+  'default': 'bg-gradient-to-br from-muted to-muted/80'       // Muted gradient for unknown types
+} as const;
+
+// Account type to gradient glow effect
+const accountGlow = {
+  'checking': 'shadow-md shadow-primary/20',
+  'savings': 'shadow-md shadow-accent/20',
+  'investment': 'shadow-md shadow-secondary/20',
+  'default': 'shadow-md shadow-muted/20'
 } as const;
 
 interface AccountSelectorProps {
@@ -40,46 +68,68 @@ export function AccountSelector({
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button 
-          variant="outline" 
-          className={cn("w-[250px] justify-between items-center", className)}
+          variant="ghost"
+          className={cn("w-full justify-between items-center p-3 h-auto rounded-xl bg-card hover:bg-muted/50 transition-all duration-200 border border-border/50 shadow-sm hover:shadow-md", className)}
         >
-          <div className="flex items-center gap-2">
-            <div className={`h-2.5 w-2.5 rounded-full ${
-              accountColors[selectedAccount.color as keyof typeof accountColors] || accountColors.default
-            }`} />
-            <span className="truncate">{selectedAccount.displayName}</span>
+          <div className="flex items-center gap-3 w-full">
+            <div className={`flex items-center justify-center w-10 h-10 rounded-lg ${
+              accountTypeGradients[selectedAccount.type as keyof typeof accountTypeGradients] || accountTypeGradients.default
+            } ${
+              accountGlow[selectedAccount.type as keyof typeof accountGlow] || accountGlow.default
+            }`}>
+              {accountIcons[selectedAccount.icon as keyof typeof accountIcons] || accountIcons.default}
+            </div>
+            <div className="text-left flex-1 min-w-0">
+              <p className="text-sm font-medium text-foreground truncate">{selectedAccount.displayName}</p>
+              <p className="text-xs text-muted-foreground truncate">
+                {formatCurrency(selectedAccount.balance, selectedAccount.currency)}
+              </p>
+            </div>
+            <ChevronDown className={`h-4 w-4 opacity-70 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
           </div>
-          <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[250px] p-0">
-        <div className="space-y-1 p-1">
-          {accounts.map((account) => (
-            <Button
-              key={account.id}
-              variant="ghost"
-              className={cn(
-                "w-full justify-start items-center",
-                selectedAccount.id === account.id && "bg-accent"
-              )}
-              onClick={() => {
-                onSelectAccount(account);
-                setIsOpen(false);
-              }}
-            >
-              <div className="flex items-center gap-2">
-                <div className={`h-2.5 w-2.5 rounded-full ${
-                  accountColors[account.color as keyof typeof accountColors] || accountColors.default
-                }`} />
-                <div className="text-left">
-                  <div className="font-medium">{account.displayName}</div>
-                  <div className="text-xs text-muted-foreground">
-                    {account.currency} {account.balance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+      <PopoverContent className="w-[280px] p-2 bg-card/95 backdrop-blur-sm border-border/50 shadow-xl" align="start" sideOffset={8}>
+        <div className="space-y-1">
+          {accounts.map((account) => {
+            const isSelected = selectedAccount.id === account.id;
+            return (
+              <Button
+                key={account.id}
+                variant="ghost"
+                className={`w-full justify-start h-auto p-2 rounded-lg transition-colors ${
+                  isSelected ? 'bg-muted/50' : 'hover:bg-muted/30'
+                }`}
+                onClick={() => {
+                  onSelectAccount(account);
+                  setIsOpen(false);
+                }}
+              >
+                <div className="flex items-center gap-3 w-full">
+                  <div className={`flex items-center justify-center w-9 h-9 rounded-lg ${
+                    accountTypeGradients[account.type as keyof typeof accountTypeGradients] || accountTypeGradients.default
+                  } ${
+                    accountGlow[account.type as keyof typeof accountGlow] || accountGlow.default
+                  }`}>
+                    {accountIcons[account.icon as keyof typeof accountIcons] || accountIcons.default}
                   </div>
+                  <div className="flex-1 min-w-0 text-left">
+                    <p className="text-sm font-medium text-foreground truncate">{account.displayName}</p>
+                    <p className="text-xs text-muted-foreground truncate">
+                      {formatCurrency(account.balance, account.currency)}
+                    </p>
+                  </div>
+                  {isSelected && (
+                    <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
+                      <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                  )}
                 </div>
-              </div>
-            </Button>
-          ))}
+              </Button>
+            );
+          })}
         </div>
       </PopoverContent>
     </Popover>
