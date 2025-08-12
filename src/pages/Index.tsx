@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import Dashboard from './Dashboard';
 import { SidebarNav } from '@/components/ui/SidebarNav';
+import BlueberryLogo from '@/components/ui/blueberry-logo';
 
 const Index = () => {
   return (
@@ -15,12 +16,10 @@ const Index = () => {
           <div>
             <h1 className="text-xl font-bold">        
               <div className="text-xl font-semibold flex items-center gap-2">
-                Blueberry Bank
-                <div className="w-2 h-2 bg-gradient-to-br from-accent to-purple-400 rounded-full"></div>
+                <BlueberryLogo />
+                <span className="text-primary font-extrabold">blueberry</span> <span className="text-primary font-thin">bank</span>
               </div>
             </h1>
-            <p className="text-white/80 text-sm">Banking experience by Marcus Björke
-          </p>
           </div>
           <Link to="/components">
             <Button variant="outline" size="sm" className="bg-popover/30 text-foreground border-0 hover:bg-popover/40">

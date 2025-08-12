@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { BlueberryLogo } from "@/components/ui/blueberry-logo";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -133,13 +134,20 @@ export const DashboardHeader = ({
   return (
     <Card className="bg-card shadow-lg border border-border">
       <div className="p-6 space-y-4">
-        {/* Account Header */}
-        <div className="flex items-center justify-between">
-          <div className="space-y-1">
-            <p className="text-foreground text-sm">{accountName}</p>
-            <Badge variant="secondary" className="bg-card/10 text-foreground border-0 text-xs">
-              Main Account
-            </Badge>
+        <div className="flex items-center space-x-4">
+          <div className="flex-shrink-0">
+            <BlueberryLogo size={36} className="text-accent" />
+          </div>
+          <div className="flex flex-col space-y-1">
+            <h1 className="text-2xl font-bold tracking-tight">
+              {currency}{formatBalance(balance)}
+            </h1>
+            <div className="flex items-center space-x-2">
+              <p className="text-sm text-muted-foreground">{accountName}</p>
+              <Badge variant="outline" className="text-xs">
+                Primary
+              </Badge>
+            </div>
           </div>
         </div>
 

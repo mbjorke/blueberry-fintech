@@ -3,24 +3,16 @@ import { Transaction, Account } from "@/components/fintech/types";
 import { TransactionDetailsModal } from "@/components/fintech/TransactionDetailsModal";
 import { TransactionItem } from "@/components/fintech/TransactionItem";
 import { SpendingInsights } from "@/components/fintech/SpendingInsights";
-import { DashboardHeader } from "@/components/fintech/DashboardHeader";
 import { AccountCard } from "@/components/fintech/AccountCard";
-import { AccountSelector } from "@/components/fintech/AccountSelector";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+
 import { 
-  Plus, 
-  Send, 
   Coffee, 
   Car, 
   ShoppingBag, 
   Home, 
   Smartphone, 
-  AlertTriangle,
-  Wallet, 
-  PiggyBank, 
-  Briefcase, 
   ArrowUpRight, 
   ArrowDownLeft, 
   CreditCard, 
@@ -28,17 +20,6 @@ import {
   Download 
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { MerchantAvatar } from "@/components/fintech/MerchantAvatar";
-import { cn } from "@/lib/utils";
-
-// Account color mapping for the selector
-const accountColors = {
-  'blue': 'bg-blue-500',
-  'green': 'bg-green-500',
-  'purple': 'bg-purple-500',
-  'default': 'bg-gray-500'
-} as const;
-
 
 // Category icons mapping
 const categoryIcons = {
@@ -427,6 +408,7 @@ const Dashboard: React.FC = () => {
               availableBalance={account.availableBalance}
               isSelected={selectedAccount.id === account.id}
               color={account.color || 'blue'}
+              icon={account.icon}
               onClick={() => handleAccountSelect(account)}
             />
           ))}
@@ -440,10 +422,10 @@ const Dashboard: React.FC = () => {
           <div className="space-y-4">
 
             {/* Recent Transactions */}
-            <Card className="p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-semibold">Recent Transactions</h2>
-                <div className="flex gap-2">
+
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold">Recent Transactions</h2>
+              <div className="flex gap-2">
                   {/* Quick Actions */}
                   <Button variant="outline" size="sm" onClick={() => handleQuickAction('Transfer')}>
                     <ArrowUpRight className="h-4 w-4 mr-2" />
@@ -466,8 +448,8 @@ const Dashboard: React.FC = () => {
                     Export
                   </Button>
                 </div>
-              </div>
-              <div className="space-y-4">
+            </div>
+            <div className="space-y-4">
                 {filteredTransactions.length > 0 ? (
                   filteredTransactions.map((transaction) => (
                     <TransactionItem
@@ -481,8 +463,7 @@ const Dashboard: React.FC = () => {
                     <p>No transactions found for this account.</p>
                   </div>
                 )}
-              </div>
-            </Card>
+            </div>
           </div>
         </div>
         

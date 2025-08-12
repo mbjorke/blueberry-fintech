@@ -1,14 +1,36 @@
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { AvatarWithIcon } from "@/components/ui/avatar-with-icon";
 
 interface MerchantAvatarProps {
+  /**
+   * URL of the merchant's logo/image
+   */
   merchantImage?: string;
+  /**
+   * Category name for fallback and alt text
+   */
   category: string;
-  CategoryIcon: React.ComponentType<{ size?: string | number }>;
+  /**
+   * Icon component to display when no image is available
+   */
+  CategoryIcon: React.ComponentType<{ className?: string }>;
+  /**
+   * Tailwind background color class for the fallback
+   */
   categoryColors: string;
+  /**
+   * Size of the avatar in pixels
+   */
   size?: number;
+  /**
+   * Additional CSS class names
+   */
   className?: string;
 }
 
+/**
+ * A specialized avatar component for displaying merchant logos with fallback to category icons.
+ * Built on top of the generic AvatarWithIcon component.
+ */
 export function MerchantAvatar({
   merchantImage,
   category,
@@ -18,22 +40,13 @@ export function MerchantAvatar({
   className = '',
 }: MerchantAvatarProps) {
   return (
-    <div className="relative">
-      {merchantImage ? (
-        <Avatar className="h-12 w-12">
-          <AvatarImage src={merchantImage} />
-          <AvatarFallback>
-            <CategoryIcon size={24} />
-          </AvatarFallback>
-        </Avatar>
-      ) : (
-        <div
-          className={`h-12 w-12 rounded-full flex items-center justify-center ${categoryColors} ${className}`}
-        >
-          <CategoryIcon size={24} />
-        </div>
-      )}
-
-    </div>
+    <AvatarWithIcon
+      imageUrl={merchantImage}
+      name={category}
+      icon={CategoryIcon}
+      colorClass={categoryColors}
+      className={className}
+      size={size}
+    />
   );
 }

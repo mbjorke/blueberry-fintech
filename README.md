@@ -1,73 +1,102 @@
-# Welcome to your Lovable project
+# Fintech Dashboard
 
-## Project info
+## Project Overview
 
-**URL**: https://lovable.dev/projects/250851b1-9513-478c-93d8-34d33780e28c
+A modern, responsive fintech dashboard built with React, TypeScript, and Tailwind CSS. This project showcases a clean, accessible UI for financial data visualization and management.
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- Account overview with balance and transaction history
+- Transaction categorization and filtering
+- Responsive design for all device sizes
+- Modern UI with dark/light mode support
+- Built with accessibility in mind
 
-**Use Lovable**
+## Getting Started
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/250851b1-9513-478c-93d8-34d33780e28c) and start prompting.
+### Prerequisites
 
-Changes made via Lovable will be committed automatically to this repo.
+- Node.js (v16 or later)
+- npm (v7 or later) or yarn
 
-**Use your preferred IDE**
+### Installation
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+1. Clone the repository:
+   ```sh
+   git clone <YOUR_GIT_URL>
+   cd fintech-dashboard
+   ```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+2. Install dependencies:
+   ```sh
+   npm install
+   # or
+   yarn install
+   ```
 
-Follow these steps:
+3. Start the development server:
+   ```sh
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+4. Open [http://localhost:8080](http://localhost:8080) in your browser.
+
+## Development
+
+### Available Scripts
+
+- `npm run dev` - Start the development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview the production build
+- `npm run lint` - Run ESLint
+
+### Project Structure
+
+- `/src/components` - Reusable UI components
+  - `/ui` - Base UI components (buttons, cards, etc.)
+  - `/fintech` - Fintech-specific components
+- `/src/tokens` - Design tokens (colors, typography, spacing)
+- `/src/pages` - Page components
+- `/src/lib` - Utility functions and hooks
+- `/public` - Static assets
+
+## Technologies Used
+
+- [Vite](https://vitejs.dev/) - Build tool and dev server
+- [React](https://react.dev/) - UI library
+- [TypeScript](https://www.typescriptlang.org/) - Type checking
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS
+- [shadcn/ui](https://ui.shadcn.com/) - UI component library
+- [Radix UI](https://www.radix-ui.com/) - Primitives for accessible components
+
+## Deployment
+
+### Building for Production
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+npm run build
 ```
 
-**Edit a file directly in GitHub**
+This will create a `dist` directory with the production build.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Hosting
 
-**Use GitHub Codespaces**
+You can deploy the built files to any static hosting service:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- [Vercel](https://vercel.com/)
+- [Netlify](https://www.netlify.com/)
+- [GitHub Pages](https://pages.github.com/)
 
-## What technologies are used for this project?
+## Contributing
 
-This project is built with:
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## License
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/250851b1-9513-478c-93d8-34d33780e28c) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

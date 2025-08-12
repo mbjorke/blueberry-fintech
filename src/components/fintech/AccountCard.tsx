@@ -1,27 +1,61 @@
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Wallet, PiggyBank, Briefcase, CreditCard } from "lucide-react";
+import { ChevronRight, Wallet, PiggyBank, Briefcase, CreditCard, Users } from "lucide-react";
+import { GradientCard } from "@/components/ui/gradient-card";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 
 interface AccountCardProps {
+  /**
+   * The current balance of the account
+   */
   balance: number;
+  /**
+   * The currency symbol to display
+   * @default "€"
+   */
   currency?: string;
+  /**
+   * The name of the account
+   * @default "Account"
+   */
   accountName?: string;
-  accountType?: 'checking' | 'savings' | 'investment' | 'credit';
+  /**
+   * The type of account
+   * @default 'checking'
+   */
+  accountType?: 'checking' | 'savings' | 'investment' | 'credit' | 'freelance';
+  /**
+   * The available balance (if different from the main balance)
+   * @default 0
+   */
   availableBalance?: number;
+  /**
+   * Whether the card is in a selected state
+   * @default false
+   */
   isSelected?: boolean;
+  /**
+   * Additional CSS class names
+   */
   className?: string;
+  /**
+   * Click handler for the card
+   */
   onClick?: () => void;
+  /**
+   * Color theme for the card
+   * @default 'blue'
+   */
   color?: string;
+  /**
+   * Icon to display for the account type
+   */
+  icon?: string;
 }
 
-// Using the design token's primary gradient
-const primaryGradient = 'bg-gradient-primary';
-const primaryGlow = 'shadow-lg shadow-primary/20';
-
-// Use a single icon for all account types for consistency
-const AccountIcon = Wallet;
-
+/**
+ * A card component for displaying account information with a gradient background.
+ * Built on top of the GradientCard UI primitive.
+ */
 export function AccountCard({ 
   balance, 
   currency = "€",
@@ -31,7 +65,8 @@ export function AccountCard({
   isSelected = false,
   className,
   onClick,
-  color = 'blue'
+  color = 'blue',
+  icon
 }: AccountCardProps) {
   const formatCurrency = (amount: number) => {
     return `${currency}${amount.toLocaleString('en-US', { 
@@ -40,61 +75,70 @@ export function AccountCard({
     })}`;
   };
 
-  const gradientClass = primaryGradient;
-  const glowClass = primaryGlow;
+  // Map icon names to their respective components with responsive sizes
+  const iconMap = (size: string) => ({
+    'wallet': <Wallet className={`${size} text-white/90`} />,
+    'piggy-bank': <PiggyBank className={`${size} text-white/90`} />,
+    'briefcase': <Briefcase className={`${size} text-white/90`} />,
+    'credit-card': <CreditCard className={`${size} text-white/90`} />,
+    'users': <Users className={`${size} text-white/90`} />
+  });
 
   return (
-    <div 
-      className={cn(
-        "relative overflow-hidden rounded-xl cursor-pointer transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.01] active:scale-100",
-        isSelected ? 'ring-2 ring-offset-2 ring-offset-primary ring-primary' : '',
-        className
-      )}
+    <GradientCard
+      className={cn("w-full max-w-md p-4 sm:p-5 text-card-foreground overflow-hidden", className)}
+      selected={isSelected}
       onClick={onClick}
+      glow={isSelected}
     >
+      {/* Account Type Icon - Made smaller */}
       <div className={cn(
-        "p-6 text-white transition-all duration-300",
-        gradientClass,
-        glowClass
+        "absolute -top-3 -right-3 w-16 h-16 sm:-top-6 sm:-right-6 sm:w-24 sm:h-24 rounded-full flex items-center justify-center opacity-90 transition-all duration-300",
+        isSelected 
+          ? "bg-gradient-primary" 
+          : "bg-gradient-to-br from-accent/50 to-accent/10",
+        isSelected ? "shadow-lg shadow-primary/20" : ""
       )}>
-        {/* Account Type Icon */}
-        <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-accent flex items-center justify-center opacity-90">
-          <AccountIcon className="w-10 h-10 text-white/90" />
+        {icon && (
+          <div className="flex items-center justify-center">
+            <div className="w-6 h-6 sm:w-10 sm:h-10">
+              {iconMap("w-full h-full")[icon as keyof ReturnType<typeof iconMap>]}
+            </div>
+          </div>
+        )}
+      </div>
+      
+      <div className="relative z-10">
+        <div className="flex items-start justify-between gap-2 mb-2 sm:mb-3">
+          <div className="flex-1 min-w-0">
+            <div className="text-sm sm:text-base font-medium text-foreground/90 truncate">{accountName}</div>
+            <div className="text-[11px] sm:text-xs text-foreground/70">
+              {accountType.charAt(0).toUpperCase() + accountType.slice(1)}
+            </div>
+          </div>
         </div>
         
-        <div className="relative z-10">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div>
-                <div className="font-medium text-white/90">{accountName}</div>
-                <div className="text-xs text-white/70">
-                  {accountType.charAt(0).toUpperCase() + accountType.slice(1)}
-                </div>
+        <div className="mt-2">
+          <div className="flex items-end justify-between">
+            <div>
+              <div className="text-[11px] sm:text-xs font-medium text-foreground/80">Available Balance</div>
+              <div className="text-lg sm:text-2xl font-bold tracking-tight">
+                {formatCurrency(balance)}
               </div>
             </div>
+            <button 
+              className="text-xs text-foreground/70 hover:text-foreground flex items-center gap-1 h-6 mb-0.5 ml-2"
+              onClick={(e) => {
+                e.stopPropagation();
+                onClick?.();
+              }}
+            >
+              More account details
+              <ChevronRight size={12} className="w-3 h-3 flex-shrink-0" />
+            </button>
           </div>
-          
-          <div className="mt-6">
-            <div className="text-sm font-medium text-white/80 mb-1">Available Balance</div>
-            <div className="text-2xl font-bold tracking-tight">
-              {formatCurrency(balance)}
-            </div>
-          </div>
-          
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className="absolute bottom-4 right-4 h-8 px-3 text-white/80 hover:text-white hover:bg-white/10"
-            onClick={(e) => {
-              e.stopPropagation();
-              onClick?.();
-            }}
-          >
-            View Details
-            <ChevronRight size={16} className="ml-1" />
-          </Button>
         </div>
       </div>
-    </div>
+    </GradientCard>
   );
 };
