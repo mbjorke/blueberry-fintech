@@ -1,13 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { AccountCard, type IconType } from '@/components/fintech/AccountCard';
+import { GradientCard } from '@/components/ui/gradient-card';
+import { Button } from '@/components/ui/button';
+import { Info } from 'lucide-react';
 
 const meta = {
-  title: 'Components/Fintech/AccountCard',
+  title: 'Composed/AccountCard',
   component: AccountCard,
   parameters: {
     layout: 'centered',
+    docs: {
+      description: {
+        component: 'A composed card component for displaying account information. Built on top of the `GradientCard` primitive with additional account-specific functionality.',
+      },
+    },
   },
-  tags: ['autodocs'],
+  tags: ['autodocs', 'composed'],
   argTypes: {
     balance: {
       control: 'number',
@@ -48,15 +56,91 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Default story with common usage
+/**
+ * Default AccountCard with common usage.
+ * 
+ * This component is built on top of the `GradientCard` primitive,
+ * adding account-specific functionality like balance display and account type indicators.
+ */
 export const Default: Story = {
   args: {
     balance: 12450.75,
-    currency: '€',
+    currency: '$',
     accountName: 'Main Account',
     accountType: 'checking',
-    isSelected: false,
     icon: 'wallet',
+    isSelected: false,
+  },
+};
+
+/**
+ * Shows how the AccountCard uses the GradientCard primitive internally.
+ * This demonstrates the composition pattern used in the component.
+ */
+export const CompositionExample: Story = {
+  render: (args) => (
+    <div className="space-y-6">
+      <div>
+        <h3 className="text-lg font-medium mb-2">AccountCard (Composed Component)</h3>
+        <AccountCard {...args} />
+      </div>
+      
+      <div>
+        <h3 className="text-lg font-medium mb-2">Underlying GradientCard (Base Primitive)</h3>
+        <div className="relative">
+          <GradientCard 
+            className="p-6 w-80 h-40 flex flex-col justify-between"
+            gradientDirection="to-br"
+            from="from-primary"
+            to="to-primary/50"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 rounded-full bg-foreground/10 flex items-center justify-center">
+                  <span className="text-foreground">👛</span>
+                </div>
+                <span className="text-sm font-medium text-foreground/90">{args.accountName}</span>
+              </div>
+              <span className="text-xs px-2 py-1 bg-foreground/10 rounded-full text-foreground/90">
+                {args.accountType}
+              </span>
+            </div>
+            
+            <div className="mt-4">
+              <p className="text-2xl font-bold text-foreground">
+                {args.currency}{args.balance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+              </p>
+              <p className="text-xs text-foreground/70 mt-1">Available Balance</p>
+            </div>
+          </GradientCard>
+          
+          <div className="absolute -bottom-8 right-0 text-xs text-muted-foreground flex items-center">
+            <Info className="w-3 h-3 mr-1" />
+            Simplified representation for illustration
+          </div>
+        </div>
+      </div>
+      
+      <div className="text-sm text-muted-foreground max-w-md">
+        <p className="font-medium mb-1">Composition Notes:</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>AccountCard extends GradientCard with account-specific features</li>
+          <li>Handles number formatting and currency display</li>
+          <li>Manages account type specific styling and icons</li>
+          <li>Implements interactive states (selected/hover/focus)</li>
+        </ul>
+      </div>
+    </div>
+  ),
+  args: {
+    ...Default.args,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Shows how the AccountCard is composed using the base GradientCard component.',
+      },
+    },
   },
 };
 
