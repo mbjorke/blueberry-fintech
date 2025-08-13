@@ -73,7 +73,7 @@ export const AllSizes = () => (
     }).map(([label, size]) => (
       <div key={size} className="flex flex-col items-center gap-3">
         <BlueberryLogo size={size as 'sm' | 'md' | 'lg' | 'xl'} />
-        <span className="text-sm text-muted-foreground">{label}</span>
+        <span className="text-sm text-foreground/70">{label}</span>
       </div>
     ))}
   </div>

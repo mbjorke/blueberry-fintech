@@ -15,7 +15,7 @@ const navItems = [
 export function SidebarNav() {
   const location = useLocation();
   return (
-    <aside className="h-screen w-56 flex-shrink-0 bg-background/90 backdrop-blur-lg border-r border-border flex flex-col py-6 px-2 text-foreground">
+    <aside className="h-screen w-56 flex-shrink-0 bg-background/90 backdrop-blur-lg flex flex-col py-6 px-2 text-foreground">
       <nav className="flex-1">
         <ul className="space-y-1">
           {navItems.map(({ label, icon: Icon, to }) => (

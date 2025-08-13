@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { AccountCard } from '@/components/fintech/AccountCard';
-import { Wallet, PiggyBank, Briefcase, CreditCard, Users } from 'lucide-react';
+import { AccountCard, type IconType } from '@/components/fintech/AccountCard';
 
 const meta = {
   title: 'Components/Fintech/AccountCard',
@@ -33,8 +32,15 @@ const meta = {
     },
     icon: {
       control: 'select',
-      options: ['wallet', 'piggy-bank', 'briefcase', 'credit-card', 'users'],
+      options: ['wallet', 'piggy-bank', 'briefcase', 'credit-card', 'users'] as IconType[],
       description: 'Icon to display for the account type',
+      mapping: {
+        'wallet': 'wallet',
+        'piggy-bank': 'piggy-bank',
+        'briefcase': 'briefcase',
+        'credit-card': 'credit-card',
+        'users': 'users'
+      },
     },
   },
 } satisfies Meta<typeof AccountCard>;

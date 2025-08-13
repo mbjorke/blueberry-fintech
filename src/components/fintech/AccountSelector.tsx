@@ -69,7 +69,7 @@ export function AccountSelector({
       <PopoverTrigger asChild>
         <Button 
           variant="ghost"
-          className={cn("w-full justify-between items-center p-3 h-auto rounded-xl bg-card hover:bg-muted/50 transition-all duration-200 border border-border/50 shadow-sm hover:shadow-md", className)}
+          className={cn("w-full justify-between items-center p-3 h-auto rounded-xl bg-card hover:bg-muted/50 transition-all duration-200 border/50 shadow-sm hover:shadow-md", className)}
         >
           <div className="flex items-center gap-3 w-full">
             <div className={`flex items-center justify-center w-10 h-10 rounded-lg ${
@@ -81,7 +81,7 @@ export function AccountSelector({
             </div>
             <div className="text-left flex-1 min-w-0">
               <p className="text-sm font-medium text-foreground truncate">{selectedAccount.displayName}</p>
-              <p className="text-xs text-muted-foreground truncate">
+              <p className="text-xs text-foreground/70 truncate">
                 {formatCurrency(selectedAccount.balance, selectedAccount.currency)}
               </p>
             </div>
@@ -89,7 +89,7 @@ export function AccountSelector({
           </div>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[280px] p-2 bg-card/95 backdrop-blur-sm border-border/50 shadow-xl" align="start" sideOffset={8}>
+      <PopoverContent className="w-[280px] p-2 bg-card/95 backdrop-blur-sm/50 shadow-xl" align="start" sideOffset={8}>
         <div className="space-y-1">
           {accounts.map((account) => {
             const isSelected = selectedAccount.id === account.id;
@@ -115,7 +115,7 @@ export function AccountSelector({
                   </div>
                   <div className="flex-1 min-w-0 text-left">
                     <p className="text-sm font-medium text-foreground truncate">{account.displayName}</p>
-                    <p className="text-xs text-muted-foreground truncate">
+                    <p className="text-xs text-foreground/70 truncate">
                       {formatCurrency(account.balance, account.currency)}
                     </p>
                   </div>

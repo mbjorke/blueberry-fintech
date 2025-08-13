@@ -109,7 +109,7 @@ export function TransactionItem({ transaction, isUnmapped = false, onClick }: Tr
               transition={{ delay: 0.2 }}
             >
               <div className="flex items-center gap-2">
-                <p className="text-base text-thin text-muted-foreground">
+                <p className="text-base text-thin text-foreground/70">
                   {formatDate(transaction.date)}
                 </p>
               </div>
@@ -144,7 +144,7 @@ export function TransactionItem({ transaction, isUnmapped = false, onClick }: Tr
                 </Badge>
               )}
               {transaction.cardLast4 && (
-                <span className="text-base text-thin text-muted-foreground">
+                <span className="text-base text-thin text-foreground/70">
                   •••• {transaction.cardLast4}
                 </span>
               )}

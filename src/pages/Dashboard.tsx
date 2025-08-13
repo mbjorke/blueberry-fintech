@@ -1,10 +1,11 @@
 import { useState, useMemo } from "react";
 import { Transaction, Account } from "@/components/fintech/types";
+import { IconType } from "@/components/fintech/AccountCard";
+import { getCategoryColorClasses } from "@/components/fintech/constants";
 import { TransactionDetailsModal } from "@/components/fintech/TransactionDetailsModal";
 import { TransactionItem } from "@/components/fintech/TransactionItem";
 import { SpendingInsights } from "@/components/fintech/SpendingInsights";
 import { AccountCard } from "@/components/fintech/AccountCard";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 import { 
@@ -70,11 +71,17 @@ const Dashboard: React.FC = () => {
         .filter(tx => tx.category === cat && tx.type === 'outgoing')
         .reduce((sum, tx) => sum + tx.amount, 0);
 
+      // Get the color for the category using the helper function
+      const colorClass = getCategoryColorClasses(cat).text;
+      // Extract the color class (e.g., 'text-blue-600' -> 'blue-600')
+      const color = colorClass.replace('text-', '').split(' ')[0];
+
       return {
         name: cat,
         amount: catAmount,
         budget: CATEGORY_BUDGETS[cat],
-        label: CATEGORY_LABELS[cat] || cat
+        label: CATEGORY_LABELS[cat] || cat,
+        color: color
       };
     });
   }, [filteredTransactions]);
@@ -118,7 +125,7 @@ const Dashboard: React.FC = () => {
               availableBalance={account.availableBalance}
               isSelected={selectedAccount.id === account.id}
               color={account.color || 'blue'}
-              icon={account.icon}
+              icon={account.icon as IconType | undefined}
               onClick={() => handleAccountSelect(account)}
             />
           ))}
@@ -169,7 +176,7 @@ const Dashboard: React.FC = () => {
                     />
                   ))
                 ) : (
-                  <div className="text-center py-8 text-muted-foreground">
+                  <div className="text-center py-8 text-foreground/70">
                     <p>No transactions found for this account.</p>
                   </div>
                 )}

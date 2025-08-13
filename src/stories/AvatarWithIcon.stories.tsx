@@ -95,7 +95,7 @@ const CategoriesTemplate: Story = {
               />
               <div className="text-center">
                 <p className="text-sm font-medium">{name}</p>
-                <p className="text-xs text-muted-foreground">{colors.bg}</p>
+                <p className="text-xs text-foreground/70">{colors.bg}</p>
               </div>
             </div>
           );
@@ -154,7 +154,7 @@ const MerchantAvatarsTemplate: Story = {
               />
               <div>
                 <p className="font-medium">{name}</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-foreground/70">
                   {isUnmapped ? 'Unmapped' : category} • {colors.bg}
                 </p>
               </div>
@@ -175,22 +175,28 @@ const WithLabelTemplate: Story = {
           icon={ShoppingBag} 
           label="Shopping" 
           showLabel 
+          size={32}
           colorClass="bg-blue-100"
           iconColorClass="text-blue-600"
+          labelClassName="text-sm"
         />
         <AvatarWithIcon 
           icon={Coffee} 
           label="Food & Drinks" 
           showLabel 
+          size={32}
           colorClass="bg-amber-100"
           iconColorClass="text-amber-600"
+          labelClassName="text-sm"
         />
         <AvatarWithIcon 
           icon={Car} 
           label="Transport" 
-          showLabel 
+          showLabel
+          size={32}
           colorClass="bg-emerald-100"
           iconColorClass="text-emerald-600"
+          labelClassName="text-sm"
         />
       </div>
       <div className="flex items-center gap-4">

@@ -3,6 +3,8 @@ import { ChevronRight, Wallet, PiggyBank, Briefcase, CreditCard, Users } from "l
 import { GradientCard } from "@/components/ui/gradient-card";
 import { cn } from "@/lib/utils";
 
+export type IconType = 'wallet' | 'piggy-bank' | 'briefcase' | 'credit-card' | 'users';
+
 interface AccountCardProps {
   /**
    * The current balance of the account
@@ -49,7 +51,7 @@ interface AccountCardProps {
   /**
    * Icon to display for the account type
    */
-  icon?: string;
+  icon?: IconType;
 }
 
 /**
@@ -86,23 +88,23 @@ export function AccountCard({
 
   return (
     <GradientCard
-      className={cn("w-full max-w-md p-4 sm:p-5 text-card-foreground overflow-hidden", className)}
+      className={cn("w-full max-w-md p-4 sm:p-5 text-card-foreground overflow-hidden relative", className)}
       selected={isSelected}
       onClick={onClick}
       glow={isSelected}
     >
       {/* Account Type Icon - Made smaller */}
       <div className={cn(
-        "absolute -top-3 -right-3 w-16 h-16 sm:-top-6 sm:-right-6 sm:w-24 sm:h-24 rounded-full flex items-center justify-center opacity-90 transition-all duration-300",
+        "absolute -top-3 -right-3 w-16 h-16 sm:-top-6 sm:-right-6 sm:w-24 sm:h-24 rounded-full flex items-center justify-center opacity-90 transition-all duration-300 z-10",
         isSelected 
           ? "bg-gradient-primary" 
-          : "bg-gradient-to-br from-accent/50 to-accent/10",
+          : "bg-gradient-to-br from-accent/50 to-accent/10 hover:opacity-100",
         isSelected ? "shadow-lg shadow-primary/20" : ""
       )}>
-        {icon && (
+        {icon && iconMap("w-full h-full")[icon] && (
           <div className="flex items-center justify-center">
             <div className="w-6 h-6 sm:w-10 sm:h-10">
-              {iconMap("w-full h-full")[icon as keyof ReturnType<typeof iconMap>]}
+              {iconMap("w-full h-full")[icon]}
             </div>
           </div>
         )}
@@ -111,8 +113,8 @@ export function AccountCard({
       <div className="relative z-10">
         <div className="flex items-start justify-between gap-2 mb-2 sm:mb-3">
           <div className="flex-1 min-w-0">
-            <div className="text-sm sm:text-base font-medium text-foreground/90 truncate">{accountName}</div>
-            <div className="text-[11px] sm:text-xs text-foreground/70">
+            <div className="text-base font-medium text-foreground/90 truncate">{accountName}</div>
+            <div className="text-xs font-medium text-foreground/70">
               {accountType.charAt(0).toUpperCase() + accountType.slice(1)}
             </div>
           </div>
@@ -121,13 +123,13 @@ export function AccountCard({
         <div className="mt-2">
           <div className="flex items-end justify-between">
             <div>
-              <div className="text-[11px] sm:text-xs font-medium text-foreground/80">Available Balance</div>
-              <div className="text-lg sm:text-2xl font-bold tracking-tight">
+              <div className="text-xs font-medium text-foreground/80">Available Balance</div>
+              <div className="text-2xl font-bold tracking-tight">
                 {formatCurrency(balance)}
               </div>
             </div>
             <button 
-              className="text-xs text-foreground/70 hover:text-foreground flex items-center gap-1 h-6 mb-0.5 ml-2"
+              className="text-xs font-medium text-foreground/70 hover:text-foreground flex items-center gap-1 h-6 mb-0.5 ml-2"
               onClick={(e) => {
                 e.stopPropagation();
                 onClick?.();
