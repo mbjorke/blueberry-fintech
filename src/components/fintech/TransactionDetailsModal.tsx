@@ -27,10 +27,12 @@ import { formatCurrency } from "@/lib/format-currency";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { categoryIcons, getCategoryColorClasses } from "./constants";
-import { MerchantAvatar } from "./MerchantAvatar";
+import { getCategoryColorClasses } from "./constants";
+import { getCategoryIcon } from "@/utils/categoryIcons";
+import { AvatarWithIcon } from "@/components/ui/avatar-with-icon";
+import { cn } from "@/lib/utils";
+import { Small } from "@/stories/BlueberryLogo.stories";
 
 interface TransactionDetailsModalProps {
   transaction: Transaction | null;
@@ -48,10 +50,9 @@ export const TransactionDetailsModal = ({
   if (!transaction) return null;
 
   const isIncoming = transaction.type === 'incoming';
-  const isUnmapped = transaction.category === 'unmapped';
+  const isUnmapped = !transaction.merchantName || transaction.merchantName === 'Unknown' || transaction.merchantName === 'Unknown Merchant' || transaction.category === 'unmapped';
   const category = transaction.category || 'other';
-  const CategoryIcon = categoryIcons[category] || categoryIcons.other;
-  const colors = getCategoryColorClasses(category, isUnmapped);
+  const colors = getCategoryColorClasses(transaction.category, isUnmapped);
   const formattedMerchantName = transaction.merchantName || 'Unknown Merchant';
 
   const formatAmount = (amount: number, currency: string) => {
@@ -85,30 +86,47 @@ export const TransactionDetailsModal = ({
       <DialogContent className={`bg-card/80 backdrop-blur-lg border ${isUnmapped ? 'border-amber-500/50' : 'border-border'} text-foreground max-w-md mx-auto`}>
         <DialogHeader>
           <div className="flex items-center gap-4">
-            {/* Merchant Avatar */}
-            <div className="relative">
-              <MerchantAvatar 
-                merchantImage={transaction.merchantImage}
-                category={isUnmapped ? 'unmapped' : transaction.category}
-                CategoryIcon={CategoryIcon}
-                categoryColors={colors.bg}
-                size={48}
-              />
-            </div>
-
-            {/* Amount and Title */}
-            <div className="flex-1">
-              <DialogTitle className={`text-2xl font-bold ${
-                isIncoming ? 'text-success' : 'text-foreground'
-              }`}>
-                {formatAmount(transaction.amount, transaction.currency)}
-              </DialogTitle>
-              <p className="text-sm text-muted-foreground">
-                {transaction.merchantDetails || transaction.merchantName || transaction.description}
-              </p>
-              <p className="text-xs text-muted-foreground mt-1">
-                {formattedDate}, {formattedTime}
-              </p>
+            {/* Merchant Avatar with consistent styling */}
+            <div className="flex flex-col items-start gap-2 w-full">
+              
+              {/* Avatar, Name,Amount and Date */}
+              <div className="flex-1 w-full">
+                <div className="flex items-center gap-4">
+                  <div className="flex-shrink-0">
+                    <AvatarWithIcon
+                      imageUrl={transaction.merchantImage}
+                      name={transaction.merchantName}
+                      icon={getCategoryIcon(transaction.merchantName, isUnmapped ? 'unmapped' : transaction.category)}
+                      colorClass="bg-card"
+                      iconColorClass="text-foreground"
+                      size={56}
+                      className="h-14 w-14"
+                    />
+                  </div>
+                  <div>
+                    <DialogTitle className={`text-lg font-normal ${
+                      isIncoming ? 'text-success' : 'text-foreground'
+                    }`}>
+                      {formattedMerchantName}
+                    </DialogTitle>
+                    <h3 className={`text-xl font-bold ${isIncoming ? 'text-success' : 'text-foreground'}`}>
+                      {formatAmount(transaction.amount, transaction.currency)}
+                    </h3>
+                  </div>
+                </div>
+                {transaction.merchantDetails && (
+                  <p className="text-base text-muted-foreground">
+                    {transaction.merchantDetails}
+                  </p>
+                )}
+                <p className="text-base text-muted-foreground mt-1 flex items-center gap-1.5">
+                  <Calendar size={12} className="text-muted-foreground/70" />
+                  {formattedDate}
+                  <span className="mx-1">•</span>
+                  <Clock size={12} className="text-muted-foreground/70" />
+                  {formattedTime}
+                </p>
+              </div>
             </div>
           </div>
         </DialogHeader>
@@ -119,7 +137,7 @@ export const TransactionDetailsModal = ({
                 <AlertCircle className="h-4 w-4" />
                 Help us understand this transaction
               </h3>
-              <p className="text-sm text-amber-700 dark:text-amber-300 mb-4">
+              <p className="text-base text-amber-700 dark:text-amber-300 mb-4">
                 We couldn't automatically identify this transaction. Please provide more details to help us categorize it correctly.
               </p>
               <Button className="w-full bg-amber-500 hover:bg-amber-600 text-white">
@@ -139,7 +157,7 @@ export const TransactionDetailsModal = ({
               transition={{ delay: 0.1 }}
             >
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">Expense status</span>
+                <span className="text-base font-medium">Expense status</span>
                 <Badge 
                   variant={
                     transaction.expenseStatus === 'approved' ? 'default' :
@@ -155,8 +173,8 @@ export const TransactionDetailsModal = ({
               
               {transaction.spendProgram && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Spend program</span>
-                  <span className="text-sm font-medium">{transaction.spendProgram}</span>
+                  <span className="text-base text-muted-foreground">Spend program</span>
+                  <span className="text-base font-medium">{transaction.spendProgram}</span>
                 </div>
               )}
             </motion.div>
@@ -173,9 +191,9 @@ export const TransactionDetailsModal = ({
           >
             <div className="flex items-center gap-2">
               <User size={16} className="text-muted-foreground" />
-              <span className="text-sm font-medium">Cardholder</span>
+              <span className="text-base font-medium">Cardholder</span>
             </div>
-            <p className="text-sm text-muted-foreground pl-6">{transaction.cardholder}</p>
+            <p className="text-base text-muted-foreground pl-6">{transaction.cardholder}</p>
           </motion.div>
 
           <Separator />
@@ -187,9 +205,9 @@ export const TransactionDetailsModal = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <h3 className="text-sm font-medium">Transaction details</h3>
+            <h3 className="text-base font-medium">Transaction details</h3>
             
-            <div className="space-y-3 text-sm">
+            <div className="space-y-3 text-base">
               {transaction.cardLast4 && (
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -205,7 +223,7 @@ export const TransactionDetailsModal = ({
                   <FileText size={16} className="text-muted-foreground" />
                   <span className="text-muted-foreground">Transaction ID</span>
                 </div>
-                <span className="font-mono text-xs">{transaction.transactionId}</span>
+                <span className="font-mono text-base">{transaction.transactionId}</span>
               </div>
 
               {transaction.location && (
@@ -223,13 +241,20 @@ export const TransactionDetailsModal = ({
                   <Calendar size={16} className="text-muted-foreground" />
                   <span className="text-muted-foreground">Category</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <Badge variant="secondary" className="capitalize">
-                    {transaction.category}
-                  </Badge>
+                <div className="flex items-center gap-2">
+                  <AvatarWithIcon
+                    icon={getCategoryIcon(undefined, category)}
+                    name={category}
+                    label={category.charAt(0).toUpperCase() + category.slice(1)}
+                    showLabel
+                    colorClass={getCategoryColorClasses(category, isUnmapped).bg}
+                    iconColorClass={getCategoryColorClasses(category, isUnmapped).icon}
+                    size={24}
+                    className="gap-2"
+                  />
                   <Badge 
                     variant={transaction.categorySource === 'manual' ? 'default' : 'outline'}
-                    className="h-4 px-1.5 text-[10px] flex items-center gap-0.5"
+                    className="h-4 px-2 text-base flex items-center gap-0.5"
                     title={transaction.categorySource === 'manual' ? 'Manually categorized' : 'Automatically categorized'}
                   >
                     {transaction.categorySource === 'manual' ? (
@@ -257,18 +282,18 @@ export const TransactionDetailsModal = ({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              <h3 className="text-sm font-medium">Expense details</h3>
+              <h3 className="text-base font-medium">Expense details</h3>
               
               {/* Receipt Section */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Receipt size={16} className="text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">Receipts</span>
+                    <span className="text-base text-muted-foreground">Receipts</span>
                   </div>
                   <Badge 
                     variant={transaction.receiptStatus === 'uploaded' ? 'default' : 'outline'}
-                    className="text-xs"
+                    className="text-base"
                   >
                     {transaction.receiptStatus === 'uploaded' ? 'Uploaded' : 
                      transaction.receiptStatus === 'required' ? 'Required' : 'None'}
@@ -284,7 +309,7 @@ export const TransactionDetailsModal = ({
               </div>
 
               {/* Additional Fields */}
-              <div className="space-y-3 text-sm">
+              <div className="space-y-3 text-base">
                 {transaction.accountingCategory && (
                   <div className="flex items-center justify-between">
                     <span className="text-muted-foreground">Accounting category</span>

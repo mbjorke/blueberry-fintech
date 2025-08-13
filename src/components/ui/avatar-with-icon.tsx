@@ -1,84 +1,119 @@
 import { Avatar, AvatarImage, AvatarFallback } from "./avatar";
 import { cn } from "@/lib/utils";
 import { User as UserIcon } from "lucide-react";
+import React from "react";
 
 interface AvatarWithIconProps {
-  /**
-   * Source URL for the avatar image
-   */
+  /** Source URL for the avatar image */
   imageUrl?: string;
-  /**
-   * Display name or initials for the fallback
-   */
+  /** Display name or initials for the fallback */
   name?: string;
-  /**
-   * Icon component to display when no image is provided
-   */
+  /** Icon component to display when no image is provided */
   icon?: React.ComponentType<{ className?: string }>;
-  /**
-   * Background color class for the fallback/icon
-   */
+  /** Background color class for the fallback/icon */
   colorClass?: string;
-  /**
-   * CSS class name for the root element
-   */
+  /** Text color class for the icon */
+  iconColorClass?: string;
+  /** CSS class name for the root element */
   className?: string;
-  /**
-   * Size of the avatar in pixels
-   */
+  /** Size of the avatar in pixels */
   size?: number;
-  /**
-   * Optional click handler
-   */
+  /** Click handler */
   onClick?: () => void;
+  /** Label text to display next to the avatar */
+  label?: string;
+  /** Whether to show the label */
+  showLabel?: boolean;
+  /** Additional class name for the label */
+  labelClassName?: string;
+  /** Children elements */
+  /** Children elements */
+  children?: React.ReactNode;
 }
 
-/**
- * A flexible avatar component that can display an image, initials, or an icon.
- * Useful for displaying user avatars, merchant logos, or category icons.
- */
-export function AvatarWithIcon({
+const AvatarWithIcon: React.FC<AvatarWithIconProps> = ({
   imageUrl,
   name,
   icon: Icon,
-  colorClass = "bg-muted text-muted-foreground",
+  colorClass = "bg-muted",
+  iconColorClass = "text-muted-foreground",
   className,
-  size = 48,
+  size,
   onClick,
-}: AvatarWithIconProps) {
-  const getInitials = (str: string) => {
-    return str
-      .split(' ')
-      .map(part => part[0])
-      .join('')
+  label,
+  showLabel = false,
+  labelClassName,
+  children,
+}) => {
+  // Generate initials from name if provided
+  const getInitials = (nameStr?: string) => {
+    if (!nameStr) return "";
+    return nameStr
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
       .toUpperCase()
       .substring(0, 2);
   };
 
+  const avatarContent = (
+    <Avatar className="h-full w-full">
+      {imageUrl && (
+        <AvatarImage
+          src={imageUrl}
+          alt={name || ""}
+          className="object-cover"
+        />
+      )}
+      <AvatarFallback
+        className={cn(
+          "flex h-full w-full items-center justify-center font-medium",
+          colorClass
+        )}
+      >
+        {Icon ? (
+          <Icon className={cn("h-2/3 w-2/3", iconColorClass)} />
+        ) : name ? (
+          getInitials(name)
+        ) : (
+          <UserIcon className={cn("h-2/3 w-2/3", iconColorClass)} />
+        )}
+      </AvatarFallback>
+    </Avatar>
+  );
+
   return (
     <div 
-      className={cn("relative flex-shrink-0", className)}
-      style={{ width: size, height: size }}
+      className={cn(
+        "inline-flex items-center rounded-full overflow-hidden",
+        colorClass,
+        className
+      )}
       onClick={onClick}
+      style={size ? { '--avatar-size': `${size}px` } as React.CSSProperties : undefined}
     >
-      <Avatar className="w-full h-full">
-        {imageUrl && <AvatarImage src={imageUrl} alt={name} />}
-        <AvatarFallback 
+      <div 
+        className={cn("flex items-center justify-center p-0.5", {
+          'w-[var(--avatar-size)] h-[var(--avatar-size)]': size !== undefined,
+        })}
+      >
+        {avatarContent}
+        {children}
+      </div>
+      {showLabel && label && (
+        <span 
           className={cn(
-            "flex items-center justify-center w-full h-full text-lg font-medium",
-            colorClass,
-            { "cursor-pointer": onClick }
+            "pr-2 py-0.5 text-base font-medium whitespace-nowrap",
+            iconColorClass || "text-foreground",
+            labelClassName
           )}
         >
-          {Icon ? (
-            <Icon className="w-3/5 h-3/5" />
-          ) : name ? (
-            getInitials(name)
-          ) : (
-            <UserIcon className="w-3/5 h-3/5" />
-          )}
-        </AvatarFallback>
-      </Avatar>
+          {label}
+        </span>
+      )}
     </div>
   );
-}
+};
+
+export { AvatarWithIcon };
+export default AvatarWithIcon;

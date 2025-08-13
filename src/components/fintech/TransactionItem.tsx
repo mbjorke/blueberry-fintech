@@ -2,8 +2,10 @@ import { Badge } from "@/components/ui/badge";
 import { Sparkles, Pencil, ArrowUpRight, ArrowDownLeft, AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { Transaction } from "./types";
-import { MerchantAvatar } from "./MerchantAvatar";
-import { categoryIcons, getCategoryColorClasses } from "./constants";
+import { getCategoryColorClasses } from "./constants";
+import { getCategoryIcon } from "@/utils/categoryIcons";
+import { AvatarWithIcon } from "@/components/ui/avatar-with-icon";
+import { colors } from "@/tokens";
 
 /**
  * TransactionItem Component
@@ -62,14 +64,30 @@ export function TransactionItem({ transaction, isUnmapped = false, onClick }: Tr
         transform hover:scale-[1.01] active:scale-100 odd:bg-accent/10 even:bg-accent/20 hover:bg-accent/5"
       onClick={handleClick}
     >
-      {/* Avatar */}
-      <div className="flex-shrink-0 w-10 h-10 transition-all duration-200">
-        <MerchantAvatar 
-          merchantImage={transaction.merchantImage}
-          category={isUnmapped ? 'unmapped' : transaction.category}
-          CategoryIcon={categoryIcons[transaction.category] || categoryIcons.other}
-          categoryColors={getCategoryColorClasses(transaction.category, isUnmapped).bg}
-        />
+      {/* Avatar - Side by side icons */}
+      <div className="flex-shrink-0 flex items-center gap-3">
+        {/* Merchant Image */}
+        <div className="relative w-12 h-12 flex-shrink-0">
+          <AvatarWithIcon
+            imageUrl={transaction.merchantImage}
+            name={transaction.merchantName}
+            icon={getCategoryIcon(transaction.merchantName, isUnmapped ? 'unmapped' : transaction.category)}
+            colorClass={getCategoryColorClasses(transaction.category, isUnmapped).bg}
+            iconColorClass={getCategoryColorClasses(transaction.category, isUnmapped).icon}
+            size={48}
+          />
+        </div>
+        
+        {/* Category Icon */}
+        <div className="w-12 h-12 flex-shrink-0">
+          <AvatarWithIcon
+            icon={getCategoryIcon(undefined, isUnmapped ? 'unmapped' : transaction.category)}
+            name={transaction.category}
+            colorClass={getCategoryColorClasses(transaction.category, isUnmapped).bg}
+            iconColorClass={getCategoryColorClasses(transaction.category, isUnmapped).icon}
+            size={48}
+          />
+        </div>
       </div>
 
       {/* Transaction Details */}
@@ -91,20 +109,14 @@ export function TransactionItem({ transaction, isUnmapped = false, onClick }: Tr
               transition={{ delay: 0.2 }}
             >
               <div className="flex items-center gap-2">
-                <p className="text-sm text-muted-foreground">
+                <p className="text-base text-thin text-muted-foreground">
                   {formatDate(transaction.date)}
                 </p>
               </div>
               <div className="flex items-center gap-1">
                 <Badge 
-                  variant="secondary" 
-                  className="text-xs capitalize"
-                >
-                  {transaction.category}
-                </Badge>
-                <Badge 
                   variant={transaction.categorySource === 'manual' ? 'default' : 'outline'}
-                  className="h-4 px-1.5 text-[10px] flex items-center gap-0.5"
+                  className="h-4 px-1.5 text-base flex items-center gap-0.5"
                   title={transaction.categorySource === 'manual' ? 'Manually categorized' : 'Automatically categorized'}
                 >
                   {transaction.categorySource === 'manual' ? (
@@ -126,13 +138,13 @@ export function TransactionItem({ transaction, isUnmapped = false, onClick }: Tr
                     transaction.expenseStatus === 'info_required' ? 'warning' :
                     'secondary'
                   }
-                  className="text-xs"
+                  className="text-base"
                 >
                   {transaction.expenseStatus.replace('_', ' ')}
                 </Badge>
               )}
               {transaction.cardLast4 && (
-                <span className="text-xs text-muted-foreground">
+                <span className="text-base text-thin text-muted-foreground">
                   •••• {transaction.cardLast4}
                 </span>
               )}
@@ -149,7 +161,7 @@ export function TransactionItem({ transaction, isUnmapped = false, onClick }: Tr
             {transaction.status !== 'completed' && (
               <Badge 
                 variant={transaction.status === 'pending' ? 'outline' : 'destructive'}
-                className="text-xs mt-1"
+                className="text-base mt-1"
               >
                 {transaction.status}
               </Badge>

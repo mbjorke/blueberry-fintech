@@ -8,326 +8,37 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 import { 
-  Coffee, 
-  Car, 
-  ShoppingBag, 
-  Home, 
-  Smartphone, 
   ArrowUpRight, 
   ArrowDownLeft, 
-  CreditCard, 
   Filter, 
-  Download 
+  Download,
+  Coffee,
+  Car,
+  ShoppingBag,
+  Home,
+  Smartphone,
+  CreditCard
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-// Category icons mapping
-const categoryIcons = {
+// Import mock data
+import {
+  mockAccounts,
+  mockTransactions,
+  CATEGORY_BUDGETS,
+  CATEGORY_LABELS,
+} from "@/mock/mockData";
+
+// Category icons mapping with React components
+const categoryIconComponents = {
   food: Coffee,
   transport: Car,
   shopping: ShoppingBag,
   housing: Home,
   technology: Smartphone,
   other: CreditCard,
+  unmapped: CreditCard
 } as const;
-
-// Mock accounts data
-const mockAccounts: Account[] = [
-  {
-    id: 'acc_1',
-    name: 'Personal Current',
-    displayName: 'Current Account',
-    balance: 12500.75,
-    availableBalance: 11500.75,
-    currency: '€',
-    type: 'checking',
-    isVisible: true,
-    lastFour: '2847',
-    icon: 'wallet',
-    color: 'blue',
-    isDefault: true,
-    status: 'active',
-    createdAt: new Date('2023-01-15'),
-    updatedAt: new Date('2024-07-30')
-  },
-  {
-    id: 'acc_2',
-    name: 'Savings',
-    displayName: 'Rainy Day Fund',
-    balance: 32500.00,
-    availableBalance: 32500.00,
-    currency: '€',
-    type: 'savings',
-    isVisible: true,
-    lastFour: '5392',
-    icon: 'piggy-bank',
-    color: 'green',
-    status: 'active',
-    createdAt: new Date('2023-01-15'),
-    updatedAt: new Date('2024-07-15')
-  },
-  {
-    id: 'acc_3',
-    name: 'Business Account',
-    displayName: 'Freelance Work',
-    balance: 8750.40,
-    availableBalance: 8750.40,
-    currency: '€',
-    type: 'business',
-    isVisible: true,
-    lastFour: '7163',
-    icon: 'briefcase',
-    color: 'purple',
-    status: 'active',
-    createdAt: new Date('2024-03-10'),
-    updatedAt: new Date('2024-08-01')
-  }
-];
-
-// Mock transactions data with account associations
-const mockTransactions: Transaction[] = [
-  {
-    id: '1',
-    accountId: 'acc_1',  // Current Account
-    type: 'outgoing',
-    amount: 5.20,
-    currency: '€',
-    description: 'Morning cappuccino and croissant',
-    category: 'food',
-    date: new Date(Date.now() - 1000 * 60 * 45), // 45 minutes ago
-    status: 'completed',
-    categorySource: 'automatic', // Add categorySource to all mock transactions
-    merchantName: 'Café de Flore',
-    merchantDetails: 'Café de Flore* Paris FR',
-    expenseStatus: 'none',
-    cardholder: 'Emma Sofia Martinez',
-    receiptStatus: 'none',
-    transactionId: 'TXN-CF-240731-001',
-    cardLast4: '2847',
-    location: 'Paris, France',
-  },
-  {
-    id: '2',
-    accountId: 'acc_1',  // Current Account
-    type: 'incoming',
-    amount: 2850.00,
-    currency: '€',
-    description: 'Monthly salary payment',
-    category: 'other',
-    date: new Date(Date.now() - 1000 * 60 * 60 * 18), // 18 hours ago
-    status: 'completed',
-    categorySource: 'automatic', // Add categorySource to all mock transactions
-    merchantName: 'TechNova Solutions',
-    merchantDetails: 'TechNova Solutions SEPA',
-    expenseStatus: 'none',
-    cardholder: 'Emma Sofia Martinez',
-    receiptStatus: 'none',
-    transactionId: 'TXN-SAL-240730-001',
-  },
-  {
-    id: '3',
-    accountId: 'acc_1',  // Current Account
-    type: 'outgoing',
-    amount: 67.45,
-    currency: '€',
-    description: 'Weekly grocery shopping',
-    category: 'shopping',
-    date: new Date(Date.now() - 1000 * 60 * 60 * 26), // 26 hours ago
-    status: 'completed',
-    categorySource: 'automatic',
-    merchantName: 'Carrefour Market',
-    merchantDetails: 'Carrefour Market* 3847',
-    expenseStatus: 'info_required',
-    spendProgram: 'Business Expenses',
-    cardholder: 'Emma Sofia Martinez',
-    receiptStatus: 'required',
-    transactionId: 'TXN-CAR-240730-002',
-    cardLast4: '2847',
-    location: 'Lyon, France',
-  },
-  {
-    id: '4',
-    accountId: 'acc_1',  // Current Account
-    type: 'outgoing',
-    amount: 89.99,
-    currency: '€',
-    description: 'New wireless headphones',
-    category: 'technology',
-    date: new Date(Date.now() - 1000 * 60 * 60 * 32), // 32 hours ago
-    status: 'completed',
-    categorySource: 'automatic',
-    merchantName: 'Amazon',
-    merchantDetails: 'Amazon.fr* Digital Services',
-    expenseStatus: 'submitted',
-    spendProgram: 'Office Equipment',
-    cardholder: 'Emma Sofia Martinez',
-    receiptStatus: 'uploaded',
-    accountingCategory: 'Technology & Equipment',
-    taxRate: '20%',
-    transactionId: 'TXN-AMZ-240729-001',
-    cardLast4: '2847',
-    location: 'Online Purchase',
-  },
-  {
-    id: '5',
-    accountId: 'acc_2',  // Savings Account
-    type: 'incoming',
-    amount: 45.00,
-    currency: '€',
-    description: 'Freelance project payment',
-    category: 'other',
-    date: new Date(Date.now() - 1000 * 60 * 60 * 72), // 3 days ago
-    status: 'completed',
-    categorySource: 'automatic',
-    merchantName: 'StartupXYZ',
-    merchantDetails: 'StartupXYZ SAS Bank Transfer',
-    expenseStatus: 'none',
-    cardholder: 'Emma Sofia Martinez',
-    receiptStatus: 'none',
-    transactionId: 'TXN-SUP-240728-001',
-  },
-  {
-    id: '6',
-    accountId: 'acc_1',  // Current Account
-    type: 'outgoing',
-    amount: 28.50,
-    currency: '€',
-    description: 'Lunch with colleagues',
-    category: 'food',
-    date: new Date(Date.now() - 1000 * 60 * 60 * 50), // 2 days ago
-    status: 'completed',
-    categorySource: 'automatic',
-    merchantName: 'Le Comptoir',
-    merchantDetails: 'Le Comptoir du 7ème* Paris',
-    expenseStatus: 'submitted',
-    spendProgram: 'Meals & Entertainment',
-    cardholder: 'Emma Sofia Martinez',
-    receiptStatus: 'uploaded',
-    accountingCategory: 'Business Meals',
-    taxRate: '10%',
-    transactionId: 'TXN-LCP-240729-002',
-    cardLast4: '2847',
-    location: 'Paris, France',
-  },
-  {
-    id: '7',
-    accountId: 'acc_3',  // Business Account
-    type: 'outgoing',
-    amount: 15.80,
-    currency: '€',
-    description: 'Metro weekly pass',
-    category: 'transport',
-    date: new Date(Date.now() - 1000 * 60 * 60 * 72), // 3 days ago
-    status: 'completed',
-    categorySource: 'automatic',
-    merchantName: 'StartupXYZ',
-    merchantDetails: 'StartupXYZ SAS Bank Transfer',
-    expenseStatus: 'none',
-    cardholder: 'Emma Sofia Martinez',
-    receiptStatus: 'none',
-    transactionId: 'TXN-SUP-240728-001',
-  },
-  {
-    id: '8',
-    accountId: 'acc_1',  // Current Account
-    type: 'outgoing',
-    amount: 125.00,
-    currency: '€',
-    description: 'Monthly gym membership',
-    category: 'other',
-    date: new Date(Date.now() - 1000 * 60 * 60 * 96), // 4 days ago
-    status: 'completed',
-    categorySource: 'automatic',
-    merchantName: 'FitLife Gym',
-    merchantDetails: 'FitLife Gym* Monthly DD',
-    expenseStatus: 'none',
-    cardholder: 'Emma Sofia Martinez',
-    receiptStatus: 'none',
-    transactionId: 'TXN-FIT-240727-001',
-    cardLast4: '2847',
-    location: 'Lyon, France',
-  },
-  {
-    id: '9',
-    accountId: 'acc_3',  // Business Account
-    type: 'outgoing',
-    amount: 24.99,
-    currency: '€',
-    description: 'Monthly gym membership',
-    category: 'other',
-    date: new Date(Date.now() - 1000 * 60 * 60 * 96), // 4 days ago
-    status: 'completed',
-    categorySource: 'automatic',
-    merchantName: 'FitLife Gym',
-    merchantDetails: 'FitLife Gym* Monthly DD',
-    expenseStatus: 'none',
-    cardholder: 'Emma Sofia Martinez',
-    receiptStatus: 'none',
-    transactionId: 'TXN-GYM-240728-001',
-    cardLast4: '2847',
-  },
-  {
-    id: '10',
-    accountId: 'acc_1',  // Current Account
-    type: 'outgoing',
-    amount: 149.99,
-    currency: '€',
-    description: 'POS 7392 12:45 27/07',
-    category: 'unmapped',
-    date: new Date(Date.now() - 1000 * 60 * 60 * 24), // 1 day ago
-    status: 'completed',
-    categorySource: 'automatic',
-    merchantName: '',
-    merchantDetails: 'POS 7392 12:45 27/07',
-    expenseStatus: 'info_required',
-    cardholder: 'Emma Sofia Martinez',
-    receiptStatus: 'required',
-    transactionId: 'TXN-UNM-240731-001',
-    cardLast4: '2847',
-  },
-];
-
-// Dynamically compute categories and spent from transactions
-const CATEGORY_BUDGETS: Record<string, number> = {
-  food: 500,
-  shopping: 400,
-  transport: 200,
-  technology: 200,
-  housing: 300,
-  other: 200,
-};
-const CATEGORY_COLORS: Record<string, string> = {
-  food: '#ff6b6b',
-  shopping: '#4ecdc4',
-  transport: '#45b7d1',
-  technology: '#a29bfe',
-  housing: '#00b894',
-  other: '#636e72',
-};
-const CATEGORY_LABELS: Record<string, string> = {
-  food: 'Food & Dining',
-  shopping: 'Shopping & Technology',
-  transport: 'Transport',
-  technology: 'Technology',
-  housing: 'Housing',
-  other: 'Other',
-};
-
-const outgoingTransactions = mockTransactions.filter(t => t.type === 'outgoing');
-const spent = outgoingTransactions.reduce((sum, t) => sum + t.amount, 0);
-
-const categories = Object.keys(CATEGORY_BUDGETS).map(cat => {
-  const catAmount = mockTransactions
-    .filter(tx => tx.category === cat && tx.type === 'outgoing')
-    .reduce((sum, tx) => sum + tx.amount, 0);
-
-  return {
-    name: cat,
-    amount: catAmount,
-    budget: CATEGORY_BUDGETS[cat],
-    color: CATEGORY_COLORS[cat],
-  };
-});
 
 const Dashboard: React.FC = () => {
   const [selectedAccount, setSelectedAccount] = useState<Account>(() => {
@@ -363,7 +74,6 @@ const Dashboard: React.FC = () => {
         name: cat,
         amount: catAmount,
         budget: CATEGORY_BUDGETS[cat],
-        color: CATEGORY_COLORS[cat],
         label: CATEGORY_LABELS[cat] || cat
       };
     });
@@ -389,7 +99,7 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 space-y-6">
+    <main className="container mx-auto p-8 space-y-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-2">
         <h1 className="text-2xl font-bold">Accounts</h1>
@@ -493,7 +203,7 @@ const Dashboard: React.FC = () => {
           transaction={selectedTransaction}
         />
       )}
-    </div>
+    </main>
   );
 };
 

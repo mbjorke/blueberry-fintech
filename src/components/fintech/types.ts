@@ -35,6 +35,7 @@ export interface Transaction {
   exchangeRate?: number;
   originalAmount?: number;
   originalCurrency?: string;
+  isRecurring?: boolean;
 }
 
 export type TransactionCategory = 

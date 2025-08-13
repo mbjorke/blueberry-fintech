@@ -20,7 +20,8 @@ const config: StorybookConfig = {
     // Core addons are now included by default in Storybook 9+
     // Only need to specify non-core addons
     '@storybook/addon-a11y',
-    '@storybook/addon-links'
+    '@storybook/addon-links',
+    '@storybook/addon-styling-webpack'
   ],
   framework: {
     name: '@storybook/react-vite',

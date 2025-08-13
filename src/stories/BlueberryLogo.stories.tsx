@@ -1,15 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { BlueberryLogo } from '@/components/ui/blueberry-logo';
 
-// Size mapping for story controls
+// Size options for story controls
 const sizeOptions = {
-  sm: 24,
-  md: 32,
-  lg: 48,
-  xl: 64,
+  sm: 'sm',
+  md: 'md',
+  lg: 'lg',
+  xl: 'xl',
 } as const;
-
-type SizeOption = keyof typeof sizeOptions;
 
 const meta = {
   title: 'Components/UI/BlueberryLogo',
@@ -17,7 +15,7 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
+  tags: ['autodocs', 'autodocs'],
   argTypes: {
     className: {
       control: 'text',
@@ -25,65 +23,59 @@ const meta = {
     },
     size: {
       control: { type: 'select' },
-      options: Object.keys(sizeOptions),
-      mapping: sizeOptions,
-      description: 'Size of the logo in pixels',
+      options: Object.values(sizeOptions),
+      description: 'Size variant of the logo',
     },
+  },
+  args: {
+    size: 'md',
   },
 } satisfies Meta<typeof BlueberryLogo>;
 
-export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {
-    size: sizeOptions.md,
-  },
-};
+export default meta;
+
+export const Default: Story = {};
 
 export const Small: Story = {
   args: {
-    size: sizeOptions.sm,
+    size: 'sm',
   },
 };
 
 export const Large: Story = {
   args: {
-    size: sizeOptions.lg,
+    size: 'lg',
   },
 };
 
 export const ExtraLarge: Story = {
   args: {
-    size: sizeOptions.xl,
+    size: 'xl',
   },
 };
 
 export const WithCustomClass: Story = {
   args: {
-    className: 'text-blue-500',
+    className: 'ring-2 ring-offset-2 ring-primary rounded-full',
   },
 };
 
 // Showcase different logo variants in a grid
 export const AllSizes = () => (
-  <div className="grid grid-cols-2 gap-8 items-center justify-items-center">
-    <div className="flex flex-col items-center gap-2">
-      <BlueberryLogo size={sizeOptions.sm} />
-      <div className="text-sm text-muted-foreground">Small ({sizeOptions.sm}px)</div>
-    </div>
-    <div className="flex flex-col items-center gap-2">
-      <BlueberryLogo size={sizeOptions.md} />
-      <div className="text-sm text-muted-foreground">Medium ({sizeOptions.md}px)</div>
-    </div>
-    <div className="flex flex-col items-center gap-2">
-      <BlueberryLogo size={sizeOptions.lg} />
-      <div className="text-sm text-muted-foreground">Large ({sizeOptions.lg}px)</div>
-    </div>
-    <div className="flex flex-col items-center gap-2">
-      <BlueberryLogo size={sizeOptions.xl} />
-      <div className="text-sm text-muted-foreground">Extra Large ({sizeOptions.xl}px)</div>
-    </div>
+  <div className="grid grid-cols-4 gap-8 items-center justify-items-center p-6">
+    {Object.entries({
+      'Small (24px)': 'sm',
+      'Medium (32px)': 'md',
+      'Large (48px)': 'lg',
+      'Extra Large (64px)': 'xl',
+    }).map(([label, size]) => (
+      <div key={size} className="flex flex-col items-center gap-3">
+        <BlueberryLogo size={size as 'sm' | 'md' | 'lg' | 'xl'} />
+        <span className="text-sm text-muted-foreground">{label}</span>
+      </div>
+    ))}
   </div>
 );
 

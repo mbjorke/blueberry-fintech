@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { AvatarWithIcon } from '@/components/ui/avatar-with-icon';
-import { User, ShoppingBag, CreditCard, Coffee, Utensils } from 'lucide-react';
+import { getCategoryIcon } from '@/utils/categoryIcons';
+import { getCategoryColorClasses } from '@/components/fintech/constants';
+import { ShoppingBag, CreditCard, Coffee, Utensils, Home, Car, HeartPulse, GraduationCap, Gift } from 'lucide-react';
 
 const meta: Meta<typeof AvatarWithIcon> = {
   title: 'Components/UI/AvatarWithIcon',
@@ -28,7 +30,7 @@ type Story = StoryObj<typeof AvatarWithIcon>;
 const IconTemplate: Story = {
   render: (args) => <AvatarWithIcon {...args} />,
   args: {
-    icon: User,
+    icon: ShoppingBag,
     colorClass: 'bg-primary text-primary-foreground',
   },
 };
@@ -64,48 +66,168 @@ const SizesTemplate: Story = {
   ),
 };
 
-// Story with different categories
+// Story with different transaction categories
 const CategoriesTemplate: Story = {
-  render: () => (
-    <div className="grid grid-cols-4 gap-4">
-      <div className="flex flex-col items-center gap-2">
+  render: () => {
+    const categories = [
+      { name: 'Shopping', icon: ShoppingBag, color: 'bg-blue-500' },
+      { name: 'Bills', icon: CreditCard, color: 'bg-green-500' },
+      { name: 'Food & Drink', icon: Utensils, color: 'bg-amber-500' },
+      { name: 'Coffee', icon: Coffee, color: 'bg-amber-400' },
+      { name: 'Housing', icon: Home, color: 'bg-purple-500' },
+      { name: 'Transport', icon: Car, color: 'bg-sky-500' },
+      { name: 'Healthcare', icon: HeartPulse, color: 'bg-rose-500' },
+      { name: 'Education', icon: GraduationCap, color: 'bg-indigo-500' },
+      { name: 'Gifts', icon: Gift, color: 'bg-pink-500' },
+    ];
+
+    return (
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        {categories.map(({ name, icon: Icon, color }) => {
+          const colors = getCategoryColorClasses(name.toLowerCase(), false);
+          return (
+            <div key={name} className="flex flex-col items-center gap-2">
+              <AvatarWithIcon 
+                icon={Icon}
+                colorClass={colors.bg}
+                size={48}
+                name={name}
+              />
+              <div className="text-center">
+                <p className="text-sm font-medium">{name}</p>
+                <p className="text-xs text-muted-foreground">{colors.bg}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+// Story showing merchant avatars with fallback to category icons
+const MerchantAvatarsTemplate: Story = {
+  render: () => {
+    const merchants = [
+      { 
+        name: 'Starbucks', 
+        category: 'food',
+        image: 'https://logo.clearbit.com/starbucks.com',
+      },
+      { 
+        name: 'Amazon', 
+        category: 'shopping',
+        image: 'https://logo.clearbit.com/amazon.com',
+      },
+      { 
+        name: 'Uber', 
+        category: 'transport',
+        image: 'https://logo.clearbit.com/uber.com',
+      },
+      { 
+        name: 'Local Restaurant', 
+        category: 'food',
+        image: '',
+      },
+      { 
+        name: 'Unknown Merchant', 
+        category: 'other',
+        isUnmapped: true,
+        image: '',
+      },
+    ];
+
+    return (
+      <div className="space-y-6">
+        {merchants.map(({ name, category, image, isUnmapped }) => {
+          const colors = getCategoryColorClasses(category, isUnmapped);
+          const Icon = getCategoryIcon(name, category);
+          
+          return (
+            <div key={name} className="flex items-center gap-4 p-4 border rounded-lg">
+              <AvatarWithIcon
+                imageUrl={image}
+                name={name}
+                icon={Icon}
+                colorClass={colors.bg}
+                size={48}
+              />
+              <div>
+                <p className="font-medium">{name}</p>
+                <p className="text-sm text-muted-foreground">
+                  {isUnmapped ? 'Unmapped' : category} • {colors.bg}
+                </p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+// Story with label
+const WithLabelTemplate: Story = {
+  render: (args) => (
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center gap-4">
         <AvatarWithIcon 
           icon={ShoppingBag} 
-          colorClass="bg-blue-500 text-white"
-          size={48}
+          label="Shopping" 
+          showLabel 
+          colorClass="bg-blue-100"
+          iconColorClass="text-blue-600"
         />
-        <span className="text-sm">Shopping</span>
-      </div>
-      <div className="flex flex-col items-center gap-2">
-        <AvatarWithIcon 
-          icon={CreditCard} 
-          colorClass="bg-green-500 text-white"
-          size={48}
-        />
-        <span className="text-sm">Bills</span>
-      </div>
-      <div className="flex flex-col items-center gap-2">
         <AvatarWithIcon 
           icon={Coffee} 
-          colorClass="bg-amber-500 text-white"
-          size={48}
+          label="Food & Drinks" 
+          showLabel 
+          colorClass="bg-amber-100"
+          iconColorClass="text-amber-600"
         />
-        <span className="text-sm">Coffee</span>
-      </div>
-      <div className="flex flex-col items-center gap-2">
         <AvatarWithIcon 
-          icon={Utensils} 
-          colorClass="bg-red-500 text-white"
-          size={48}
+          icon={Car} 
+          label="Transport" 
+          showLabel 
+          colorClass="bg-emerald-100"
+          iconColorClass="text-emerald-600"
         />
-        <span className="text-sm">Dining</span>
+      </div>
+      <div className="flex items-center gap-4">
+        <AvatarWithIcon 
+          icon={Home} 
+          label="Housing" 
+          showLabel 
+          size={32}
+          colorClass="bg-purple-100"
+          iconColorClass="text-purple-600"
+          labelClassName="text-sm"
+        />
+        <AvatarWithIcon 
+          icon={HeartPulse} 
+          label="Health" 
+          showLabel 
+          size={32}
+          colorClass="bg-rose-100"
+          iconColorClass="text-rose-600"
+          labelClassName="text-sm"
+        />
       </div>
     </div>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'AvatarWithIcon with labels showing different categories. The label appears next to the icon and can be styled using the `labelClassName` prop.'
+      }
+    }
+  }
 };
 
 export const WithIcon = IconTemplate;
 export const WithImage = ImageTemplate;
 export const WithInitials = InitialsTemplate;
-export const Sizes = SizesTemplate;
-export const CategoryExamples = CategoriesTemplate;
+export const WithCategoryIcons = CategoriesTemplate;
+export const WithMerchantAvatars = MerchantAvatarsTemplate;
+export const WithLabel = WithLabelTemplate;
+export const MerchantExamples = MerchantAvatarsTemplate;

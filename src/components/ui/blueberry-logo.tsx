@@ -1,43 +1,35 @@
 import React from 'react';
+import { Avatar, AvatarImage } from './avatar';
 
-interface BlueberryLogoProps extends React.SVGProps<SVGSVGElement> {
-  size?: number;
+interface BlueberryLogoProps extends React.HTMLAttributes<HTMLDivElement> {
+  size?: 'sm' | 'md' | 'lg' | 'xl' | number;
   className?: string;
 }
 
-export function BlueberryLogo({ size = 32, className, ...props }: BlueberryLogoProps) {
+const sizeMap = {
+  sm: 24,
+  md: 32,
+  lg: 48,
+  xl: 64,
+} as const;
+
+export function BlueberryLogo({ 
+  size = 'md', 
+  className = '',
+  ...props 
+}: BlueberryLogoProps) {
+  const sizeValue = typeof size === 'string' ? sizeMap[size] : size;
+  
   return (
-    <svg 
-      width={size} 
-      height={size} 
-      viewBox="0 0 64 64" 
-      fill="none" 
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      {...props}
-    >
-      {/* Berry */}
-      <circle cx="32" cy="32" r="28" fill="url(#berryGradient)" filter="url(#berryShadow)" />
-      
-      {/* Highlights */}
-      <circle cx="24" cy="24" r="2" fill="white" fillOpacity="0.8" />
-      <circle cx="32" cy="20" r="2" fill="white" fillOpacity="0.8" />
-      <circle cx="40" cy="24" r="2" fill="white" fillOpacity="0.8" />
-      <circle cx="36" cy="32" r="2" fill="white" fillOpacity="0.8" />
-      <circle cx="28" cy="36" r="2" fill="white" fillOpacity="0.8" />
-      
-      {/* Gradient and Effects */}
-      <defs>
-        <linearGradient id="berryGradient" x1="32" y1="4" x2="32" y2="60" gradientUnits="userSpaceOnUse">
-          <stop stopColor="hsl(260, 85%, 72%)" />
-          <stop offset="1" stopColor="hsl(260, 85%, 60%)" />
-        </linearGradient>
-        
-        <filter id="berryShadow" x="0" y="0" width="64" height="64" filterUnits="userSpaceOnUse">
-          <feDropShadow dx="0" dy="4" stdDeviation="4" floodOpacity="0.2" />
-        </filter>
-      </defs>
-    </svg>
+    <div className={`inline-block ${className}`} {...props}>
+      <Avatar className="bg-transparent" style={{ width: sizeValue, height: sizeValue }}>
+        <AvatarImage 
+          src="/blueberry.svg" 
+          alt="Blueberry Logo"
+          className="w-full h-full object-contain"
+        />
+      </Avatar>
+    </div>
   );
 }
 

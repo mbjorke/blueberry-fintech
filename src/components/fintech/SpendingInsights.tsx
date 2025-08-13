@@ -2,6 +2,10 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, TrendingDown, ArrowRight } from "lucide-react";
+import { AvatarWithIcon } from "@/components/ui/avatar-with-icon";
+import { getCategoryColorClasses } from "@/components/fintech/constants";
+import { getCategoryIcon } from "@/utils/categoryIcons";
+import { cn } from "@/lib/utils";
 
 /**
  * SpendingInsights Component
@@ -75,6 +79,9 @@ export const SpendingInsights = ({
   };
 
   const budgetStatus = getBudgetStatus();
+  
+  // Sort categories by amount (descending)
+  const sortedCategories = [...categories].sort((a, b) => b.amount - a.amount);
 
   return (
     <Card className="bg-card/80 backdrop-blur-lg text-foreground p-6 shadow-card">
@@ -83,12 +90,12 @@ export const SpendingInsights = ({
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-lg font-semibold text-foreground">Spending Insights</h3>
-            <p className="text-sm text-muted-foreground">This month's overview</p>
+            <p className="text-base text-muted-foreground">This month's overview</p>
           </div>
           <div className="flex items-center gap-2">
             <div className={`flex items-center gap-1 ${trend.direction === 'up' ? 'text-error' : 'text-success'}`}>
               {trend.direction === 'up' ? <TrendingUp size={16} /> : <TrendingDown size={16} />}
-              <span className="text-sm font-medium">{trend.percentage}%</span>
+              <span className="text-base font-medium">{trend.percentage}%</span>
             </div>
           </div>
         </div>
@@ -100,17 +107,17 @@ export const SpendingInsights = ({
               <p className="text-2xl font-bold text-foreground">
                 {currency}{formatAmount(spent)}
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-base text-muted-foreground">
                 of {currency}{formatAmount(monthlyBudget)} budget
               </p>
             </div>
             <div className="text-right">
-              <p className={`text-sm font-medium ${budgetStatus === 'good' ? 'text-success' : budgetStatus === 'warning' ? 'text-warning' : 'text-error'}`}>
+              <p className={`text-base font-medium ${budgetStatus === 'good' ? 'text-success' : budgetStatus === 'warning' ? 'text-warning' : 'text-error'}`}>
                 {currency}{formatAmount(Math.abs(remainingBudget))} {remainingBudget >= 0 ? 'left' : 'over'}
               </p>
               <Badge 
                 variant={budgetStatus === 'good' ? 'default' : budgetStatus === 'warning' ? 'outline' : 'destructive'}
-                className="text-xs"
+                className="text-base"
               >
                 {Math.round(budgetProgress)}% used
               </Badge>
@@ -127,21 +134,26 @@ export const SpendingInsights = ({
         <div className="space-y-4">
           <h4 className="font-medium text-foreground">Top Categories</h4>
           <div className="space-y-3">
-            {categories.slice(0, 4).map((category, index) => {
+            {sortedCategories.slice(0, 4).map((category, index) => {
               const categoryProgress = (category.amount / category.budget) * 100;
               
               return (
                 <div key={index} className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <div 
-                        className="w-3 h-3 rounded-full bg-background"
-                        style={{ backgroundColor: category.color }}
+                    <div className="flex items-center">
+                      <AvatarWithIcon 
+                        icon={getCategoryIcon(undefined, category.name)}
+                        size={20}
+                        colorClass={getCategoryColorClasses(category.name).bg}
+                        iconColorClass={getCategoryColorClasses(category.name).icon}
+                        label={category.name}
+                        showLabel
+                        labelClassName="text-xs font-medium capitalize"
+                        className="h-6"
                       />
-                      <span className="text-sm font-medium text-foreground">{category.name}</span>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-medium text-foreground">
+                      <p className="text-base font-medium text-foreground">
                         {currency}{formatAmount(category.amount)}
                       </p>
                       <p className="text-xs text-muted-foreground">
@@ -163,7 +175,7 @@ export const SpendingInsights = ({
         {onViewDetails && (
           <button
             onClick={onViewDetails}
-            className="w-full flex items-center justify-center gap-2 text-sm text-primary hover:bg-card/20 hover:text-primary/80 transition-colors py-2"
+            className="w-full flex items-center justify-center gap-2 text-base text-primary hover:bg-card/20 hover:text-primary/80 transition-colors py-2"
           >
             View detailed analytics
             <ArrowRight size={16} />

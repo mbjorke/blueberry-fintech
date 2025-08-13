@@ -17,7 +17,7 @@ export { SpendingInsights } from './SpendingInsights';
 export { DashboardHeader } from './DashboardHeader';
 
 // Type exports
-export type { Transaction } from './TransactionItem';
+export type { Transaction } from './types';
 
 /**
  * Component Categories:
