@@ -1,24 +1,18 @@
-/* Import Montserrat font - must be at the top */
-@import '@fontsource/montserrat';
-@import '@fontsource/montserrat/400.css';
-@import '@fontsource/montserrat/500.css';
-@import '@fontsource/montserrat/600.css';
-@import '@fontsource/montserrat/700.css';
-
 /* Tailwind directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Import Montserrat variable font */
+@import '@fontsource-variable/montserrat';
 
+/* Base styles and design system */
 @layer base {
-  html {
-    font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
-  }
   :root {
+    /* Font settings */
+    --font-sans: 'Montserrat Variable', 'Montserrat', system-ui, -apple-system, sans-serif;
+    
+    /* Color definitions */
     --background: 240 15% 8%;
     --foreground: 240 5% 98%;
     --card: 240 12% 11%;
@@ -47,11 +41,16 @@ All colors MUST be HSL.
     --gradient-bg: linear-gradient(135deg, hsl(240 15% 8%), hsl(240 12% 11%));
     --gradient-berry: linear-gradient(135deg, hsl(260 85% 68%), hsl(230 80% 65%));
   }
-}
 
-@layer base {
+  /* Base element styles */
   * {
     @apply border-border;
+  }
+
+  html {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {

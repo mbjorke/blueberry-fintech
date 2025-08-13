@@ -21,14 +21,13 @@ import {
 
 // Main configuration
 export default {
-  darkMode: ["class"],
+  darkMode: "class",
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
   ],
-  prefix: "",
   theme: {
     container: {
       center: true,
@@ -44,10 +43,7 @@ export default {
       maxWidth: maxWidth as unknown as Record<string, string>,
       
       // Typography
-      fontFamily: {
-        sans: ['Montserrat', ...fontFamily.sans.slice(1)],
-        mono: [...fontFamily.mono]
-      },
+      fontFamily: fontFamily,
       fontSize,
       fontWeight,
       lineHeight,
