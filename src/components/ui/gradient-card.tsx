@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./card";
+import { Button } from "react-day-picker";
 
 export interface GradientCardProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -62,17 +63,26 @@ const GradientCard = React.forwardRef<HTMLDivElement, GradientCardProps>(
       : `${from} ${to}`;
 
     return (
-      <Card
+      <div
         ref={ref}
         className={cn(
-          'overflow-hidden transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.01] active:scale-100',
+          'focus:ring-1 focus:ring-accent hover:ring-1 hover:ring-accent rounded-2xl outline-none cursor-pointer overflow-hidden transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.01] active:scale-100',
           `bg-gradient-${gradientDirection} ${gradientClass}`,
           className
         )}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          // Trigger click on Enter or Space
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            (e.currentTarget as HTMLElement).click();
+          }
+        }}
         {...props}
       >
         {children}
-      </Card>
+      </div>
     );
   }
 );
