@@ -3,6 +3,8 @@ import { Button } from '@/components/ui/button';
 import Dashboard from './Dashboard';
 import { SidebarNav } from '@/components/ui/SidebarNav';
 import BlueberryLogo from '@/components/ui/blueberry-logo';
+import { AlertsDropdown } from '@/components/fintech/AlertsDropdown';
+import { UserAvatar } from '@/components/fintech/UserAvatar';
 
 const Index = () => {
   return (
@@ -16,11 +18,14 @@ const Index = () => {
             <BlueberryLogo />
             <span className="text-primary font-extrabold">blueberry</span> <span className="text-primary font-light">bank</span>
           </h1>
-          <Link to="/components">
-            <Button variant="outline" size="sm" className="bg-popover/30 text-foreground border-0 hover:bg-popover/40">
-              Design System
-            </Button>
-          </Link>
+          <div className="flex items-center gap-3">
+            <AlertsDropdown />
+            <UserAvatar 
+              name="Marcus Björke" 
+              email="mbjorke@gmail.com"
+              imageUrl="/marcus-bjorke.jpeg"
+            />
+          </div>
         </div>
       </header>
       

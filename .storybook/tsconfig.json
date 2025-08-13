@@ -1,0 +1,21 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../node_modules/.cache/storybook",
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "*.ts",
+    "*.tsx",
+    "../src/**/*.stories.tsx",
+    "../src/**/*.stories.ts",
+    "../src/**/*.stories.mdx"
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/dist"
+  ]
+}

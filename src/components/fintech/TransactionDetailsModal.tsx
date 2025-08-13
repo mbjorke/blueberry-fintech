@@ -1,6 +1,4 @@
 import { 
-  ArrowUpRight, 
-  ArrowDownLeft, 
   Calendar, 
   Clock, 
   X, 
@@ -17,13 +15,6 @@ import {
   CreditCard as CardIcon
 } from "lucide-react";
 import { Transaction } from "./types";
-import { motion } from "framer-motion";
-import { format } from "date-fns";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { formatCurrency } from "@/lib/format-currency";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -31,8 +22,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { getCategoryColorClasses } from "./constants";
 import { getCategoryIcon } from "@/utils/categoryIcons";
 import { AvatarWithIcon } from "@/components/ui/avatar-with-icon";
-import { cn } from "@/lib/utils";
-import { Small } from "@/stories/BlueberryLogo.stories";
 
 interface TransactionDetailsModalProps {
   transaction: Transaction | null;
@@ -150,12 +139,7 @@ export const TransactionDetailsModal = ({
           <div className="space-y-6 pt-4">
             {/* Status Section */}
           {transaction.expenseStatus !== 'none' && (
-            <motion.div 
-              className="space-y-3"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-            >
+            <div className="space-y-3 transition-all duration-200">
               <div className="flex items-center justify-between">
                 <span className="text-base font-medium">Expense status</span>
                 <Badge 
@@ -177,34 +161,24 @@ export const TransactionDetailsModal = ({
                   <span className="text-base font-medium">{transaction.spendProgram}</span>
                 </div>
               )}
-            </motion.div>
+            </div>
           )}
 
           <Separator />
 
           {/* Cardholder Information */}
-          <motion.div 
-            className="space-y-3"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
+          <div className="space-y-3 transition-all duration-200">
             <div className="flex items-center gap-2">
               <User size={16} className="text-foreground/70" />
               <span className="text-base font-medium">Cardholder</span>
             </div>
             <p className="text-base text-foreground/70 pl-6">{transaction.cardholder}</p>
-          </motion.div>
+          </div>
 
           <Separator />
 
           {/* Transaction Details */}
-          <motion.div 
-            className="space-y-4"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
+          <div className="space-y-4 transition-all duration-200">
             <h3 className="text-base font-medium">Transaction details</h3>
             
             <div className="space-y-3 text-base">
@@ -270,18 +244,13 @@ export const TransactionDetailsModal = ({
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           <Separator />
 
           {/* Expense Details */}
           {transaction.expenseStatus !== 'none' && (
-            <motion.div 
-              className="space-y-4"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-            >
+            <div className="space-y-4 transition-all duration-200">
               <h3 className="text-base font-medium">Expense details</h3>
               
               {/* Receipt Section */}
@@ -324,7 +293,7 @@ export const TransactionDetailsModal = ({
                   </div>
                 )}
               </div>
-            </motion.div>
+            </div>
           )}
         </div>
       </DialogContent>

@@ -5,7 +5,6 @@ import { TrendingUp, TrendingDown, ArrowRight } from "lucide-react";
 import { AvatarWithIcon } from "@/components/ui/avatar-with-icon";
 import { getCategoryColorClasses } from "@/components/fintech/constants";
 import { getCategoryIcon } from "@/utils/categoryIcons";
-import { cn } from "@/lib/utils";
 
 /**
  * SpendingInsights Component

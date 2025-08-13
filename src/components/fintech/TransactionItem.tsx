@@ -1,11 +1,9 @@
 import { Badge } from "@/components/ui/badge";
-import { Sparkles, Pencil, ArrowUpRight, ArrowDownLeft, AlertCircle } from "lucide-react";
-import { motion } from "framer-motion";
+import { Sparkles, Pencil } from "lucide-react";
 import { Transaction } from "./types";
 import { getCategoryColorClasses } from "./constants";
 import { getCategoryIcon } from "@/utils/categoryIcons";
 import { AvatarWithIcon } from "@/components/ui/avatar-with-icon";
-import { colors } from "@/tokens";
 
 /**
  * TransactionItem Component
@@ -59,9 +57,9 @@ export function TransactionItem({ transaction, isUnmapped = false, onClick }: Tr
   };
 
   return (
-    <div 
-      className="flex items-start gap-4 p-4 rounded-lg transition-all duration-200 cursor-pointer
-        transform hover:scale-[1.01] active:scale-100 odd:bg-accent/10 even:bg-accent/20 hover:bg-accent/5"
+    <button 
+      className="flex w-full outline-none hover:ring-1 hover:ring-accent focus:ring-1 focus:ring-accent items-start gap-4 p-4 rounded-lg transition-all duration-200 cursor-pointer text-left
+        transform hover:scale-[1.01] active:scale-100 odd:bg-accent/10 even:bg-accent/20"
       onClick={handleClick}
     >
       {/* Avatar - Side by side icons */}
@@ -94,20 +92,10 @@ export function TransactionItem({ transaction, isUnmapped = false, onClick }: Tr
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between">
           <div className="min-w-0 flex-1">
-            <motion.p 
-              className="font-medium text-foreground truncate"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.1 }}
-            >
+            <p className="font-medium text-foreground truncate transition-opacity duration-200">
               {transaction.merchantDetails || transaction.merchantName || transaction.description}
-            </motion.p>
-            <motion.div 
-              className="flex items-center gap-2 mt-1"
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
+            </p>
+            <div className="flex items-center gap-2 mt-1 transition-all duration-200">
               <div className="flex items-center gap-2">
                 <p className="text-base text-thin text-foreground/70">
                   {formatDate(transaction.date)}
@@ -148,14 +136,14 @@ export function TransactionItem({ transaction, isUnmapped = false, onClick }: Tr
                   •••• {transaction.cardLast4}
                 </span>
               )}
-            </motion.div>
+            </div>
           </div>
           
           {/* Amount */}
           <div className="text-right">
             <p className={`font-semibold ${
               isIncoming ? 'text-success' : 'text-foreground'
-            }`}>
+            } transition-colors duration-200`}>
               {formatAmount(transaction.amount, transaction.currency)}
             </p>
             {transaction.status !== 'completed' && (
@@ -169,6 +157,6 @@ export function TransactionItem({ transaction, isUnmapped = false, onClick }: Tr
           </div>
         </div>
       </div>
-    </div>
+    </button>
   );
 };
