@@ -79,11 +79,11 @@ export function AccountCard({
 
   // Map icon names to their respective components with responsive sizes
   const iconMap = (size: string) => ({
-    'wallet': <Wallet className={`${size} text-white/90`} />,
-    'piggy-bank': <PiggyBank className={`${size} text-white/90`} />,
-    'briefcase': <Briefcase className={`${size} text-white/90`} />,
-    'credit-card': <CreditCard className={`${size} text-white/90`} />,
-    'users': <Users className={`${size} text-white/90`} />
+    'wallet': <Wallet className={`${size} text-card-foreground/90`} />,
+    'piggy-bank': <PiggyBank className={`${size} text-card-foreground/90`} />,
+    'briefcase': <Briefcase className={`${size} text-card-foreground/90`} />,
+    'credit-card': <CreditCard className={`${size} text-card-foreground/90`} />,
+    'users': <Users className={`${size} text-card-foreground/90`} />
   });
 
   return (
@@ -113,8 +113,16 @@ export function AccountCard({
       <div className="relative z-10">
         <div className="flex items-start justify-between gap-2 mb-2 sm:mb-3">
           <div className="flex-1 min-w-0">
-            <div className="text-base font-medium text-foreground/90 truncate">{accountName}</div>
-            <div className="text-xs font-medium text-foreground/70">
+            <div className={cn(
+              "text-base font-medium truncate text-white",
+              isSelected ? "text-white" : "text-foreground/80"
+            )}>
+              {accountName}
+            </div>
+            <div className={cn(
+              "text-xs font-medium",
+              isSelected ? "text-white" : "text-foreground/60"
+            )}>
               {accountType.charAt(0).toUpperCase() + accountType.slice(1)}
             </div>
           </div>
@@ -123,13 +131,26 @@ export function AccountCard({
         <div className="mt-2">
           <div className="flex items-end justify-between">
             <div>
-              <div className="text-xs font-medium text-foreground/80">Available Balance</div>
-              <div className="text-2xl font-bold tracking-tight">
+              <div className={cn(
+                "text-xs font-medium",
+                isSelected ? "text-white" : "text-foreground/60"
+              )}>
+                Available Balance
+              </div>
+              <div className={cn(
+                "text-2xl font-bold tracking-tight",
+                isSelected ? "text-white" : "text-foreground/90"
+              )}>
                 {formatCurrency(balance)}
               </div>
             </div>
             <button 
-              className="text-xs font-medium text-foreground/70 hover:text-foreground flex items-center gap-1 h-6 mb-0.5 ml-2"
+              className={cn(
+                "text-xs font-medium flex items-center gap-1 h-6 mb-0.5 ml-2 transition-colors",
+                isSelected 
+                  ? "text-foreground/90 hover:text-foreground" 
+                  : "text-foreground/70 hover:text-foreground"
+              )}
               onClick={(e) => {
                 e.stopPropagation();
                 onClick?.();

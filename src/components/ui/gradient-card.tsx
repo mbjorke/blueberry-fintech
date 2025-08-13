@@ -51,16 +51,16 @@ const GradientCard = React.forwardRef<HTMLDivElement, GradientCardProps>(
     children,
     glow = false,
     gradientDirection = 'to-br',
-    from = 'from-accent/20',
-    to = 'to-accent/10',
+    from = 'from-accent/30 dark:from-accent/20',
+    to = 'to-accent/20 dark:to-accent/10',
     selected = false,
     selectedFrom = 'from-accent',
-    selectedTo = 'to-accent/50',
+    selectedTo = 'to-accent/70 dark:to-accent/50',
     ...props
   }, ref) => {
     const gradientClass = selected 
       ? `${selectedFrom} ${selectedTo}`
-      : `${from} ${to}`;
+      : `${from} dark:${from} ${to} dark:${to}`;
 
     return (
       <div
