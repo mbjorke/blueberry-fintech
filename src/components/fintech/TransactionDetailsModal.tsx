@@ -129,7 +129,7 @@ export const TransactionDetailsModal = ({
               <p className="text-base text-amber-700 dark:text-amber-300 mb-4">
                 We couldn't automatically identify this transaction. Please provide more details to help us categorize it correctly.
               </p>
-              <Button className="w-full bg-amber-500 hover:bg-amber-600 text-white">
+              <Button variant="default" className="bg-amber-500 hover:bg-amber-600 text-amber-50">
                 <Pencil className="mr-2 h-4 w-4" />
                 Add Details
               </Button>

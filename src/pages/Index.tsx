@@ -5,6 +5,7 @@ import { SidebarNav } from '@/components/ui/SidebarNav';
 import BlueberryLogo from '@/components/ui/blueberry-logo';
 import { AlertsDropdown } from '@/components/fintech/AlertsDropdown';
 import { UserAvatar } from '@/components/fintech/UserAvatar';
+import { ThemeToggle } from '@/components/theme/ThemeToggle';
 
 const Index = () => {
   return (
@@ -19,6 +20,7 @@ const Index = () => {
             <span className="text-primary font-extrabold">blueberry</span> <span className="text-primary font-light">bank</span>
           </h1>
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <AlertsDropdown />
             <UserAvatar 
               name="Marcus Björke" 

@@ -27,10 +27,10 @@ const formatCurrency = (amount: number, currency: string): string => {
 
 // Account icon mapping with consistent styling
 const accountIcons = {
-  'wallet': <Wallet className="h-5 w-5 text-white" />,
-  'piggy-bank': <PiggyBank className="h-5 w-5 text-white" />,
-  'briefcase': <Briefcase className="h-5 w-5 text-white" />,
-  'default': <Wallet className="h-5 w-5 text-white" />
+  'wallet': <Wallet className="h-5 w-5 text-card-foreground" />,
+  'piggy-bank': <PiggyBank className="h-5 w-5 text-card-foreground" />,
+  'briefcase': <Briefcase className="h-5 w-5 text-card-foreground" />,
+  'default': <Wallet className="h-5 w-5 text-card-foreground" />
 } as const;
 
 // Account type to gradient mapping using design system's gradient system
