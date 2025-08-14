@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
 const meta: Meta<typeof AspectRatio> = {
-  title: 'UI/Base/AspectRatio',
+  title: 'BASE/AspectRatio',
   component: AspectRatio,
   parameters: {
     layout: 'centered',

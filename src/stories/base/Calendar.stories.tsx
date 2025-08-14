@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { CalendarIcon, CreditCard, PiggyBank, TrendingUp } from 'lucide-react';
 
 const meta: Meta<typeof Calendar> = {
-  title: 'UI/Base/Calendar',
+  title: 'Base/Calendar',
   component: Calendar,
   parameters: {
     layout: 'centered',

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { CreditCard, TrendingUp, PiggyBank, Shield, Bell, User, Settings, HelpCircle } from 'lucide-react';
 
 const meta: Meta<typeof HoverCard> = {
-  title: 'UI/Base/HoverCard',
+  title: 'BASE/HoverCard',
   component: HoverCard,
   parameters: {
     layout: 'centered',

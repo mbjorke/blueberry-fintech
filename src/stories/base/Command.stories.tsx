@@ -5,7 +5,7 @@ import { Search, CreditCard, Wallet, PiggyBank, TrendingUp, Settings, User, Shie
 import { useState } from 'react';
 
 const meta: Meta<typeof Command> = {
-  title: 'UI/Base/Command',
+  title: 'BASE/Command',
   component: Command,
   parameters: {
     layout: 'centered',

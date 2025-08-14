@@ -3,7 +3,7 @@ import { ContextMenu, ContextMenuCheckboxItem, ContextMenuContent, ContextMenuIt
 import { CreditCard, Wallet, PiggyBank, TrendingUp, Settings, User, Shield, Bell, HelpCircle, Copy, Edit, Trash2, Download, Share2, MoreHorizontal } from 'lucide-react';
 
 const meta: Meta<typeof ContextMenu> = {
-  title: 'UI/Base/ContextMenu',
+  title: 'BASE/ContextMenu',
   component: ContextMenu,
   parameters: {
     layout: 'centered',

@@ -5,7 +5,7 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 
 const meta: Meta<typeof Collapsible> = {
-  title: 'UI/Base/Collapsible',
+  title: 'BASE/Collapsible',
   component: Collapsible,
   parameters: {
     layout: 'centered',

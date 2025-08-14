@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Info, HelpCircle, AlertCircle, CheckCircle } from 'lucide-react';
 
 const meta: Meta<typeof Tooltip> = {
-  title: 'UI/Base/Tooltip',
+  title: 'BASE/Tooltip',
   component: Tooltip,
   parameters: {
     layout: 'centered',

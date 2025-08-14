@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { TrendingUp, CreditCard, PiggyBank, Shield, Bell, User } from 'lucide-react';
 
 const meta: Meta<typeof Carousel> = {
-  title: 'UI/Base/Carousel',
+  title: 'Base/Carousel',
   component: Carousel,
   parameters: {
     layout: 'centered',

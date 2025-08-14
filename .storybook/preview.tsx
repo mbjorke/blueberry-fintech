@@ -1,5 +1,5 @@
 import { Preview } from '@storybook/react';
-import { themes } from '@storybook/theming';
+import { withThemeByClassName } from '@storybook/addon-themes';
 import React from 'react';
 import '../src/index.css';
 
@@ -24,11 +24,12 @@ const preview: Preview = {
       stylePreview: true,
     },
     docs: {
-      theme: themes.dark,
+      theme: 'dark',
     },
     options: {
       storySort: {
-        order: ['Introduction', 'Components', 'Pages'],
+        order: ['Introduction', 'Base', 'Components', 'Pages'],
+        method: 'alphabetical',
       },
     },
   },
@@ -38,6 +39,13 @@ const preview: Preview = {
         <Story />
       </div>
     ),
+    withThemeByClassName({
+      themes: {
+        light: 'light',
+        dark: 'dark',
+      },
+      defaultTheme: 'dark',
+    }),
   ],
 };
 
