@@ -7,15 +7,13 @@
   [![React](https://img.shields.io/badge/React-18.2-61DAFB?logo=react)](https://reactjs.org/)
   [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?logo=typescript)](https://www.typescriptlang.org/)
   [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.3-06B6D4?logo=tailwind-css)](https://tailwindcss.com/)
-
-  <!-- Replace with actual dashboard screenshot -->
-  <img src="/banking-dashboard.png" alt="Dashboard Preview" width="100%">
+  <img src="./public/banking-dashboard.png" alt="Dashboard Preview" width="100%">
 </div>
 
 ## 🌟 Features
 
 ### 🎨 Design System
-- **40+** reusable, accessible components
+- **60+** reusable, accessible components
 - Built with Radix UI primitives and shadcn/ui
 - Comprehensive Storybook documentation
 - Dark/light mode support
@@ -71,7 +69,7 @@ Then open [http://localhost:6006](http://localhost:6006) to browse components an
 
 ```
 src/
-├── components/         # Reusable UI components
+├── components/        # Reusable UI components
 │   ├── ui/            # Base components (buttons, inputs, etc.)
 │   └── fintech/       # Fintech-specific components
 ├── stories/           # Component stories for Storybook
