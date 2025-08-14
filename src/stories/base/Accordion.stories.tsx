@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
-const meta: Meta<typeof Accordion> = {
+const meta: Meta = {
   title: 'Base/Accordion',
   component: Accordion,
   parameters: {
@@ -13,33 +13,14 @@ const meta: Meta<typeof Accordion> = {
     },
   },
   tags: ['autodocs'],
-  argTypes: {
-    type: {
-      control: 'select',
-      options: ['single', 'multiple'],
-      description: 'Whether to allow single or multiple items to be open at once',
-    },
-    collapsible: {
-      control: 'boolean',
-      description: 'Whether to allow all items to be closed when type is "single"',
-    },
-    disabled: {
-      control: 'boolean',
-      description: 'Whether the accordion is disabled',
-    },
-  },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {
-    type: 'single',
-    collapsible: true,
-  },
-  render: (args) => (
-    <Accordion {...args} className="w-[400px]">
+  render: () => (
+    <Accordion type="single" collapsible className="w-[400px]">
       <AccordionItem value="item-1">
         <AccordionTrigger>What is Fintech Spark Studio?</AccordionTrigger>
         <AccordionContent>
@@ -63,11 +44,8 @@ export const Default: Story = {
 };
 
 export const Multiple: Story = {
-  args: {
-    type: 'multiple',
-  },
-  render: (args) => (
-    <Accordion {...args} className="w-[400px]">
+  render: () => (
+    <Accordion type="multiple" className="w-[400px]">
       <AccordionItem value="item-1">
         <AccordionTrigger>Account Security</AccordionTrigger>
         <AccordionContent>
@@ -91,12 +69,8 @@ export const Multiple: Story = {
 };
 
 export const Disabled: Story = {
-  args: {
-    type: 'single',
-    disabled: true,
-  },
-  render: (args) => (
-    <Accordion {...args} className="w-[400px]">
+  render: () => (
+    <Accordion type="single" disabled className="w-[400px]">
       <AccordionItem value="item-1">
         <AccordionTrigger>Disabled Item</AccordionTrigger>
         <AccordionContent>
@@ -108,11 +82,8 @@ export const Disabled: Story = {
 };
 
 export const CustomStyling: Story = {
-  args: {
-    type: 'single',
-  },
-  render: (args) => (
-    <Accordion {...args} className="w-[400px]">
+  render: () => (
+    <Accordion type="single" className="w-[400px]">
       <AccordionItem value="item-1" className="border-primary/20">
         <AccordionTrigger className="text-primary hover:text-primary/80">
           Custom Styled Trigger
@@ -134,10 +105,7 @@ export const CustomStyling: Story = {
 };
 
 export const Accessibility: Story = {
-  args: {
-    type: 'single',
-  },
-  render: (args) => (
+  render: () => (
     <div className="space-y-4">
       <div className="text-sm text-muted-foreground">
         <h3 className="font-semibold mb-2">Accessibility Features:</h3>
@@ -149,7 +117,7 @@ export const Accessibility: Story = {
           <li>High contrast ratios for text readability</li>
         </ul>
       </div>
-      <Accordion {...args} className="w-[400px]">
+      <Accordion type="single" className="w-[400px]">
         <AccordionItem value="item-1">
           <AccordionTrigger>Accessibility Demo</AccordionTrigger>
           <AccordionContent>
