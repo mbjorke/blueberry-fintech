@@ -171,6 +171,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
+- [Lovable](https://www.lovable.dev/) for their excellent work on the Radix UI primitives that this project is built upon
 - [Radix UI](https://www.radix-ui.com/) for accessible primitives
 - [shadcn/ui](https://ui.shadcn.com/) for the component inspiration
 - [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS
