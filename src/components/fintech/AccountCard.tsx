@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Wallet, PiggyBank, Briefcase, CreditCard, Users } from "lucide-react";
+import { Settings, Wallet, PiggyBank, Briefcase, CreditCard, Users } from "lucide-react";
 import { GradientCard } from "@/components/ui/gradient-card";
 import { cn } from "@/lib/utils";
+import { AccountDetailsModal } from "./AccountDetailsModal";
+import { useMemo, useState } from "react";
 
 export type IconType = 'wallet' | 'piggy-bank' | 'briefcase' | 'credit-card' | 'users';
 
@@ -86,13 +88,18 @@ export function AccountCard({
     'users': <Users className={`${size} text-card-foreground/90`} />
   });
 
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+
   return (
-    <GradientCard
-      className={cn("w-full max-w-md p-4 sm:p-5 text-card-foreground overflow-hidden relative", className)}
-      selected={isSelected}
-      onClick={onClick}
-      glow={isSelected}
-    >
+    <>
+      <GradientCard
+        className={cn("w-full max-w-md p-4 sm:p-5 text-card-foreground overflow-hidden relative group", className)}
+        selected={isSelected}
+        onClick={onClick}
+        glow={isSelected}
+        aria-label={`${accountName}, ${accountType} account`}
+        aria-pressed={isSelected}
+      >
       {/* Account Type Icon - Made smaller */}
       <div className={cn(
         "absolute -top-3 -right-3 w-16 h-16 sm:-top-6 sm:-right-6 sm:w-24 sm:h-24 rounded-full flex items-center justify-center opacity-90 transition-all duration-300 z-10",
@@ -144,24 +151,36 @@ export function AccountCard({
                 {formatCurrency(balance)}
               </div>
             </div>
-            <button 
-              className={cn(
-                "text-xs font-medium flex items-center gap-1 h-6 mb-0.5 ml-2 transition-colors",
-                isSelected 
-                  ? "text-foreground/90 hover:text-foreground" 
-                  : "text-foreground/70 hover:text-foreground"
-              )}
+            <button
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground/60 hover:text-foreground transition-colors group"
               onClick={(e) => {
                 e.stopPropagation();
-                onClick?.();
+                setIsDetailsOpen(true);
               }}
+              aria-label="More account details"
             >
-              More account details
-              <ChevronRight size={12} className="w-3 h-3 flex-shrink-0" />
+              <span>More details</span>
+              <Settings className="w-3.5 h-3.5 flex-shrink-0" />
             </button>
           </div>
         </div>
       </div>
+
     </GradientCard>
+
+    <AccountDetailsModal
+      isOpen={isDetailsOpen}
+      onClose={() => setIsDetailsOpen(false)}
+      account={{
+        name: accountName,
+        type: accountType,
+        accountNumber: '•••• 1234', // Replace with actual account data
+        iban: 'FI21 1234 5600 0007 85', // Replace with actual IBAN
+        currency,
+        balance,
+        availableBalance,
+      }}
+    />
+  </>
   );
 };

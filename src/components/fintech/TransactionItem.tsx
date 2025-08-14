@@ -4,6 +4,7 @@ import { Transaction } from "./types";
 import { getCategoryColorClasses } from "./constants";
 import { getCategoryIcon } from "@/utils/categoryIcons";
 import { AvatarWithIcon } from "@/components/ui/avatar-with-icon";
+import { cn } from "@/lib/utils";
 
 /**
  * TransactionItem Component
@@ -28,6 +29,14 @@ interface TransactionItemProps {
 export function TransactionItem({ transaction, isUnmapped = false, onClick }: TransactionItemProps) {
   const isIncoming = transaction.type === 'incoming';
   
+  // Handle keyboard events for accessibility
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if ((e.key === 'Enter' || e.key === ' ') && onClick) {
+      e.preventDefault();
+      onClick();
+    }
+  };
+
   const formatAmount = (amount: number, currency: string) => {
     const formatted = new Intl.NumberFormat('en-GB', {
       minimumFractionDigits: 2,
@@ -57,13 +66,24 @@ export function TransactionItem({ transaction, isUnmapped = false, onClick }: Tr
   };
 
   return (
-    <button 
-      className="flex w-full outline-none hover:ring-1 hover:ring-accent focus:ring-1 focus:ring-accent items-start gap-4 p-4 rounded-lg transition-all duration-200 cursor-pointer text-left
-        transform hover:scale-[1.01] active:scale-100 odd:bg-accent/10 even:bg-accent/20"
+    <div 
+      role="button"
+      tabIndex={onClick ? 0 : -1}
+      onKeyDown={handleKeyDown}
       onClick={handleClick}
+      aria-label={`${transaction.merchantDetails || transaction.merchantName || 'Transaction'} for ${formatAmount(transaction.amount, transaction.currency)} on ${transaction.date.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`}
+      className={cn(
+        "flex w-full items-start gap-4 p-4 rounded-lg transition-all duration-200 cursor-pointer text-left",
+        "transform hover:scale-[1.01] active:scale-100 odd:bg-accent/10 even:bg-accent/20",
+        "focus:ring-2 focus:ring-offset-1 focus:ring-offset-accent focus:ring-accent outline-none",
+        {
+          "cursor-pointer": onClick,
+          "cursor-default": !onClick
+        }
+      )}
     >
       {/* Avatar - Side by side icons */}
-      <div className="flex-shrink-0 flex items-center gap-3">
+      <div className="flex-shrink-0 flex items-center gap-3" aria-hidden="true">
         {/* Merchant Image */}
         <div className="relative w-12 h-12 flex-shrink-0">
           <AvatarWithIcon
@@ -92,14 +112,18 @@ export function TransactionItem({ transaction, isUnmapped = false, onClick }: Tr
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between">
           <div className="min-w-0 flex-1">
-            <p className="font-medium text-foreground truncate transition-opacity duration-200">
+            <h3 className="font-medium text-foreground truncate transition-opacity duration-200 m-0" id={`transaction-${transaction.id}-merchant`}>
               {transaction.merchantDetails || transaction.merchantName || transaction.description}
-            </p>
+            </h3>
             <div className="flex items-center gap-2 mt-1 transition-all duration-200">
               <div className="flex items-center gap-2">
-                <p className="text-base text-thin text-foreground/70">
+                <time 
+                  dateTime={transaction.date.toISOString()}
+                  className="text-base text-thin text-foreground/70"
+                  aria-label={`Date: ${transaction.date.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`}
+                >
                   {formatDate(transaction.date)}
-                </p>
+                </time>
               </div>
               <div className="flex items-center gap-1">
                 <Badge 
@@ -141,9 +165,16 @@ export function TransactionItem({ transaction, isUnmapped = false, onClick }: Tr
           
           {/* Amount */}
           <div className="text-right">
-            <p className={`font-semibold ${
-              isIncoming ? 'text-success' : 'text-foreground'
-            } transition-colors duration-200`}>
+            <p 
+              className={`font-semibold ${
+                isIncoming ? 'text-success' : 'text-foreground'
+              } transition-colors duration-200`}
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              <span className="sr-only">
+                {isIncoming ? 'Credit: ' : 'Debit: '}
+              </span>
               {formatAmount(transaction.amount, transaction.currency)}
             </p>
             {transaction.status !== 'completed' && (
@@ -157,6 +188,6 @@ export function TransactionItem({ transaction, isUnmapped = false, onClick }: Tr
           </div>
         </div>
       </div>
-    </button>
+    </div>
   );
 };

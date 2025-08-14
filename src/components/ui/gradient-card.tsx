@@ -66,7 +66,9 @@ const GradientCard = React.forwardRef<HTMLDivElement, GradientCardProps>(
       <div
         ref={ref}
         className={cn(
-          'focus:ring-1 focus:ring-accent hover:ring-1 hover:ring-accent rounded-2xl outline-none cursor-pointer overflow-hidden transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.01] active:scale-100',
+          'focus:ring-2 focus:ring-offset-1 focus:ring-offset-accent focus:ring-accent outline-none',
+          'rounded-2xl outline-none cursor-pointer overflow-hidden transition-all duration-300 transform',
+          'hover:-translate-y-1 hover:scale-[1.01] active:scale-100',
           `bg-gradient-${gradientDirection} ${gradientClass}`,
           className
         )}
