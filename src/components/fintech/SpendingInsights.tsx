@@ -5,7 +5,7 @@ import { TrendingUp, TrendingDown, ArrowRight } from "lucide-react";
 import { AvatarWithIcon } from "@/components/ui/avatar-with-icon";
 import { getCategoryColorClasses } from "@/components/fintech/constants";
 import { getCategoryIcon } from "@/utils/categoryIcons";
-import { cn } from "@/lib/utils";
+import { Icon } from "@radix-ui/react-select";
 
 /**
  * SpendingInsights Component
@@ -90,7 +90,7 @@ export const SpendingInsights = ({
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-lg font-semibold text-foreground">Spending Insights</h3>
-            <p className="text-base text-muted-foreground">This month's overview</p>
+            <p className="text-base text-foreground/70">This month's overview</p>
           </div>
           <div className="flex items-center gap-2">
             <div className={`flex items-center gap-1 ${trend.direction === 'up' ? 'text-error' : 'text-success'}`}>
@@ -107,7 +107,7 @@ export const SpendingInsights = ({
               <p className="text-2xl font-bold text-foreground">
                 {currency}{formatAmount(spent)}
               </p>
-              <p className="text-base text-muted-foreground">
+              <p className="text-base text-foreground/70">
                 of {currency}{formatAmount(monthlyBudget)} budget
               </p>
             </div>
@@ -143,12 +143,12 @@ export const SpendingInsights = ({
                     <div className="flex items-center">
                       <AvatarWithIcon 
                         icon={getCategoryIcon(undefined, category.name)}
-                        size={20}
+                        size={24}
                         colorClass={getCategoryColorClasses(category.name).bg}
                         iconColorClass={getCategoryColorClasses(category.name).icon}
                         label={category.name}
                         showLabel
-                        labelClassName="text-xs font-medium capitalize"
+                        labelClassName="text-sm font-medium capitalize"
                         className="h-6"
                       />
                     </div>
@@ -156,7 +156,7 @@ export const SpendingInsights = ({
                       <p className="text-base font-medium text-foreground">
                         {currency}{formatAmount(category.amount)}
                       </p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-foreground/70">
                         of {currency}{formatAmount(category.budget)}
                       </p>
                     </div>

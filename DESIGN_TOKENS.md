@@ -214,7 +214,7 @@ All tokens are available as Tailwind CSS utility classes:
 
 // Using typography
 <h1 className="text-3xl font-bold leading-tight">Heading</h1>
-<p className="text-muted-foreground">Subtitle</p>
+<p className="text-foreground/70">Subtitle</p>
 
 // Using spacing
 <div className="p-4 m-2">Spaced content</div>

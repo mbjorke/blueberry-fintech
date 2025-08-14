@@ -1,11 +1,10 @@
 import { Badge } from "@/components/ui/badge";
-import { Sparkles, Pencil, ArrowUpRight, ArrowDownLeft, AlertCircle } from "lucide-react";
-import { motion } from "framer-motion";
+import { Sparkles, Pencil } from "lucide-react";
 import { Transaction } from "./types";
 import { getCategoryColorClasses } from "./constants";
 import { getCategoryIcon } from "@/utils/categoryIcons";
 import { AvatarWithIcon } from "@/components/ui/avatar-with-icon";
-import { colors } from "@/tokens";
+import { cn } from "@/lib/utils";
 
 /**
  * TransactionItem Component
@@ -13,6 +12,7 @@ import { colors } from "@/tokens";
  * Displays individual transaction information with appropriate icons,
  * categories, and styling based on transaction type.
  * Enhanced with smooth hover animations and click feedback.
+ * Responsive design optimized for mobile and desktop.
  * 
  * Props:
  * - transaction: Transaction object containing all transaction details
@@ -30,6 +30,14 @@ interface TransactionItemProps {
 export function TransactionItem({ transaction, isUnmapped = false, onClick }: TransactionItemProps) {
   const isIncoming = transaction.type === 'incoming';
   
+  // Handle keyboard events for accessibility
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if ((e.key === 'Enter' || e.key === ' ') && onClick) {
+      e.preventDefault();
+      onClick();
+    }
+  };
+
   const formatAmount = (amount: number, currency: string) => {
     const formatted = new Intl.NumberFormat('en-GB', {
       minimumFractionDigits: 2,
@@ -60,12 +68,23 @@ export function TransactionItem({ transaction, isUnmapped = false, onClick }: Tr
 
   return (
     <div 
-      className="flex items-start gap-4 p-4 rounded-lg transition-all duration-200 cursor-pointer
-        transform hover:scale-[1.01] active:scale-100 odd:bg-accent/10 even:bg-accent/20 hover:bg-accent/5"
+      role="button"
+      tabIndex={onClick ? 0 : -1}
+      onKeyDown={handleKeyDown}
       onClick={handleClick}
+      aria-label={`${transaction.merchantDetails || transaction.merchantName || 'Transaction'} for ${formatAmount(transaction.amount, transaction.currency)} on ${transaction.date.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`}
+      className={cn(
+        "flex w-full items-start gap-2 sm:gap-3 md:gap-4 p-3 sm:p-4 rounded-lg transition-all duration-200 cursor-pointer text-left",
+        "transform hover:scale-[1.01] active:scale-100 odd:bg-accent/10 even:bg-accent/20",
+        "focus:ring-2 focus:ring-offset-1 focus:ring-offset-accent focus:ring-accent outline-none",
+        {
+          "cursor-pointer": onClick,
+          "cursor-default": !onClick
+        }
+      )}
     >
-      {/* Avatar - Side by side icons */}
-      <div className="flex-shrink-0 flex items-center gap-3">
+      {/* Avatar - Responsive sizing and layout */}
+      <div className="flex-shrink-0 flex items-center gap-2 sm:gap-3" aria-hidden="true">
         {/* Merchant Image */}
         <div className="relative w-12 h-12 flex-shrink-0">
           <AvatarWithIcon
@@ -78,8 +97,8 @@ export function TransactionItem({ transaction, isUnmapped = false, onClick }: Tr
           />
         </div>
         
-        {/* Category Icon */}
-        <div className="w-12 h-12 flex-shrink-0">
+        {/* Category Icon - Hidden on very small screens */}
+        <div className="hidden sm:block w-12 h-12 flex-shrink-0">
           <AvatarWithIcon
             icon={getCategoryIcon(undefined, isUnmapped ? 'unmapped' : transaction.category)}
             name={transaction.category}
@@ -90,45 +109,27 @@ export function TransactionItem({ transaction, isUnmapped = false, onClick }: Tr
         </div>
       </div>
 
-      {/* Transaction Details */}
+      {/* Transaction Details - Responsive layout */}
       <div className="flex-1 min-w-0">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
           <div className="min-w-0 flex-1">
-            <motion.p 
-              className="font-medium text-foreground truncate"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.1 }}
-            >
+            <h3 className="font-medium text-foreground truncate transition-opacity duration-200 m-0 text-sm sm:text-base" id={`transaction-${transaction.id}-merchant`}>
               {transaction.merchantDetails || transaction.merchantName || transaction.description}
-            </motion.p>
-            <motion.div 
-              className="flex items-center gap-2 mt-1"
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
-              <div className="flex items-center gap-2">
-                <p className="text-base text-thin text-muted-foreground">
-                  {formatDate(transaction.date)}
-                </p>
-              </div>
-              <div className="flex items-center gap-1">
-                <Badge 
-                  variant={transaction.categorySource === 'manual' ? 'default' : 'outline'}
-                  className="h-4 px-1.5 text-base flex items-center gap-0.5"
-                  title={transaction.categorySource === 'manual' ? 'Manually categorized' : 'Automatically categorized'}
+            </h3>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mt-1 transition-all duration-200">
+              <div className="flex flex-wrap items-center gap-1 sm:gap-2">
+                <time 
+                  dateTime={transaction.date.toISOString()}
+                  className="text-xs sm:text-sm text-thin text-foreground/70"
+                  aria-label={`Date: ${transaction.date.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`}
                 >
-                  {transaction.categorySource === 'manual' ? (
-                    <>
-                      <Pencil size={10} /> Manual
-                    </>
-                  ) : (
-                    <>
-                      <Sparkles size={10} /> Auto
-                    </>
-                  )}
-                </Badge>
+                  {formatDate(transaction.date)}
+                </time>
+                {transaction.cardLast4 && (
+                  <span className="text-xs sm:text-sm text-thin text-foreground/70">
+                    •••• {transaction.cardLast4}
+                  </span>
+                )}
               </div>
               {transaction.expenseStatus !== 'none' && (
                 <Badge 
@@ -138,30 +139,32 @@ export function TransactionItem({ transaction, isUnmapped = false, onClick }: Tr
                     transaction.expenseStatus === 'info_required' ? 'warning' :
                     'secondary'
                   }
-                  className="text-base"
+                  className="text-xs sm:text-sm w-fit"
                 >
                   {transaction.expenseStatus.replace('_', ' ')}
                 </Badge>
               )}
-              {transaction.cardLast4 && (
-                <span className="text-base text-thin text-muted-foreground">
-                  •••• {transaction.cardLast4}
-                </span>
-              )}
-            </motion.div>
+            </div>
           </div>
           
-          {/* Amount */}
-          <div className="text-right">
-            <p className={`font-semibold ${
-              isIncoming ? 'text-success' : 'text-foreground'
-            }`}>
+          {/* Amount - Responsive positioning and sizing */}
+          <div className="text-left sm:text-right sm:min-w-[80px]">
+            <p 
+              className={`font-semibold text-sm sm:text-base ${
+                isIncoming ? 'text-success' : 'text-foreground'
+              } transition-colors duration-200`}
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              <span className="sr-only">
+                {isIncoming ? 'Credit: ' : 'Debit: '}
+              </span>
               {formatAmount(transaction.amount, transaction.currency)}
             </p>
             {transaction.status !== 'completed' && (
               <Badge 
                 variant={transaction.status === 'pending' ? 'outline' : 'destructive'}
-                className="text-base mt-1"
+                className="text-xs sm:text-sm mt-1 w-fit"
               >
                 {transaction.status}
               </Badge>

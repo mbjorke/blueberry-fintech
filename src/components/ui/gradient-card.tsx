@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./card";
+import { Button } from "react-day-picker";
 
 export interface GradientCardProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -50,29 +51,40 @@ const GradientCard = React.forwardRef<HTMLDivElement, GradientCardProps>(
     children,
     glow = false,
     gradientDirection = 'to-br',
-    from = 'from-accent/20',
-    to = 'to-accent/10',
+    from = 'from-accent/30 dark:from-accent/20',
+    to = 'to-accent/20 dark:to-accent/10',
     selected = false,
     selectedFrom = 'from-accent',
-    selectedTo = 'to-accent/50',
+    selectedTo = 'to-accent/70 dark:to-accent/50',
     ...props
   }, ref) => {
     const gradientClass = selected 
       ? `${selectedFrom} ${selectedTo}`
-      : `${from} ${to}`;
+      : `${from} dark:${from} ${to} dark:${to}`;
 
     return (
-      <Card
+      <div
         ref={ref}
         className={cn(
-          'overflow-hidden transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.01] active:scale-100',
+          'focus:ring-2 focus:ring-offset-1 focus:ring-offset-accent focus:ring-accent outline-none',
+          'rounded-2xl outline-none cursor-pointer overflow-hidden transition-all duration-300 transform',
+          'hover:-translate-y-1 hover:scale-[1.01] active:scale-100',
           `bg-gradient-${gradientDirection} ${gradientClass}`,
           className
         )}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          // Trigger click on Enter or Space
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            (e.currentTarget as HTMLElement).click();
+          }
+        }}
         {...props}
       >
         {children}
-      </Card>
+      </div>
     );
   }
 );

@@ -1,7 +1,8 @@
 // Font families
 export const fontFamily = {
   sans: [
-    'Montserrat',
+    'Montserrat Variable',  // Using variable font
+    'Montserrat',           // Fallback to static font
     'system-ui',
     '-apple-system',
     'BlinkMacSystemFont',

@@ -36,7 +36,7 @@ const AvatarWithIcon: React.FC<AvatarWithIconProps> = ({
   name,
   icon: Icon,
   colorClass = "bg-muted",
-  iconColorClass = "text-muted-foreground",
+  iconColorClass = "text-foreground/70",
   className,
   size,
   onClick,

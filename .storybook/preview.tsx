@@ -1,4 +1,5 @@
-import type { Preview } from '@storybook/react-vite';
+import { Preview } from '@storybook/react';
+import { withThemeByClassName } from '@storybook/addon-themes';
 import React from 'react';
 import '../src/index.css';
 
@@ -8,7 +9,7 @@ const preview: Preview = {
     controls: {
       matchers: {
         color: /(background|color)$/i,
-        date: /Date$/,
+        date: /Date$/i,
       },
     },
     backgrounds: {
@@ -18,6 +19,19 @@ const preview: Preview = {
         { name: 'dark', value: '#0f172a' },
       ],
     },
+    darkMode: {
+      current: 'dark',
+      stylePreview: true,
+    },
+    docs: {
+      theme: 'dark',
+    },
+    options: {
+      storySort: {
+        order: ['Introduction', 'Base', 'Components', 'Pages'],
+        method: 'alphabetical',
+      },
+    },
   },
   decorators: [
     (Story) => (
@@ -25,6 +39,13 @@ const preview: Preview = {
         <Story />
       </div>
     ),
+    withThemeByClassName({
+      themes: {
+        light: 'light',
+        dark: 'dark',
+      },
+      defaultTheme: 'dark',
+    }),
   ],
 };
 

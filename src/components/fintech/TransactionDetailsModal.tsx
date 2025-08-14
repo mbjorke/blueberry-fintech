@@ -1,6 +1,4 @@
 import { 
-  ArrowUpRight, 
-  ArrowDownLeft, 
   Calendar, 
   Clock, 
   X, 
@@ -17,13 +15,6 @@ import {
   CreditCard as CardIcon
 } from "lucide-react";
 import { Transaction } from "./types";
-import { motion } from "framer-motion";
-import { format } from "date-fns";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { formatCurrency } from "@/lib/format-currency";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -31,8 +22,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { getCategoryColorClasses } from "./constants";
 import { getCategoryIcon } from "@/utils/categoryIcons";
 import { AvatarWithIcon } from "@/components/ui/avatar-with-icon";
-import { cn } from "@/lib/utils";
-import { Small } from "@/stories/BlueberryLogo.stories";
 
 interface TransactionDetailsModalProps {
   transaction: Transaction | null;
@@ -115,15 +104,15 @@ export const TransactionDetailsModal = ({
                   </div>
                 </div>
                 {transaction.merchantDetails && (
-                  <p className="text-base text-muted-foreground">
+                  <p className="text-base text-foreground/70">
                     {transaction.merchantDetails}
                   </p>
                 )}
-                <p className="text-base text-muted-foreground mt-1 flex items-center gap-1.5">
-                  <Calendar size={12} className="text-muted-foreground/70" />
+                <p className="text-base text-foreground/70 mt-1 flex items-center gap-1.5">
+                  <Calendar size={12} className="text-foreground/70/70" />
                   {formattedDate}
                   <span className="mx-1">•</span>
-                  <Clock size={12} className="text-muted-foreground/70" />
+                  <Clock size={12} className="text-foreground/70/70" />
                   {formattedTime}
                 </p>
               </div>
@@ -140,7 +129,7 @@ export const TransactionDetailsModal = ({
               <p className="text-base text-amber-700 dark:text-amber-300 mb-4">
                 We couldn't automatically identify this transaction. Please provide more details to help us categorize it correctly.
               </p>
-              <Button className="w-full bg-amber-500 hover:bg-amber-600 text-white">
+              <Button variant="default" className="bg-amber-500 hover:bg-amber-600 text-amber-50">
                 <Pencil className="mr-2 h-4 w-4" />
                 Add Details
               </Button>
@@ -150,12 +139,7 @@ export const TransactionDetailsModal = ({
           <div className="space-y-6 pt-4">
             {/* Status Section */}
           {transaction.expenseStatus !== 'none' && (
-            <motion.div 
-              className="space-y-3"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-            >
+            <div className="space-y-3 transition-all duration-200">
               <div className="flex items-center justify-between">
                 <span className="text-base font-medium">Expense status</span>
                 <Badge 
@@ -173,46 +157,36 @@ export const TransactionDetailsModal = ({
               
               {transaction.spendProgram && (
                 <div className="flex items-center justify-between">
-                  <span className="text-base text-muted-foreground">Spend program</span>
+                  <span className="text-base text-foreground/70">Spend program</span>
                   <span className="text-base font-medium">{transaction.spendProgram}</span>
                 </div>
               )}
-            </motion.div>
+            </div>
           )}
 
           <Separator />
 
           {/* Cardholder Information */}
-          <motion.div 
-            className="space-y-3"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
+          <div className="space-y-3 transition-all duration-200">
             <div className="flex items-center gap-2">
-              <User size={16} className="text-muted-foreground" />
+              <User size={16} className="text-foreground/70" />
               <span className="text-base font-medium">Cardholder</span>
             </div>
-            <p className="text-base text-muted-foreground pl-6">{transaction.cardholder}</p>
-          </motion.div>
+            <p className="text-base text-foreground/70 pl-6">{transaction.cardholder}</p>
+          </div>
 
           <Separator />
 
           {/* Transaction Details */}
-          <motion.div 
-            className="space-y-4"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
+          <div className="space-y-4 transition-all duration-200">
             <h3 className="text-base font-medium">Transaction details</h3>
             
             <div className="space-y-3 text-base">
               {transaction.cardLast4 && (
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <CardIcon size={16} className="text-foreground/60" />
-                    <span className="text-muted-foreground">Card</span>
+                    <CardIcon size={16} className="text-foreground/70" />
+                    <span className="text-foreground/70">Card</span>
                   </div>
                   <span>•••• {transaction.cardLast4}</span>
                 </div>
@@ -220,8 +194,8 @@ export const TransactionDetailsModal = ({
               
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <FileText size={16} className="text-muted-foreground" />
-                  <span className="text-muted-foreground">Transaction ID</span>
+                  <FileText size={16} className="text-foreground/70" />
+                  <span className="text-foreground/70">Transaction ID</span>
                 </div>
                 <span className="font-mono text-base">{transaction.transactionId}</span>
               </div>
@@ -229,8 +203,8 @@ export const TransactionDetailsModal = ({
               {transaction.location && (
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <MapPin size={16} className="text-muted-foreground" />
-                    <span className="text-muted-foreground">Location</span>
+                    <MapPin size={16} className="text-foreground/70" />
+                    <span className="text-foreground/70">Location</span>
                   </div>
                   <span>{transaction.location}</span>
                 </div>
@@ -238,8 +212,8 @@ export const TransactionDetailsModal = ({
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Calendar size={16} className="text-muted-foreground" />
-                  <span className="text-muted-foreground">Category</span>
+                  <Calendar size={16} className="text-foreground/70" />
+                  <span className="text-foreground/70">Category</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <AvatarWithIcon
@@ -270,26 +244,21 @@ export const TransactionDetailsModal = ({
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           <Separator />
 
           {/* Expense Details */}
           {transaction.expenseStatus !== 'none' && (
-            <motion.div 
-              className="space-y-4"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-            >
+            <div className="space-y-4 transition-all duration-200">
               <h3 className="text-base font-medium">Expense details</h3>
               
               {/* Receipt Section */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Receipt size={16} className="text-muted-foreground" />
-                    <span className="text-base text-muted-foreground">Receipts</span>
+                    <Receipt size={16} className="text-foreground/70" />
+                    <span className="text-base text-foreground/70">Receipts</span>
                   </div>
                   <Badge 
                     variant={transaction.receiptStatus === 'uploaded' ? 'default' : 'outline'}
@@ -312,19 +281,19 @@ export const TransactionDetailsModal = ({
               <div className="space-y-3 text-base">
                 {transaction.accountingCategory && (
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Accounting category</span>
+                    <span className="text-foreground/70">Accounting category</span>
                     <span>{transaction.accountingCategory}</span>
                   </div>
                 )}
                 
                 {transaction.taxRate && (
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Tax rate</span>
+                    <span className="text-foreground/70">Tax rate</span>
                     <span>{transaction.taxRate}</span>
                   </div>
                 )}
               </div>
-            </motion.div>
+            </div>
           )}
         </div>
       </DialogContent>

@@ -1,4 +1,5 @@
 import { categoryIcons } from '@/components/fintech/constants';
+import { CreditCard } from 'lucide-react';
 
 // Fallback icons for common merchant types
 export const fallbackIcons: Record<string, React.ComponentType<any>> = {

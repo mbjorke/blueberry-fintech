@@ -1,102 +1,179 @@
-# Fintech Dashboard
+<div align="center">
+  <h1>Fintech Spark Studio</h1>
+  <p>A modern fintech dashboard and design system built with React, TypeScript, and Tailwind CSS</p>
+  
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+  [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg)](https://storybook.js.org/)
+  [![React](https://img.shields.io/badge/React-18.2-61DAFB?logo=react)](https://reactjs.org/)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?logo=typescript)](https://www.typescriptlang.org/)
+  [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.3-06B6D4?logo=tailwind-css)](https://tailwindcss.com/)
 
-## Project Overview
+  <!-- Replace with actual dashboard screenshot -->
+  <img src="/banking-dashboard.png" alt="Dashboard Preview" width="100%">
+</div>
 
-A modern, responsive fintech dashboard built with React, TypeScript, and Tailwind CSS. This project showcases a clean, accessible UI for financial data visualization and management.
+## 🌟 Features
 
-## Features
+### 🎨 Design System
+- **40+** reusable, accessible components
+- Built with Radix UI primitives and shadcn/ui
+- Comprehensive Storybook documentation
+- Dark/light mode support
+- Fully responsive design
 
-- Account overview with balance and transaction history
-- Transaction categorization and filtering
-- Responsive design for all device sizes
-- Modern UI with dark/light mode support
-- Built with accessibility in mind
+### 💳 Fintech Dashboard
+- Real-time account overview
+- Transaction history and categorization
+- Interactive data visualizations
+- Responsive layout for all devices
+- Modern, clean UI with smooth animations
 
-## Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
-
-- Node.js (v16 or later)
-- npm (v7 or later) or yarn
+- Node.js 18+
+- npm 9+ or yarn 1.22+
 
 ### Installation
 
-1. Clone the repository:
-   ```sh
-   git clone <YOUR_GIT_URL>
-   cd fintech-dashboard
-   ```
+```bash
+# Clone the repository
+git clone <YOUR_GIT_URL>
+cd fintech-spark-studio
 
-2. Install dependencies:
-   ```sh
-   npm install
-   # or
-   yarn install
-   ```
+# Install dependencies
+npm install
+# or
+yarn install
 
-3. Start the development server:
-   ```sh
-   npm run dev
-   # or
-   yarn dev
-   ```
+# Start the development server
+npm run dev
+# or
+yarn dev
+```
 
-4. Open [http://localhost:8080](http://localhost:8080) in your browser.
+Open [http://localhost:8080](http://localhost:8080) in your browser to view the dashboard.
 
-## Development
+## 📚 Storybook
+
+Explore all components in our interactive Storybook:
+
+```bash
+# Start Storybook
+npm run storybook
+# or
+yarn storybook
+```
+
+Then open [http://localhost:6006](http://localhost:6006) to browse components and their documentation.
+
+## 🏗️ Project Structure
+
+```
+src/
+├── components/         # Reusable UI components
+│   ├── ui/            # Base components (buttons, inputs, etc.)
+│   └── fintech/       # Fintech-specific components
+├── stories/           # Component stories for Storybook
+├── lib/               # Utilities and helpers
+├── pages/             # Page components
+└── styles/            # Global styles and themes
+```
+
+## 🎨 Design System Components
+
+### Base Components
+- Buttons
+- Forms & Inputs
+- Navigation
+- Overlays (Dialogs, Drawers, Tooltips)
+- Layout (Cards, Containers)
+- Typography
+
+### Fintech Components
+- Account Cards
+- Transaction Lists
+- Data Visualization Charts
+- Gradient Cards
+- Status Indicators
+
+## 🛠️ Development
 
 ### Available Scripts
 
-- `npm run dev` - Start the development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview the production build
-- `npm run lint` - Run ESLint
+- `dev` - Start development server
+- `build` - Build for production
+- `preview` - Preview production build
+- `storybook` - Start Storybook
+- `build-storybook` - Build static Storybook
+- `lint` - Run ESLint
+- `type-check` - Run TypeScript type checking
 
-### Project Structure
+## 🏗️ Built With
 
-- `/src/components` - Reusable UI components
-  - `/ui` - Base UI components (buttons, cards, etc.)
-  - `/fintech` - Fintech-specific components
-- `/src/tokens` - Design tokens (colors, typography, spacing)
-- `/src/pages` - Page components
-- `/src/lib` - Utility functions and hooks
-- `/public` - Static assets
+- [React 18](https://reactjs.org/) - UI Library
+- [TypeScript](https://www.typescriptlang.org/) - Type Safety
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [Radix UI](https://www.radix-ui.com/) - Primitives
+- [shadcn/ui](https://ui.shadcn.com/) - Component Library
+- [Storybook](https://storybook.js.org/) - Component Documentation
+- [Vite](https://vitejs.dev/) - Build Tool
 
-## Technologies Used
-
-- [Vite](https://vitejs.dev/) - Build tool and dev server
-- [React](https://react.dev/) - UI library
-- [TypeScript](https://www.typescriptlang.org/) - Type checking
-- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS
-- [shadcn/ui](https://ui.shadcn.com/) - UI component library
-- [Radix UI](https://www.radix-ui.com/) - Primitives for accessible components
-
-## Deployment
+## 🚀 Deployment
 
 ### Building for Production
 
-```sh
+```bash
+# Create production build
 npm run build
+
+# Preview the production build locally
+npm run preview
 ```
 
-This will create a `dist` directory with the production build.
+The build will be available in the `dist` directory.
 
-### Hosting
+### Deployment Options
 
-You can deploy the built files to any static hosting service:
+#### Vercel (Recommended)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=<YOUR_REPO_URL>&project-name=fintech-spark-studio&repository-name=fintech-spark-studio)
 
-- [Vercel](https://vercel.com/)
-- [Netlify](https://www.netlify.com/)
-- [GitHub Pages](https://pages.github.com/)
+1. Push your code to a GitHub repository
+2. Import the project on Vercel
+3. Vercel will automatically detect the Vite project and set up the build settings
 
-## Contributing
+#### Netlify
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=<YOUR_REPO_URL>)
+
+1. Connect your GitHub repository to Netlify
+2. Set the build command to `npm run build`
+3. Set the publish directory to `dist`
+4. Deploy!
+
+## 🤝 Contributing
+
+Contributions are welcome! Here's how you can help:
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
+### Code Style
+
+- Follow the existing code style (prettier + eslint)
+- Write meaningful commit messages
+- Document new components with Storybook stories
+- Add TypeScript types for all new code
+
+## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- [Radix UI](https://www.radix-ui.com/) for accessible primitives
+- [shadcn/ui](https://ui.shadcn.com/) for the component inspiration
+- [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS
+- [Storybook](https://storybook.js.org/) for component documentation
