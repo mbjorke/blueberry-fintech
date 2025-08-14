@@ -5,6 +5,7 @@ import { TrendingUp, TrendingDown, ArrowRight } from "lucide-react";
 import { AvatarWithIcon } from "@/components/ui/avatar-with-icon";
 import { getCategoryColorClasses } from "@/components/fintech/constants";
 import { getCategoryIcon } from "@/utils/categoryIcons";
+import { Icon } from "@radix-ui/react-select";
 
 /**
  * SpendingInsights Component
@@ -142,12 +143,12 @@ export const SpendingInsights = ({
                     <div className="flex items-center">
                       <AvatarWithIcon 
                         icon={getCategoryIcon(undefined, category.name)}
-                        size={20}
+                        size={24}
                         colorClass={getCategoryColorClasses(category.name).bg}
                         iconColorClass={getCategoryColorClasses(category.name).icon}
                         label={category.name}
                         showLabel
-                        labelClassName="text-xs font-medium capitalize"
+                        labelClassName="text-sm font-medium capitalize"
                         className="h-6"
                       />
                     </div>

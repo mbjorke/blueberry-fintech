@@ -106,15 +106,15 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <main className="container mx-auto p-8 space-y-6">
+    <main className="container mx-auto p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-2">
-        <h1 className="text-2xl font-bold">Accounts</h1>
+        <h1 className="text-xl sm:text-2xl font-bold">Accounts</h1>
       </div>
 
       {/* Account Cards */}
-      <div className="mb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="mb-6 sm:mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {mockAccounts.map((account) => (
             <AccountCard
               key={account.id}
@@ -133,40 +133,49 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
         {/* Transactions Section */}
         <div className="flex-1">
           <div className="space-y-4">
 
-            {/* Recent Transactions */}
-
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold">Recent Transactions</h2>
-              <div className="flex gap-2">
-                  {/* Quick Actions */}
-                  <Button variant="outline" size="sm" onClick={() => handleQuickAction('Transfer')}>
-                    <ArrowUpRight className="h-4 w-4 mr-2" />
-                    Transfer
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={() => handleQuickAction('Request')}>
-                    <ArrowDownLeft className="h-4 w-4 mr-2" />
-                    Request
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={() => handleQuickAction('Pay Bill')}>
-                    <CreditCard className="h-4 w-4 mr-2" />
-                    Pay Bill
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={() => handleQuickAction('Filter')}>
-                    <Filter className="h-4 w-4 mr-2" />
-                    Filter
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={() => handleQuickAction('Export')}>
-                    <Download className="h-4 w-4 mr-2" />
-                    Export
-                  </Button>
-                </div>
+            {/* Recent Transactions Header */}
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0 mb-4">
+              <h2 className="text-lg sm:text-xl font-semibold">Recent Transactions</h2>
+              
+              {/* Quick Actions - Clean horizontal action buttons */}
+              <div className="flex items-center gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => handleQuickAction('Transfer')}
+                  className="h-8 px-3 text-xs"
+                >
+                  <ArrowUpRight className="h-3 w-3 mr-1.5" />
+                  Upcoming
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => handleQuickAction('Filter')}
+                  className="h-8 px-3 text-xs"
+                >
+                  <Filter className="h-3 w-3 mr-1.5" />
+                  Filter
+                </Button>
+                <Button 
+                  variant="default" 
+                  size="sm" 
+                  onClick={() => handleQuickAction('Pay Bill')}
+                  className="h-8 px-3 text-xs"
+                >
+                  <CreditCard className="h-3 w-3 mr-1.5" />
+                  Pay
+                </Button>
+              </div>
             </div>
-            <div className="space-y-4">
+            
+            {/* Transactions List */}
+            <div className="space-y-3 sm:space-y-4">
                 {filteredTransactions.length > 0 ? (
                   filteredTransactions.map((transaction) => (
                     <TransactionItem
@@ -176,16 +185,16 @@ const Dashboard: React.FC = () => {
                     />
                   ))
                 ) : (
-                  <div className="text-center py-8 text-foreground/70">
-                    <p>No transactions found for this account.</p>
+                  <div className="text-center py-6 sm:py-8 text-foreground/70">
+                    <p className="text-sm sm:text-base">No transactions found for this account.</p>
                   </div>
                 )}
             </div>
           </div>
         </div>
         
-        {/* Spending Insights */}
-        <div className="lg:w-80 flex-shrink-0">
+        {/* Spending Insights - Responsive width */}
+        <div className="w-full lg:w-80 flex-shrink-0">
           <div className="sticky top-4">
             <SpendingInsights 
               monthlyBudget={3000}
