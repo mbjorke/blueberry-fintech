@@ -15,36 +15,20 @@ const navItems = [
   { label: "Analytics", icon: BarChart2, to: "/analytics" },
 ];
 
-export function SidebarNav() {
-  const location = useLocation();
-  const [isOpen, setIsOpen] = useState(false);
+interface SidebarNavProps {
+  isOpen?: boolean;
+  onToggle?: (open: boolean) => void;
+}
 
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
+export function SidebarNav({ isOpen = false, onToggle }: SidebarNavProps) {
+  const location = useLocation();
 
   const closeSidebar = () => {
-    setIsOpen(false);
+    onToggle?.(false);
   };
 
   return (
     <>
-      {/* Mobile Menu Button */}
-      <Button
-        variant="premium"
-        size="circle"
-        onClick={toggleSidebar}
-        className="lg:hidden fixed top-4 left-4 z-50"
-        aria-label="Toggle navigation menu"
-        aria-expanded={isOpen}
-      >
-        {isOpen ? (
-          <X className="h-12 w-12" />
-        ) : (
-          <Menu className="h-12 w-12" />
-        )}
-      </Button>
-
       {/* Mobile Overlay */}
       {isOpen && (
         <div

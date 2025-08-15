@@ -106,7 +106,7 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <main className="container mx-auto p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6">
+    <main className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-2">
         <h1 className="text-xl sm:text-2xl font-bold">Accounts</h1>
