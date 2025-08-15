@@ -1,5 +1,4 @@
 import { Badge } from "@/components/ui/badge";
-import { Sparkles, Pencil } from "lucide-react";
 import { Transaction } from "./types";
 import { getCategoryColorClasses } from "./constants";
 import { getCategoryIcon } from "@/utils/categoryIcons";

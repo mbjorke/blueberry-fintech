@@ -60,7 +60,7 @@ export function ThemeToggle() {
         <Button 
           variant="ghost" 
           size="icon" 
-          className="h-12 w-12 rounded-full focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 cursor-pointer"
+          className="h-12 w-12 rounded-full hover:bg-accent/20 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           aria-label="Toggle theme"
         >
           {theme === 'dark' ? (
@@ -80,7 +80,7 @@ export function ThemeToggle() {
           <DropdownMenuItem
             key={value}
             onClick={() => handleThemeChange(value as Theme)}
-            className={`flex items-center justify-between cursor-pointer ${theme === value ? 'bg-accent/20' : ''}`}
+            className={`flex items-center justify-between cursor-pointer hover:bg-accent/20 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${theme === value ? 'bg-accent/20' : ''}`}
           >
             <span>{label}</span>
             {theme === value && <Icon className={`h-4 w-4 ${iconClass}`} />}

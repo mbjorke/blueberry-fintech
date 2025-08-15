@@ -89,7 +89,11 @@ export const AlertsDropdown = () => {
   return (
     <DropdownMenu onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="premium" size="circle" className="relative">
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className="relative h-12 w-12 rounded-full hover:bg-accent/20 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
           <Bell className="h-12 w-12" />
           {unreadCount > 0 && (
             <Badge 
@@ -112,6 +116,7 @@ export const AlertsDropdown = () => {
               markAllAsRead();
             }}
             disabled={unreadCount === 0}
+            className="hover:bg-accent/20 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             Mark all as read
           </Button>
@@ -122,7 +127,7 @@ export const AlertsDropdown = () => {
             alerts.map((alert) => (
               <div key={alert.id}>
                 <DropdownMenuItem 
-                  className={`flex items-start gap-3 p-3 cursor-pointer ${!alert.read ? 'bg-muted/50' : ''}`}
+                  className={`flex items-start gap-3 p-3 cursor-pointer hover:bg-accent/20 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${!alert.read ? 'bg-muted/50' : ''}`}
                   onClick={() => markAsRead(alert.id)}
                 >
                   <div className="mt-0.5">

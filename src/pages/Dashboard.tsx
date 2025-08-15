@@ -10,9 +10,7 @@ import { Button } from "@/components/ui/button";
 
 import { 
   ArrowUpRight, 
-  ArrowDownLeft, 
   Filter, 
-  Download,
   Coffee,
   Car,
   ShoppingBag,
@@ -29,17 +27,6 @@ import {
   CATEGORY_BUDGETS,
   CATEGORY_LABELS,
 } from "@/mock/mockData";
-
-// Category icons mapping with React components
-const categoryIconComponents = {
-  food: Coffee,
-  transport: Car,
-  shopping: ShoppingBag,
-  housing: Home,
-  technology: Smartphone,
-  other: CreditCard,
-  unmapped: CreditCard
-} as const;
 
 const Dashboard: React.FC = () => {
   const [selectedAccount, setSelectedAccount] = useState<Account>(() => {

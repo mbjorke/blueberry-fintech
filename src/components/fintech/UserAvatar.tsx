@@ -104,7 +104,10 @@ export const UserAvatar = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-12 w-12 rounded-full p-0">
+        <Button 
+          variant="ghost" 
+          className="relative h-12 w-12 rounded-full p-0 hover:bg-accent/20 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
           <Avatar className="h-12 w-12">
             {imageUrl ? (
               <AvatarImage src={imageUrl} alt={name} />
