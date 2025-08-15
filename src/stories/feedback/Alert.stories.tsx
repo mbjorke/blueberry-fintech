@@ -10,7 +10,7 @@ import { AlertCircle, Bell, CheckCircle2, Info, Terminal, X, XCircle } from "luc
 import { cn } from "@/lib/utils";
 
 const meta: Meta<typeof Alert> = {
-  title: "Feedback/Alert",
+  title: "BASE/Alert",
   component: Alert,
   tags: ["autodocs"],
   parameters: {

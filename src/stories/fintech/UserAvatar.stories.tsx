@@ -21,6 +21,10 @@ const meta = {
       control: 'text',
       description: 'User\'s email to display in the dropdown',
     },
+    resumeUrl: {
+      control: 'text',
+      description: 'URL to the user\'s resume/CV',
+    },
   },
 } satisfies Meta<typeof UserAvatar>;
 
@@ -46,5 +50,21 @@ export const LongName: Story = {
   args: {
     name: 'Dr. Elizabeth Alexandra Mary Windsor',
     email: 'queen.elizabeth@example.com',
+  },
+};
+
+export const WithResume: Story = {
+  args: {
+    name: 'Marcus Björke',
+    email: 'mbjorke@gmail.com',
+    imageUrl: '/marcus-bjorke.jpeg',
+    resumeUrl: '/Marcus_Bjorke_Resume.pdf',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Example with a resume link that will open in a new tab when clicked.',
+      },
+    },
   },
 };

@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Loader2, Plus, Upload, X, AlertCircle } from "lucide-react";
 
 const meta: Meta<typeof Dialog> = {
-  title: "Feedback/Dialog",
+  title: "BASE/Dialog",
   component: Dialog,
   tags: ["autodocs"],
   parameters: { layout: "centered" },

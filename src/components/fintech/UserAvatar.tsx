@@ -23,12 +23,32 @@ interface UserAvatarProps {
    * User's email to display in the dropdown
    */
   email?: string;
+  /**
+   * URL to the user's resume/CV (optional)
+   */
+  resumeUrl?: string;
+  /**
+   * Callback for when profile is clicked (if resumeUrl is not provided)
+   */
+  onProfileClick?: () => void;
+  /**
+   * Callback for when settings is clicked
+   */
+  onSettingsClick?: () => void;
+  /**
+   * Callback for when sign out is clicked
+   */
+  onSignOut?: () => void;
 }
 
 export const UserAvatar = ({
   imageUrl,
   name = "User",
   email = "user@example.com",
+  resumeUrl,
+  onProfileClick,
+  onSettingsClick,
+  onSignOut,
 }: UserAvatarProps) => {
   const { toast } = useToast();
   
@@ -40,25 +60,45 @@ export const UserAvatar = ({
     .toUpperCase()
     .slice(0, 2);
 
-  const handleProfileClick = () => {
-    toast({
-      title: "Profile",
-      description: "Profile dialog will be implemented here.",
-    });
+  const handleProfileClick = (e: React.MouseEvent) => {
+    if (resumeUrl) {
+      // If resumeUrl is provided, don't prevent default to allow the link to work
+      return;
+    }
+    
+    e.preventDefault();
+    if (onProfileClick) {
+      onProfileClick();
+    } else {
+      toast({
+        title: "Profile",
+        description: "Profile dialog will be implemented here.",
+      });
+    }
   };
 
-  const handleSettingsClick = () => {
-    toast({
-      title: "Settings",
-      description: "Settings dialog will be implemented here.",
-    });
+  const handleSettingsClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (onSettingsClick) {
+      onSettingsClick();
+    } else {
+      toast({
+        title: "Settings",
+        description: "Settings dialog will be implemented here.",
+      });
+    }
   };
 
-  const handleSignOut = () => {
-    toast({
-      title: "Signed out",
-      description: "You have been signed out.",
-    });
+  const handleSignOut = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (onSignOut) {
+      onSignOut();
+    } else {
+      toast({
+        title: "Signed out",
+        description: "You have been signed out.",
+      });
+    }
   };
 
   return (
@@ -86,9 +126,17 @@ export const UserAvatar = ({
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleProfileClick}>
-          Profile & CV
-        </DropdownMenuItem>
+        {resumeUrl ? (
+          <DropdownMenuItem asChild>
+            <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="w-full">
+              View CV / Resume
+            </a>
+          </DropdownMenuItem>
+        ) : (
+          <DropdownMenuItem onClick={handleProfileClick}>
+            Profile
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem onClick={handleSettingsClick}>
           Settings
         </DropdownMenuItem>

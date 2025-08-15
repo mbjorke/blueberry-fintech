@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 
 const meta: Meta<typeof AlertDialog> = {
-  title: 'UI/Feedback/AlertDialog',
+  title: 'BASE/AlertDialog',
   component: AlertDialog,
   parameters: {
     layout: 'centered',

@@ -49,6 +49,7 @@ const Index = () => {
                 name="Marcus Björke" 
                 email="mbjorke@gmail.com"
                 imageUrl="/marcus-bjorke.jpeg"
+                resumeUrl="/Marcus_Bjorke_Resume.pdf"
               />
             </div>
           </div>
