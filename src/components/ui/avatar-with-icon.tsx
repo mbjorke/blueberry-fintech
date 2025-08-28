@@ -1,5 +1,5 @@
 import { Avatar, AvatarImage, AvatarFallback } from "./avatar";
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 import { User as UserIcon } from "lucide-react";
 import React from "react";
 

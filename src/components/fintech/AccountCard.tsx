@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Settings, Wallet, PiggyBank, Briefcase, CreditCard, Users } from "lucide-react";
 import { GradientCard } from "@/components/ui/gradient-card";
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 import { AccountDetailsModal } from "./AccountDetailsModal";
 import { useMemo, useState } from "react";
 

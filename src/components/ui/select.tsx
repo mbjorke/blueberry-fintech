@@ -2,7 +2,7 @@ import * as React from "react"
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { Check, ChevronDown, ChevronUp } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+import { cn } from "../../lib/utils"
 
 const Select = SelectPrimitive.Root
 
@@ -144,6 +144,22 @@ const SelectSeparator = React.forwardRef<
 ))
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName
 
+// Simple HTML select component for backward compatibility
+export interface SimpleSelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  variant?: 'default';
+}
+
+const SimpleSelect = React.forwardRef<HTMLSelectElement, SimpleSelectProps>(
+  ({ className, variant = 'default', ...props }, ref) => {
+    const baseStyles = "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors font-family: ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"";
+
+    return (
+      <select className={cn(baseStyles, className)} ref={ref} {...props} />
+    );
+  }
+);
+SimpleSelect.displayName = 'SimpleSelect';
+
 export {
   Select,
   SelectGroup,
@@ -155,4 +171,5 @@ export {
   SelectSeparator,
   SelectScrollUpButton,
   SelectScrollDownButton,
+  SimpleSelect,
 }

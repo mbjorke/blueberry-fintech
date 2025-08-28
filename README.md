@@ -1,178 +1,236 @@
-<div align="center">
-  <h1>Fintech Spark Studio</h1>
-  <p>A modern fintech dashboard and design system built with React, TypeScript, and Tailwind CSS</p>
-  
-  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-  [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg)](https://storybook.js.org/)
-  [![React](https://img.shields.io/badge/React-18.2-61DAFB?logo=react)](https://reactjs.org/)
-  [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?logo=typescript)](https://www.typescriptlang.org/)
-  [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1-06B6D4?logo=tailwind-css)](https://tailwindcss.com/)
-  <img src="./public/banking-dashboard.png" alt="Dashboard Preview" width="100%">
-</div>
+# 🎨 Blueberry Design System
 
-## 🌟 Features
+A comprehensive design system built for Blueberry products, featuring custom-branded components while respecting third-party dependencies. Originally developed as a proof of concept and now properly branded under the Blueberry ecosystem with our `blueberry-*` naming convention.
 
-### 🎨 Design System
-- **60+** reusable, accessible components
-- Built with Radix UI primitives and shadcn/ui
-- Comprehensive Storybook documentation
-- Dark/light mode support
-- Fully responsive design
+## 📦 Background
 
-### 💳 Fintech Dashboard
-- Real-time account overview
-- Transaction history and categorization
-- Interactive data visualizations
-- Responsive layout for all devices
-- Modern, clean UI with smooth animations
+This design system was originally built as [`blueberry-fintech`](https://github.com/mbjorke/blueberry-fintech) - a proof of concept demonstrating:
 
-## 🚀 Quick Start
+- Design system architecture with Storybook documentation
+- Component library built on Radix UI primitives
+- Fintech-specific UI components
+- TypeScript implementation with comprehensive testing
+- Theme system with design tokens
 
-### Prerequisites
-- Node.js 18+
-- npm 9+ or yarn 1.22+
+**Now fully transitioned to Blueberry ecosystem** with:
 
-### Installation
+- ✅ **Pure Blueberry Ownership** - All third-party tool references removed
+- ✅ **Clean Branding** - `@blueberry/design-system` package name
+- ✅ **Legal Compliance** - Clear IP separation maintained
+- ✅ **Monorepo Integration** - Works seamlessly with other Blueberry packages
 
+## 🏗️ Architecture
+
+### Original Blueberry Structure
+```
+blueberry-fintech/
+├── Components built on Radix UI
+├── Fintech-specific UI patterns
+├── Storybook documentation
+└── Custom theming system
+```
+
+### Lopify Integration
+```
+packages/lopify-design-system/
+├── 🔧 Built on Radix UI primitives (Third-party)
+│   ├── @radix-ui/react-dialog
+│   ├── @radix-ui/react-dropdown-menu
+│   └── [40+ Radix components]
+│
+├── 🎨 Lopify Branding (Our IP)
+│   ├── Custom styling & theming
+│   ├── Lopify design tokens
+│   ├── Branded component variants
+│   └── Logo & identity system
+│
+└── 📚 Documentation & Examples
+    ├── Storybook stories
+    ├── Component documentation
+    └── Usage guidelines
+```
+
+## 🎯 Naming Convention Demonstration
+
+### ✅ Our Branding (`lopify-*`)
 ```bash
-# Clone the repository
-git clone <YOUR_GIT_URL>
-cd fintech-spark-studio
+# Our design system package
+@lopify/design-system
 
-# Install dependencies
-npm install
-# or
-yarn install
+# Our branded components
+<LopifyLogo />          ← Our component
+<LopifyButton />        ← Our component
+<LopifyCard />          ← Our component
 
-# Start the development server
-npm run dev
-# or
-yarn dev
+# Our design tokens
+lopifyColors           ← Our tokens
+lopifyTypography       ← Our tokens
+lopifySpacing          ← Our tokens
 ```
 
-Open [http://localhost:8080](http://localhost:8080) in your browser to view the dashboard.
-
-## 📚 Storybook
-
-Explore all components in our interactive Storybook:
-
+### 🔗 Third-Party Dependencies
 ```bash
-# Start Storybook
-npm run storybook
-# or
-yarn storybook
+# Radix UI primitives (MIT licensed)
+@radix-ui/react-dialog
+@radix-ui/react-dropdown-menu
+@radix-ui/react-button
+
+# Other third-party libraries
+@iconify/react
+@hookform/resolvers
+tailwindcss
 ```
 
-Then open [http://localhost:6006](http://localhost:6006) to browse components and their documentation.
+## 📜 Legal Considerations
 
-## 🏗️ Project Structure
+### ✅ Proper Attribution Strategy
+- **Radix UI**: MIT license (no attribution required)
+- **Our Code**: MIT license (commercial friendly)
+- **Clear Separation**: Third-party dependencies clearly listed in package.json
 
+### ✅ Branding Rights
+- **`lopify-*`**: Our trademarked brand name
+- **No Confusion**: Clear distinction from Radix UI or other design systems
+- **Commercial Use**: Can be used in proprietary products
+
+### ✅ IP Protection
+- **Our Components**: Original styling, theming, composition
+- **Our Documentation**: Custom usage guidelines and examples
+- **Our Branding**: Lopify logos, colors, typography system
+
+## 🚀 Transition Process
+
+### Step 1: Package Rebranding
+```bash
+# Before
+"blueberry-fintech" → "blueberry.svg"
+
+# After
+"@lopify/design-system" → "lopify-logo.tsx"
 ```
-src/
-├── components/        # Reusable UI components
-│   ├── ui/            # Base components (buttons, inputs, etc.)
-│   └── fintech/       # Fintech-specific components
-├── stories/           # Component stories for Storybook
-├── lib/               # Utilities and helpers
-├── pages/             # Page components
-└── styles/            # Global styles and themes
+
+### Step 2: Component Rebranding
+```typescript
+// Before
+<BlueberryLogo src="/blueberry.svg" alt="Blueberry" />
+
+// After
+<LopifyLogo variant="lopify" alt="Lopify Logo" />
 ```
 
-## 🎨 Design System Components
+### Step 3: Backward Compatibility
+```typescript
+// Maintain compatibility for existing code
+export const BlueberryLogo = LopifyLogo;
+```
 
-### Base Components
-- Buttons
-- Forms & Inputs
-- Navigation
-- Overlays (Dialogs, Drawers, Tooltips)
-- Layout (Cards, Containers)
-- Typography
+## 🎨 Component Showcase
 
-### Fintech Components
-- Account Cards
-- Transaction Lists
-- Data Visualization Charts
-- Gradient Cards
-- Status Indicators
+### Base Components (Built on Radix UI)
+- **Avatar, Badge, Button** - Essential UI primitives
+- **Card, Dialog, Dropdown** - Layout and interaction
+- **Form, Input, Select** - Data entry components
+- **Toast, Tooltip, Progress** - Feedback and status
+
+### Fintech Components (Our Innovation)
+- **AccountCard** - Banking account display
+- **TransactionItem** - Transaction history
+- **SpendingInsights** - Analytics visualization
+- **AlertsDropdown** - Notification system
+
+### Branding Components (Our Identity)
+- **LopifyLogo** - Company logo with variants
+- **ThemeProvider** - Lopify theme system
+- **Design Tokens** - Lopify color palette and typography
 
 ## 🛠️ Development
 
-### Available Scripts
-
-- `dev` - Start development server
-- `build` - Build for production
-- `preview` - Preview production build
-- `storybook` - Start Storybook
-- `build-storybook` - Build static Storybook
-- `lint` - Run ESLint
-- `type-check` - Run TypeScript type checking
-
-## 🏗️ Built With
-
-- [React 18](https://reactjs.org/) - UI Library
-- [TypeScript](https://www.typescriptlang.org/) - Type Safety
-- [Tailwind CSS](https://tailwindcss.com/) - Styling
-- [Radix UI](https://www.radix-ui.com/) - Primitives
-- [shadcn/ui](https://ui.shadcn.com/) - Component Library
-- [Storybook](https://storybook.js.org/) - Component Documentation
-- [Vite](https://vitejs.dev/) - Build Tool
-
-## 🚀 Deployment
-
-### Building for Production
-
+### Getting Started
 ```bash
-# Create production build
-npm run build
+# Install dependencies
+npm install
 
-# Preview the production build locally
-npm run preview
+# Run Storybook
+npm run storybook
+
+# Build for production
+npm run build
 ```
 
-The build will be available in the `dist` directory.
+### Adding New Components
+1. **Choose Radix Primitive** (when applicable)
+2. **Apply Lopify Styling** (design tokens)
+3. **Add Lopify Branding** (naming, variants)
+4. **Document in Storybook** (examples, props)
 
-### Deployment Options
+### Design Token Usage
+```typescript
+import { lopifyColors, lopifyTypography } from './tokens';
 
-#### Vercel (Recommended)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=<YOUR_REPO_URL>&project-name=fintech-spark-studio&repository-name=fintech-spark-studio)
+// Use our branded design tokens
+const buttonStyles = {
+  backgroundColor: lopifyColors.primary,
+  fontFamily: lopifyTypography.fontFamily,
+  borderRadius: lopifySpacing.borderRadius,
+};
+```
 
-1. Push your code to a GitHub repository
-2. Import the project on Vercel
-3. Vercel will automatically detect the Vite project and set up the build settings
+## 📊 Storybook Documentation
 
-#### Netlify
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=<YOUR_REPO_URL>)
+The design system includes comprehensive Storybook documentation:
 
-1. Connect your GitHub repository to Netlify
-2. Set the build command to `npm run build`
-3. Set the publish directory to `dist`
-4. Deploy!
+### Component Categories
+- **Base Components** - Fundamental UI primitives
+- **Composed Components** - Complex fintech-specific components
+- **Feedback Components** - Status and interaction feedback
+- **Form Components** - Data entry and validation
+- **Navigation Components** - Routing and navigation
+- **Utilities** - Helper components and utilities
+
+### Documentation Features
+- **Interactive Examples** - Try components in real-time
+- **Props Documentation** - Complete TypeScript interfaces
+- **Usage Guidelines** - Best practices and patterns
+- **Accessibility** - WCAG compliance information
+- **Theming** - Customization and branding options
+
+## 🔄 Migration Path
+
+### For Existing Blueberry Projects
+```typescript
+// Old imports (still work)
+import { BlueberryLogo } from '@lopify/design-system';
+
+// New recommended imports
+import { LopifyLogo } from '@lopify/design-system';
+```
+
+### Gradual Transition
+1. **Keep backward compatibility** during transition
+2. **Update documentation** to show Lopify examples
+3. **Migrate components** gradually
+4. **Update branding** in design files
 
 ## 🤝 Contributing
 
-Contributions are welcome! Here's how you can help:
+### Component Development Guidelines
+1. **Use Radix UI** when possible (accessibility benefits)
+2. **Follow Lopify design tokens** (consistency)
+3. **Document thoroughly** (Storybook + README)
+4. **Test accessibility** (WCAG AA compliance)
+5. **TypeScript first** (comprehensive type definitions)
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+### Branding Guidelines
+- Use `Lopify` prefix for component names
+- Follow established design tokens
+- Document component variants
+- Include accessibility considerations
 
-### Code Style
+## 📄 License
 
-- Follow the existing code style (prettier + eslint)
-- Write meaningful commit messages
-- Document new components with Storybook stories
-- Add TypeScript types for all new code
+MIT License - see LICENSE file for details.
 
-## 📝 License
+---
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- [Lovable](https://www.lovable.dev/) for their excellent work on the Radix UI primitives that this project is built upon
-- [Radix UI](https://www.radix-ui.com/) for accessible primitives
-- [shadcn/ui](https://ui.shadcn.com/) for the component inspiration
-- [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS
-- [Storybook](https://storybook.js.org/) for component documentation
+**🎨 Built with ❤️ by Lopify | Originally developed as Blueberry Fintech POC**
+**🔧 Powered by Radix UI primitives | 📚 Documented with Storybook**
