@@ -77,6 +77,7 @@ export default defineConfig(({ mode }) => ({
         // Other libraries that might use React
         'next-themes',
         '@clerk/nextjs',
+        '@clerk/react',
         'date-fns',
         '@hookform/resolvers'
       ],
@@ -127,6 +128,7 @@ export default defineConfig(({ mode }) => ({
           // Other libraries
           'next-themes': 'NextThemes',
           '@clerk/nextjs': 'Clerk',
+          '@clerk/react': 'ClerkReact',
           'date-fns': 'DateFns',
           '@hookform/resolvers': 'HookformResolvers'
         }
