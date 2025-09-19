@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   useUser,
   useClerk,
@@ -49,8 +48,9 @@ export function Navigation({
   const [loading, setLoadingCount] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const router = useRouter();
-  const pathname = usePathname();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const pathname = location.pathname;
   const { user, isLoaded } = useUser();
   const { signOut } = useClerk();
 
@@ -84,7 +84,7 @@ export function Navigation({
 
   const handleSignOut = async () => {
     await signOut();
-    router.push('/');
+    navigate('/');
   };
 
   // Don't show navbar on auth pages

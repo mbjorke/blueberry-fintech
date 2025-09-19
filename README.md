@@ -1,236 +1,246 @@
-# 🎨 Blueberry Design System
+<div align="center">
+  <img src="./public/blueberry.svg" alt="Blueberry Logo" width="120" height="120" />
+  <h1>🫐 Blueberry Design & Build System</h1>
+  <p><strong>Enterprise-grade design system with kick-ass developer workflows</strong></p>
+  <p>Complete UI components + automated quality assurance + developer tooling</p>
+</div>
 
-A comprehensive design system built for Blueberry products, featuring custom-branded components while respecting third-party dependencies. Originally developed as a proof of concept and now properly branded under the Blueberry ecosystem with our `blueberry-*` naming convention.
+---
 
-## 📦 Background
+## 🚀 What Makes Blueberry Special
 
-This design system was originally built as [`blueberry-fintech`](https://github.com/mbjorke/blueberry-fintech) - a proof of concept demonstrating:
+Blueberry is not just another component library—it's a **complete design and build system** engineered for modern development teams who demand quality, speed, and reliability.
 
-- Design system architecture with Storybook documentation
-- Component library built on Radix UI primitives
-- Fintech-specific UI components
-- TypeScript implementation with comprehensive testing
-- Theme system with design tokens
+### 🎯 Core Features
 
-**Now fully transitioned to Blueberry ecosystem** with:
+- **🧩 40+ Production Components**: Complete UI component library with variants
+- **⚡ TypeScript First**: Full type safety, IntelliSense, and developer experience
+- **🎨 Tailwind CSS**: Utility-first styling with custom design tokens
+- **♿ Radix UI Foundation**: Accessible, unstyled primitives you can trust
+- **📚 Interactive Storybook**: Live component documentation and testing
+- **🏗️ Vite Build System**: Lightning-fast development and optimized production builds
 
-- ✅ **Pure Blueberry Ownership** - All third-party tool references removed
-- ✅ **Clean Branding** - `@blueberry/design-system` package name
-- ✅ **Legal Compliance** - Clear IP separation maintained
-- ✅ **Monorepo Integration** - Works seamlessly with other Blueberry packages
+### 🔥 Developer Workflows (The Secret Sauce)
 
-## 🏗️ Architecture
+Blueberry comes with **enterprise-grade developer workflows** that ensure code quality and accelerate development:
 
-### Original Blueberry Structure
-```
-blueberry-fintech/
-├── Components built on Radix UI
-├── Fintech-specific UI patterns
-├── Storybook documentation
-└── Custom theming system
-```
+- **🎨 Design Review**: Automated UI/UX quality assurance using Playwright
+- **🔒 Security Review**: Automated security scanning and vulnerability detection
+- **📝 Code Review**: Static analysis, complexity checks, and best practices validation
+- **🧪 Testing Integration**: Comprehensive test suite with coverage reporting
+- **📦 Build Optimization**: Tree shaking, bundle analysis, and performance monitoring
 
-### Lopify Integration
-```
-packages/lopify-design-system/
-├── 🔧 Built on Radix UI primitives (Third-party)
-│   ├── @radix-ui/react-dialog
-│   ├── @radix-ui/react-dropdown-menu
-│   └── [40+ Radix components]
-│
-├── 🎨 Lopify Branding (Our IP)
-│   ├── Custom styling & theming
-│   ├── Lopify design tokens
-│   ├── Branded component variants
-│   └── Logo & identity system
-│
-└── 📚 Documentation & Examples
-    ├── Storybook stories
-    ├── Component documentation
-    └── Usage guidelines
-```
+### 🛠️ CLI Tools for External Projects
 
-## 🎯 Naming Convention Demonstration
+External projects can leverage Blueberry's workflows:
 
-### ✅ Our Branding (`lopify-*`)
 ```bash
-# Our design system package
-@lopify/design-system
+# Run quality reviews on any project
+npx @blueberry/design-system workflow:design-review
+npx @blueberry/design-system workflow:code-review
+npx @blueberry/design-system workflow:security-review
 
-# Our branded components
-<LopifyLogo />          ← Our component
-<LopifyButton />        ← Our component
-<LopifyCard />          ← Our component
-
-# Our design tokens
-lopifyColors           ← Our tokens
-lopifyTypography       ← Our tokens
-lopifySpacing          ← Our tokens
+# Run all reviews at once
+npx @blueberry/design-system workflow:all
 ```
 
-### 🔗 Third-Party Dependencies
+## 📦 Quick Start
+
 ```bash
-# Radix UI primitives (MIT licensed)
-@radix-ui/react-dialog
-@radix-ui/react-dropdown-menu
-@radix-ui/react-button
+# Install the complete design & build system
+npm install @blueberry/design-system
 
-# Other third-party libraries
-@iconify/react
-@hookform/resolvers
-tailwindcss
+# Start development with hot reloading
+npm run dev
+
+# Build for production
+npm run build
+
+# Run quality reviews
+npm run workflow:all
 ```
 
-## 📜 Legal Considerations
+## 🏗️ Usage
 
-### ✅ Proper Attribution Strategy
-- **Radix UI**: MIT license (no attribution required)
-- **Our Code**: MIT license (commercial friendly)
-- **Clear Separation**: Third-party dependencies clearly listed in package.json
+```tsx
+import { Button, Card, Input, Badge, BrandLogo } from '@blueberry/design-system';
 
-### ✅ Branding Rights
-- **`lopify-*`**: Our trademarked brand name
-- **No Confusion**: Clear distinction from Radix UI or other design systems
-- **Commercial Use**: Can be used in proprietary products
-
-### ✅ IP Protection
-- **Our Components**: Original styling, theming, composition
-- **Our Documentation**: Custom usage guidelines and examples
-- **Our Branding**: Lopify logos, colors, typography system
-
-## 🚀 Transition Process
-
-### Step 1: Package Rebranding
-```bash
-# Before
-"blueberry-fintech" → "blueberry.svg"
-
-# After
-"@lopify/design-system" → "lopify-logo.tsx"
+function App() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-background to-muted p-6">
+      <BrandLogo variant="v1.0.0" className="mb-8" />
+      <Card className="max-w-md mx-auto">
+        <div className="p-6 space-y-4">
+          <Input placeholder="Enter your details..." />
+          <Button variant="primary" className="w-full">
+            Get Started
+          </Button>
+          <Badge variant="secondary">Beta Access</Badge>
+        </div>
+      </Card>
+    </div>
+  );
+}
 ```
 
-### Step 2: Component Rebranding
-```typescript
-// Before
-<BlueberryLogo src="/blueberry.svg" alt="Blueberry" />
+## 🎨 Component Library
 
-// After
-<LopifyLogo variant="lopify" alt="Lopify Logo" />
-```
+### 🧩 Core Components (40+)
+- **Form Controls**: Button, Input, Select, Checkbox, Radio, Textarea
+- **Layout**: Card, Dialog, Sheet, Popover, Dropdown, Tooltip
+- **Navigation**: Navigation, Tabs, Breadcrumb, Pagination
+- **Data Display**: Table, Badge, Avatar, Skeleton, Progress
+- **Feedback**: Toast, Alert, Spinner, Loading states
+- **Specialized**: Calendar, Carousel, Charts, Form components
 
-### Step 3: Backward Compatibility
-```typescript
-// Maintain compatibility for existing code
-export const BlueberryLogo = LopifyLogo;
-```
+### 🪝 Custom Hooks
+- **useIsMobile**: Responsive breakpoint detection
+- **useToast**: Toast notification management
+- **Form hooks**: React Hook Form integration
 
-## 🎨 Component Showcase
+### 🎨 Design System
+- **Color Palette**: Primary, secondary, neutral, semantic colors
+- **Typography**: Font families, sizes, weights, line heights
+- **Spacing**: Consistent spacing scale and utilities
+- **Shadows**: Elevation system for depth
+- **Border Radius**: Consistent corner rounding
+- **Brand Elements**: Logo, gradients, animations
 
-### Base Components (Built on Radix UI)
-- **Avatar, Badge, Button** - Essential UI primitives
-- **Card, Dialog, Dropdown** - Layout and interaction
-- **Form, Input, Select** - Data entry components
-- **Toast, Tooltip, Progress** - Feedback and status
+## 🔧 Development
 
-### Fintech Components (Our Innovation)
-- **AccountCard** - Banking account display
-- **TransactionItem** - Transaction history
-- **SpendingInsights** - Analytics visualization
-- **AlertsDropdown** - Notification system
-
-### Branding Components (Our Identity)
-- **LopifyLogo** - Company logo with variants
-- **ThemeProvider** - Lopify theme system
-- **Design Tokens** - Lopify color palette and typography
-
-## 🛠️ Development
-
-### Getting Started
+### Local Development
 ```bash
 # Install dependencies
 npm install
 
-# Run Storybook
+# Start development server
+npm run dev
+
+# Start Storybook
 npm run storybook
 
 # Build for production
 npm run build
 ```
 
-### Adding New Components
-1. **Choose Radix Primitive** (when applicable)
-2. **Apply Lopify Styling** (design tokens)
-3. **Add Lopify Branding** (naming, variants)
-4. **Document in Storybook** (examples, props)
+## 🔥 Developer Workflows (Enterprise Grade)
 
-### Design Token Usage
-```typescript
-import { lopifyColors, lopifyTypography } from './tokens';
+Blueberry's **secret weapon** is its comprehensive developer workflow system that ensures code quality, security, and design consistency across your entire development lifecycle.
 
-// Use our branded design tokens
-const buttonStyles = {
-  backgroundColor: lopifyColors.primary,
-  fontFamily: lopifyTypography.fontFamily,
-  borderRadius: lopifySpacing.borderRadius,
-};
+### 🎯 Available Workflows
+
+| Workflow | Purpose | Trigger |
+|----------|---------|---------|
+| **Design Review** | UI/UX quality, accessibility, consistency | Pre-deployment |
+| **Code Review** | Static analysis, complexity, best practices | Pre-commit |
+| **Security Review** | Vulnerability scanning, credential detection | Pre-deployment |
+| **Testing Suite** | Unit, integration, visual regression tests | CI/CD |
+
+### 🚀 Running Workflows
+
+```bash
+# Run individual reviews
+npm run workflow:design-review    # 🎨 UI/UX quality assurance
+npm run workflow:code-review      # 📝 Code quality & security
+npm run workflow:security-review  # 🔒 Security scanning
+
+# Run everything at once
+npm run workflow:all             # 🔥 Complete quality suite
 ```
 
-## 📊 Storybook Documentation
+### 🛠️ CLI Tools for Any Project
 
-The design system includes comprehensive Storybook documentation:
+**Use Blueberry's workflows on ANY project** (not just React/TypeScript):
 
-### Component Categories
-- **Base Components** - Fundamental UI primitives
-- **Composed Components** - Complex fintech-specific components
-- **Feedback Components** - Status and interaction feedback
-- **Form Components** - Data entry and validation
-- **Navigation Components** - Routing and navigation
-- **Utilities** - Helper components and utilities
+```bash
+# From any project directory
+npx @blueberry/design-system workflow:design-review
+npx @blueberry/design-system workflow:code-review
+npx @blueberry/design-system workflow:all
 
-### Documentation Features
-- **Interactive Examples** - Try components in real-time
-- **Props Documentation** - Complete TypeScript interfaces
-- **Usage Guidelines** - Best practices and patterns
-- **Accessibility** - WCAG compliance information
-- **Theming** - Customization and branding options
-
-## 🔄 Migration Path
-
-### For Existing Blueberry Projects
-```typescript
-// Old imports (still work)
-import { BlueberryLogo } from '@lopify/design-system';
-
-// New recommended imports
-import { LopifyLogo } from '@lopify/design-system';
+# Get workflow reports
+npx @blueberry/design-system workflow:security-review
 ```
 
-### Gradual Transition
-1. **Keep backward compatibility** during transition
-2. **Update documentation** to show Lopify examples
-3. **Migrate components** gradually
-4. **Update branding** in design files
+### 📊 Workflow Reports
 
-## 🤝 Contributing
+Each workflow generates detailed reports:
+- **📈 Metrics**: Code complexity, bundle size, performance
+- **🔍 Issues**: Actionable recommendations with severity levels
+- **📋 Coverage**: Test coverage, accessibility compliance
+- **🎨 Visual**: Screenshots, design consistency analysis
 
-### Component Development Guidelines
-1. **Use Radix UI** when possible (accessibility benefits)
-2. **Follow Lopify design tokens** (consistency)
-3. **Document thoroughly** (Storybook + README)
-4. **Test accessibility** (WCAG AA compliance)
-5. **TypeScript first** (comprehensive type definitions)
+## 📋 Publishing
 
-### Branding Guidelines
-- Use `Lopify` prefix for component names
-- Follow established design tokens
-- Document component variants
-- Include accessibility considerations
+To publish a new version:
+
+```bash
+# Build and publish
+npm run publish:design-system
+
+# Or manually
+npm run build
+npm publish
+```
+
+## 🏗️ System Architecture
+
+```
+packages/blueberry-design-system/
+├── src/
+│   ├── components/
+│   │   ├── ui/           # 40+ UI components
+│   │   ├── fintech/      # Financial components
+│   │   └── theme/        # Theme providers
+│   ├── hooks/            # Custom React hooks
+│   ├── tokens/           # Design system tokens
+│   ├── lib/              # Utilities & helpers
+│   └── stories/          # Storybook documentation
+├── dist/                 # Optimized production build
+├── workflows/            # Developer workflow scripts
+└── public/               # Static assets & branding
+```
+
+## 🎯 Perfect For
+
+- **🚀 Startup Teams**: Rapid prototyping with enterprise quality
+- **🏢 Enterprise Teams**: Consistent design with developer tooling
+- **👥 Design Systems**: Comprehensive foundation for custom systems
+- **🔧 Developer Tools**: CLI workflows for any project type
+- **📱 Modern Web Apps**: React + TypeScript + Tailwind stack
+
+## 🌟 Why Choose Blueberry?
+
+| Feature | Blueberry | Others |
+|---------|-----------|---------|
+| **Components** | 40+ production-ready | Limited selection |
+| **Developer Workflows** | ✅ Built-in automation | ❌ Manual processes |
+| **CLI Tools** | ✅ Any project type | ❌ Framework-specific |
+| **Build Optimization** | ✅ Tree shaking, 443kB | ❌ Bloated bundles |
+| **Type Safety** | ✅ 100% TypeScript | ⚠️ Optional |
+| **Accessibility** | ✅ Radix UI foundation | ⚠️ Variable |
+
+## 🤝 Community & Support
+
+- **📖 Documentation**: Comprehensive Storybook + guides
+- **🛠️ CLI Tools**: Workflow automation for any project
+- **🔧 Developer Experience**: Hot reload, IntelliSense, testing
+- **📦 Enterprise Ready**: Production-tested, optimized, secure
+
+## 🔗 Ecosystem
+
+- **🫐 Blueberry Monorepo**: Complete development ecosystem
+- **⚡ Dev Flow App**: Independent development workflow tool
+- **🏪 Component Marketplace**: Share and discover components
+- **🔧 CLI Tools**: Developer workflow automation
 
 ## 📄 License
 
-MIT License - see LICENSE file for details.
+**MIT © Blueberry** - Build amazing things, give credit, share improvements!
 
 ---
 
-**🎨 Built with ❤️ by Lopify | Originally developed as Blueberry Fintech POC**
-**🔧 Powered by Radix UI primitives | 📚 Documented with Storybook**
+<div align="center">
+  <p><strong>🫐 Blueberry - Design & Build System with Kick-Ass Developer Workflows</strong></p>
+  <p>Built with ❤️ for developers who demand quality and speed</p>
+</div>

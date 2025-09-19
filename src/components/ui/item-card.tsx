@@ -1,6 +1,5 @@
 import { formatDistanceToNow } from 'date-fns';
-import Link from 'next/link';
-import Image from 'next/image';
+import { Link } from 'react-router-dom';
 import { Badge } from './badge';
 import { Card, CardContent } from './card';
 
@@ -80,12 +79,10 @@ export function ItemCard({
       <Card className={`group cursor-pointer transition-all duration-300 ease-out hover:shadow-xl hover:shadow-gray-200/50 hover:scale-[1.02] hover:-translate-y-1 active:scale-[0.98] ${className}`}>
         {/* Image */}
         <div className='aspect-square relative bg-gray-100 overflow-hidden'>
-          <Image
+          <img
             src={mainImage}
             alt={item.title}
-            fill
-            className='object-cover transition-transform duration-300 ease-out group-hover:scale-110'
-            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+            className='w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-110'
           />
 
           {/* Condition Badge */}
@@ -166,11 +163,9 @@ export function ItemCard({
             <div className='mt-2 pt-2 border-t border-gray-100 flex items-center space-x-2 transition-colors duration-200 group-hover:border-gray-200'>
               <div className='w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center transition-all duration-200 group-hover:scale-110 group-hover:ring-2 group-hover:ring-blue-200'>
                 {item.seller.avatar ? (
-                  <Image
+                  <img
                     src={item.seller.avatar}
                     alt={item.seller.name}
-                    width={24}
-                    height={24}
                     className='w-6 h-6 rounded-full object-cover'
                   />
                 ) : (
