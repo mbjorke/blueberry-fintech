@@ -1,6 +1,5 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Navigation } from "../../components/ui/navigation";
 
 // Mock Clerk hooks and components for Storybook
 const mockUseUser = (isSignedIn: boolean) => ({
@@ -57,42 +56,70 @@ const MockLink = ({ href, children, className, onClick }: {
   </a>
 );
 
-// Create a mocked Navigation component for Storybook
+// Create a simple mocked Navigation component for Storybook
 const MockNavigation = (props: any) => {
-  // Mock the Clerk and Next.js hooks
-  React.useEffect(() => {
-    // Override global hooks for Storybook
-    (window as any).__STORYBOOK_CLERK_MOCKS__ = {
-      useUser: mockUseUser(props.isSignedIn || false),
-      useClerk: mockUseClerk(),
-      useRouter: mockUseRouter(),
-      usePathname: mockUsePathname(),
-      SignInButton: MockSignInButton,
-      SignUpButton: MockSignUpButton,
-      UserButton: MockUserButton,
-      SignedIn: MockSignedIn,
-      SignedOut: MockSignedOut,
-      Link: MockLink,
-    };
-  }, [props.isSignedIn]);
+  const { brand = "blueberry", showAuth = true, isSignedIn = false, items = [] } = props;
+  
+  return (
+    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          {/* Logo */}
+          <div className="flex items-center">
+            <a href="/" className="flex items-center">
+              <div className="text-2xl font-bold text-blue-600">
+                🫐 {brand === "loppis" ? "Loppis" : "Blueberry"}
+              </div>
+            </a>
+          </div>
 
-  // Import the real component dynamically to avoid build issues
-  const [NavigationComponent, setNavigationComponent] = React.useState<any>(null);
+          {/* Navigation */}
+          <div className="hidden md:flex items-center space-x-1">
+            {items.map((item: any, index: number) => (
+              <a
+                key={index}
+                href={item.href}
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+              >
+                {item.icon && <item.icon className="w-4 h-4" />}
+                <span>{item.label}</span>
+                {item.badge && item.badge > 0 && (
+                  <span className="bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
+                    {item.badge}
+                  </span>
+                )}
+              </a>
+            ))}
+          </div>
 
-  React.useEffect(() => {
-    import("../../components/ui/navigation").then(({ Navigation }) => {
-      setNavigationComponent(() => Navigation);
-    });
-  }, []);
-
-  if (!NavigationComponent) {
-    return <div className="h-16 bg-gray-100 animate-pulse" />;
-  }
-
-  return <NavigationComponent {...props} />;
+          {/* User menu */}
+          {showAuth && (
+            <div className="hidden md:flex items-center space-x-2">
+              {isSignedIn ? (
+                <MockUserButton />
+              ) : (
+                <>
+                  <MockSignInButton mode="modal">
+                    <button className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900">
+                      Sign In
+                    </button>
+                  </MockSignInButton>
+                  <MockSignUpButton mode="modal">
+                    <button className="px-3 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                      Sign Up
+                    </button>
+                  </MockSignUpButton>
+                </>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </nav>
+  );
 };
 
-const meta: Meta<typeof Navigation> = {
+const meta: Meta<typeof MockNavigation> = {
   title: "Navigation/Navigation",
   component: MockNavigation,
   tags: ["autodocs"],
@@ -122,7 +149,7 @@ const meta: Meta<typeof Navigation> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof Navigation>;
+type Story = StoryObj<typeof MockNavigation>;
 
 // Default Navigation
 export const Default: Story = {
