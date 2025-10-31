@@ -47,7 +47,7 @@ const Index = () => {
               <AlertsDropdown />
               <UserAvatar 
                 name="Marcus Björke" 
-                email="mbjorke@gmail.com"
+                email="marcus@blueberry.surf"
                 imageUrl="/marcus-bjorke.png"
                 resumeUrl="https://mbjorke.cv"
               />
