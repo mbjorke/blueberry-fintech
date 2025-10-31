@@ -10,8 +10,11 @@ RUN echo "Cache bust: $CACHEBUST" >/dev/null
 # Build the dashboard app (not storybook)
 RUN npm run build
 # Verify we built the dashboard and not storybook
-RUN test -f dist/index.html && echo "Dashboard build successful" || (echo "ERROR: Dashboard build failed!" && exit 1)
-RUN test ! -f dist/iframe.html && echo "Verified: No storybook iframe.html" || echo "WARNING: Storybook files detected"
+RUN test -f dist/index.html || (echo "ERROR: Dashboard build failed - no index.html!" && exit 1)
+RUN test ! -f dist/iframe.html || (echo "ERROR: Storybook detected in dist! Build is wrong!" && exit 1)
+RUN test ! -d dist/iframe.html || (echo "ERROR: Storybook iframe.html found!" && exit 1)
+RUN grep -q "Fintech Dashboard" dist/index.html || (echo "ERROR: Dashboard index.html doesn't contain expected title!" && exit 1)
+RUN echo "✓ Dashboard build verified successfully"
 RUN ls -la dist/ | head -10
 
 # Production stage
