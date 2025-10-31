@@ -20,35 +20,19 @@ Blueberry is not just another component library—it's a **complete design and b
 - **📚 Interactive Storybook**: Live component documentation and testing
 - **🏗️ Vite Build System**: Lightning-fast development and optimized production builds
 
-### 🔥 Developer Workflows (The Secret Sauce)
+### 🔥 Developer Workflows
 
-Blueberry comes with **enterprise-grade developer workflows** that ensure code quality and accelerate development:
+Blueberry includes developer workflows for quality assurance:
 
-- **🎨 Design Review**: Automated UI/UX quality assurance using Playwright
-- **🔒 Security Review**: Automated security scanning and vulnerability detection
-- **📝 Code Review**: Static analysis, complexity checks, and best practices validation
 - **🧪 Testing Integration**: Comprehensive test suite with coverage reporting
-- **📦 Build Optimization**: Tree shaking, bundle analysis, and performance monitoring
-
-### 🛠️ CLI Tools for External Projects
-
-External projects can leverage Blueberry's workflows:
-
-```bash
-# Run quality reviews on any project
-npx @blueberry/design-system workflow:design-review
-npx @blueberry/design-system workflow:code-review
-npx @blueberry/design-system workflow:security-review
-
-# Run all reviews at once
-npx @blueberry/design-system workflow:all
-```
+- **📦 Build Optimization**: Tree shaking and optimized production builds
+- **📚 Storybook**: Interactive component documentation and testing
 
 ## 📦 Quick Start
 
 ```bash
-# Install the complete design & build system
-npm install @blueberry/design-system
+# Install dependencies
+npm install
 
 # Start development with hot reloading
 npm run dev
@@ -56,26 +40,26 @@ npm run dev
 # Build for production
 npm run build
 
-# Run quality reviews
-npm run workflow:all
 ```
 
 ## 🏗️ Usage
 
+Components are organized in the `src/components` directory. Import directly from the component files:
+
 ```tsx
-import { Button, Card, Input, Badge, BrandLogo } from '@blueberry/design-system';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 
 function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted p-6">
-      <BrandLogo variant="v1.0.0" className="mb-8" />
       <Card className="max-w-md mx-auto">
         <div className="p-6 space-y-4">
           <Input placeholder="Enter your details..." />
-          <Button variant="primary" className="w-full">
+          <Button variant="default" className="w-full">
             Get Started
           </Button>
-          <Badge variant="secondary">Beta Access</Badge>
         </div>
       </Card>
     </div>
@@ -123,81 +107,46 @@ npm run storybook
 npm run build
 ```
 
-## 🔥 Developer Workflows (Enterprise Grade)
+## 🔥 Developer Workflows
 
-Blueberry's **secret weapon** is its comprehensive developer workflow system that ensures code quality, security, and design consistency across your entire development lifecycle.
+### 🧪 Testing
 
-### 🎯 Available Workflows
-
-| Workflow | Purpose | Trigger |
-|----------|---------|---------|
-| **Design Review** | UI/UX quality, accessibility, consistency | Pre-deployment |
-| **Code Review** | Static analysis, complexity, best practices | Pre-commit |
-| **Security Review** | Vulnerability scanning, credential detection | Pre-deployment |
-| **Testing Suite** | Unit, integration, visual regression tests | CI/CD |
-
-### 🚀 Running Workflows
+Vitest is configured for testing. Run tests using:
 
 ```bash
-# Run individual reviews
-npm run workflow:design-review    # 🎨 UI/UX quality assurance
-npm run workflow:code-review      # 📝 Code quality & security
-npm run workflow:security-review  # 🔒 Security scanning
+# Run tests with Vitest (if test script is added)
+npx vitest
 
-# Run everything at once
-npm run workflow:all             # 🔥 Complete quality suite
+# Run tests with coverage
+npx vitest --coverage
 ```
 
-### 🛠️ CLI Tools for Any Project
+### 📝 Linting
 
-**Use Blueberry's workflows on ANY project** (not just React/TypeScript):
+Check code quality with ESLint:
 
 ```bash
-# From any project directory
-npx @blueberry/design-system workflow:design-review
-npx @blueberry/design-system workflow:code-review
-npx @blueberry/design-system workflow:all
+# Run linter
+npm run lint
 
-# Get workflow reports
-npx @blueberry/design-system workflow:security-review
+# Type check
+npm run type-check
 ```
 
-### 📊 Workflow Reports
-
-Each workflow generates detailed reports:
-- **📈 Metrics**: Code complexity, bundle size, performance
-- **🔍 Issues**: Actionable recommendations with severity levels
-- **📋 Coverage**: Test coverage, accessibility compliance
-- **🎨 Visual**: Screenshots, design consistency analysis
-
-## 📋 Publishing
-
-To publish a new version:
-
-```bash
-# Build and publish
-npm run publish:design-system
-
-# Or manually
-npm run build
-npm publish
-```
 
 ## 🏗️ System Architecture
 
 ```
-packages/blueberry-design-system/
-├── src/
-│   ├── components/
-│   │   ├── ui/           # 40+ UI components
-│   │   ├── fintech/      # Financial components
-│   │   └── theme/        # Theme providers
-│   ├── hooks/            # Custom React hooks
-│   ├── tokens/           # Design system tokens
-│   ├── lib/              # Utilities & helpers
-│   └── stories/          # Storybook documentation
+src/
+├── components/
+│   ├── ui/               # UI components
+│   └── fintech/          # Financial components
+├── hooks/                # Custom React hooks
+├── lib/                  # Utilities & helpers
+├── stories/              # Storybook documentation
+├── pages/                # Page components
+└── styles/               # Global styles and themes
 ├── dist/                 # Optimized production build
-├── workflows/            # Developer workflow scripts
 └── public/               # Static assets & branding
 ```
 
@@ -206,7 +155,6 @@ packages/blueberry-design-system/
 - **🚀 Startup Teams**: Rapid prototyping with enterprise quality
 - **🏢 Enterprise Teams**: Consistent design with developer tooling
 - **👥 Design Systems**: Comprehensive foundation for custom systems
-- **🔧 Developer Tools**: CLI workflows for any project type
 - **📱 Modern Web Apps**: React + TypeScript + Tailwind stack
 
 ## 🌟 Why Choose Blueberry?
@@ -214,25 +162,16 @@ packages/blueberry-design-system/
 | Feature | Blueberry | Others |
 |---------|-----------|---------|
 | **Components** | 40+ production-ready | Limited selection |
-| **Developer Workflows** | ✅ Built-in automation | ❌ Manual processes |
-| **CLI Tools** | ✅ Any project type | ❌ Framework-specific |
-| **Build Optimization** | ✅ Tree shaking, 443kB | ❌ Bloated bundles |
+| **Developer Tools** | ✅ Storybook, Testing, Linting | ❌ Manual processes |
+| **Build Optimization** | ✅ Tree shaking, optimized bundles | ❌ Bloated bundles |
 | **Type Safety** | ✅ 100% TypeScript | ⚠️ Optional |
 | **Accessibility** | ✅ Radix UI foundation | ⚠️ Variable |
 
 ## 🤝 Community & Support
 
 - **📖 Documentation**: Comprehensive Storybook + guides
-- **🛠️ CLI Tools**: Workflow automation for any project
 - **🔧 Developer Experience**: Hot reload, IntelliSense, testing
-- **📦 Enterprise Ready**: Production-tested, optimized, secure
-
-## 🔗 Ecosystem
-
-- **🫐 Blueberry Monorepo**: Complete development ecosystem
-- **⚡ Dev Flow App**: Independent development workflow tool
-- **🏪 Component Marketplace**: Share and discover components
-- **🔧 CLI Tools**: Developer workflow automation
+- **📦 Production Ready**: Production-tested, optimized builds
 
 ## 📄 License
 
