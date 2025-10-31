@@ -1,19 +1,24 @@
 /// <reference types="vitest" />
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
+import tailwindcss from '@tailwindcss/vite';
 import path from "path";
 import { fileURLToPath } from 'node:url';
 
 
 const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig(({ mode }) => {
+  const isLibraryBuild = process.env.LIB_BUILD === '1';
+  
+  return ({
   server: {
     host: "::",
     port: 8080
   },
   plugins: [
     react(),
+    tailwindcss(),
   ],
   resolve: {
     alias: {
@@ -24,7 +29,7 @@ export default defineConfig(({ mode }) => ({
     'process.env.NODE_ENV': JSON.stringify(mode),
     global: 'globalThis',
   },
-  build: {
+  build: isLibraryBuild ? {
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
       name: 'BlueberryDesignSystem',
@@ -148,7 +153,7 @@ export default defineConfig(({ mode }) => ({
         }
       ]
     }
-  },
+  } : undefined,
   test: {
     globals: true,
     environment: 'jsdom',
@@ -160,4 +165,5 @@ export default defineConfig(({ mode }) => ({
       exclude: ['node_modules/', '.storybook/']
     }
   }
-}));
+  });
+});

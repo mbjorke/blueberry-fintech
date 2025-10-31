@@ -386,7 +386,7 @@ export const LoginForm: Story = {
       },
     });
 
-    function onSubmit(data: any) {
+    function onSubmit(data: { email: string; password: string; remember: boolean }) {
       toast({
         title: "Login submitted",
         description: `Email: ${data.email}, Remember: ${data.remember}`,
@@ -481,7 +481,7 @@ export const ContactForm: Story = {
       },
     });
 
-    function onSubmit(data: any) {
+    function onSubmit(data: { name: string; email: string; subject: string; message: string }) {
       toast({
         title: "Message sent",
         description: "We'll get back to you soon!",
