@@ -1,9 +1,12 @@
 # Build stage
 FROM node:20-alpine AS build
 WORKDIR /app
+ARG CACHEBUST=1
 COPY package*.json ./
 RUN npm install --legacy-peer-deps
 COPY . .
+# Force rebuild of the app layer when CACHEBUST changes
+RUN echo "Cache bust: $CACHEBUST" >/dev/null
 RUN npm run build
 
 # Production stage

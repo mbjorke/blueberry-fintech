@@ -10,7 +10,10 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "design:review": "npx -y @blueberry/design-system@latest workflow:design-review",
+    "design:review:gh": "npx -y github:blueberry-ui/design-system workflow:design-review",
+    "design:review:local": "npm run build-storybook"
   },
   "dependencies": {
     "@fontsource-variable/montserrat": "^5.2.6",
