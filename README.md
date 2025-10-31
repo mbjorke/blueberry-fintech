@@ -1,178 +1,246 @@
 <div align="center">
-  <h1>Fintech Spark Studio</h1>
-  <p>A modern fintech dashboard and design system built with React, TypeScript, and Tailwind CSS</p>
-  
-  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-  [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg)](https://storybook.js.org/)
-  [![React](https://img.shields.io/badge/React-18.2-61DAFB?logo=react)](https://reactjs.org/)
-  [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?logo=typescript)](https://www.typescriptlang.org/)
-  [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1-06B6D4?logo=tailwind-css)](https://tailwindcss.com/)
-  <img src="./public/banking-dashboard.png" alt="Dashboard Preview" width="100%">
+  <img src="./public/blueberry.svg" alt="Blueberry Logo" width="120" height="120" />
+  <h1>🫐 Blueberry Design & Build System</h1>
+  <p><strong>Enterprise-grade design system with kick-ass developer workflows</strong></p>
+  <p>Complete UI components + automated quality assurance + developer tooling</p>
 </div>
 
-## 🌟 Features
+---
 
-### 🎨 Design System
-- **60+** reusable, accessible components
-- Built with Radix UI primitives and shadcn/ui
-- Comprehensive Storybook documentation
-- Dark/light mode support
-- Fully responsive design
+## 🚀 What Makes Blueberry Special
 
-### 💳 Fintech Dashboard
-- Real-time account overview
-- Transaction history and categorization
-- Interactive data visualizations
-- Responsive layout for all devices
-- Modern, clean UI with smooth animations
+Blueberry is not just another component library—it's a **complete design and build system** engineered for modern development teams who demand quality, speed, and reliability.
 
-## 🚀 Quick Start
+### 🎯 Core Features
 
-### Prerequisites
-- Node.js 18+
-- npm 9+ or yarn 1.22+
+- **🧩 40+ Production Components**: Complete UI component library with variants
+- **⚡ TypeScript First**: Full type safety, IntelliSense, and developer experience
+- **🎨 Tailwind CSS**: Utility-first styling with custom design tokens
+- **♿ Radix UI Foundation**: Accessible, unstyled primitives you can trust
+- **📚 Interactive Storybook**: Live component documentation and testing
+- **🏗️ Vite Build System**: Lightning-fast development and optimized production builds
 
-### Installation
+### 🔥 Developer Workflows (The Secret Sauce)
+
+Blueberry comes with **enterprise-grade developer workflows** that ensure code quality and accelerate development:
+
+- **🎨 Design Review**: Automated UI/UX quality assurance using Playwright
+- **🔒 Security Review**: Automated security scanning and vulnerability detection
+- **📝 Code Review**: Static analysis, complexity checks, and best practices validation
+- **🧪 Testing Integration**: Comprehensive test suite with coverage reporting
+- **📦 Build Optimization**: Tree shaking, bundle analysis, and performance monitoring
+
+### 🛠️ CLI Tools for External Projects
+
+External projects can leverage Blueberry's workflows:
 
 ```bash
-# Clone the repository
-git clone <YOUR_GIT_URL>
-cd fintech-spark-studio
+# Run quality reviews on any project
+npx @blueberry/design-system workflow:design-review
+npx @blueberry/design-system workflow:code-review
+npx @blueberry/design-system workflow:security-review
 
-# Install dependencies
-npm install
-# or
-yarn install
+# Run all reviews at once
+npx @blueberry/design-system workflow:all
+```
 
-# Start the development server
+## 📦 Quick Start
+
+```bash
+# Install the complete design & build system
+npm install @blueberry/design-system
+
+# Start development with hot reloading
 npm run dev
-# or
-yarn dev
-```
 
-Open [http://localhost:8080](http://localhost:8080) in your browser to view the dashboard.
-
-## 📚 Storybook
-
-Explore all components in our interactive Storybook:
-
-```bash
-# Start Storybook
-npm run storybook
-# or
-yarn storybook
-```
-
-Then open [http://localhost:6006](http://localhost:6006) to browse components and their documentation.
-
-## 🏗️ Project Structure
-
-```
-src/
-├── components/        # Reusable UI components
-│   ├── ui/            # Base components (buttons, inputs, etc.)
-│   └── fintech/       # Fintech-specific components
-├── stories/           # Component stories for Storybook
-├── lib/               # Utilities and helpers
-├── pages/             # Page components
-└── styles/            # Global styles and themes
-```
-
-## 🎨 Design System Components
-
-### Base Components
-- Buttons
-- Forms & Inputs
-- Navigation
-- Overlays (Dialogs, Drawers, Tooltips)
-- Layout (Cards, Containers)
-- Typography
-
-### Fintech Components
-- Account Cards
-- Transaction Lists
-- Data Visualization Charts
-- Gradient Cards
-- Status Indicators
-
-## 🛠️ Development
-
-### Available Scripts
-
-- `dev` - Start development server
-- `build` - Build for production
-- `preview` - Preview production build
-- `storybook` - Start Storybook
-- `build-storybook` - Build static Storybook
-- `lint` - Run ESLint
-- `type-check` - Run TypeScript type checking
-
-## 🏗️ Built With
-
-- [React 18](https://reactjs.org/) - UI Library
-- [TypeScript](https://www.typescriptlang.org/) - Type Safety
-- [Tailwind CSS](https://tailwindcss.com/) - Styling
-- [Radix UI](https://www.radix-ui.com/) - Primitives
-- [shadcn/ui](https://ui.shadcn.com/) - Component Library
-- [Storybook](https://storybook.js.org/) - Component Documentation
-- [Vite](https://vitejs.dev/) - Build Tool
-
-## 🚀 Deployment
-
-### Building for Production
-
-```bash
-# Create production build
+# Build for production
 npm run build
 
-# Preview the production build locally
-npm run preview
+# Run quality reviews
+npm run workflow:all
 ```
 
-The build will be available in the `dist` directory.
+## 🏗️ Usage
 
-### Deployment Options
+```tsx
+import { Button, Card, Input, Badge, BrandLogo } from '@blueberry/design-system';
 
-#### Vercel (Recommended)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=<YOUR_REPO_URL>&project-name=fintech-spark-studio&repository-name=fintech-spark-studio)
+function App() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-background to-muted p-6">
+      <BrandLogo variant="v1.0.0" className="mb-8" />
+      <Card className="max-w-md mx-auto">
+        <div className="p-6 space-y-4">
+          <Input placeholder="Enter your details..." />
+          <Button variant="primary" className="w-full">
+            Get Started
+          </Button>
+          <Badge variant="secondary">Beta Access</Badge>
+        </div>
+      </Card>
+    </div>
+  );
+}
+```
 
-1. Push your code to a GitHub repository
-2. Import the project on Vercel
-3. Vercel will automatically detect the Vite project and set up the build settings
+## 🎨 Component Library
 
-#### Netlify
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=<YOUR_REPO_URL>)
+### 🧩 Core Components (40+)
+- **Form Controls**: Button, Input, Select, Checkbox, Radio, Textarea
+- **Layout**: Card, Dialog, Sheet, Popover, Dropdown, Tooltip
+- **Navigation**: Navigation, Tabs, Breadcrumb, Pagination
+- **Data Display**: Table, Badge, Avatar, Skeleton, Progress
+- **Feedback**: Toast, Alert, Spinner, Loading states
+- **Specialized**: Calendar, Carousel, Charts, Form components
 
-1. Connect your GitHub repository to Netlify
-2. Set the build command to `npm run build`
-3. Set the publish directory to `dist`
-4. Deploy!
+### 🪝 Custom Hooks
+- **useIsMobile**: Responsive breakpoint detection
+- **useToast**: Toast notification management
+- **Form hooks**: React Hook Form integration
 
-## 🤝 Contributing
+### 🎨 Design System
+- **Color Palette**: Primary, secondary, neutral, semantic colors
+- **Typography**: Font families, sizes, weights, line heights
+- **Spacing**: Consistent spacing scale and utilities
+- **Shadows**: Elevation system for depth
+- **Border Radius**: Consistent corner rounding
+- **Brand Elements**: Logo, gradients, animations
 
-Contributions are welcome! Here's how you can help:
+## 🔧 Development
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+### Local Development
+```bash
+# Install dependencies
+npm install
 
-### Code Style
+# Start development server
+npm run dev
 
-- Follow the existing code style (prettier + eslint)
-- Write meaningful commit messages
-- Document new components with Storybook stories
-- Add TypeScript types for all new code
+# Start Storybook
+npm run storybook
 
-## 📝 License
+# Build for production
+npm run build
+```
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## 🔥 Developer Workflows (Enterprise Grade)
 
-## 🙏 Acknowledgments
+Blueberry's **secret weapon** is its comprehensive developer workflow system that ensures code quality, security, and design consistency across your entire development lifecycle.
 
-- [Lovable](https://www.lovable.dev/) for their excellent work on the Radix UI primitives that this project is built upon
-- [Radix UI](https://www.radix-ui.com/) for accessible primitives
-- [shadcn/ui](https://ui.shadcn.com/) for the component inspiration
-- [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS
-- [Storybook](https://storybook.js.org/) for component documentation
+### 🎯 Available Workflows
+
+| Workflow | Purpose | Trigger |
+|----------|---------|---------|
+| **Design Review** | UI/UX quality, accessibility, consistency | Pre-deployment |
+| **Code Review** | Static analysis, complexity, best practices | Pre-commit |
+| **Security Review** | Vulnerability scanning, credential detection | Pre-deployment |
+| **Testing Suite** | Unit, integration, visual regression tests | CI/CD |
+
+### 🚀 Running Workflows
+
+```bash
+# Run individual reviews
+npm run workflow:design-review    # 🎨 UI/UX quality assurance
+npm run workflow:code-review      # 📝 Code quality & security
+npm run workflow:security-review  # 🔒 Security scanning
+
+# Run everything at once
+npm run workflow:all             # 🔥 Complete quality suite
+```
+
+### 🛠️ CLI Tools for Any Project
+
+**Use Blueberry's workflows on ANY project** (not just React/TypeScript):
+
+```bash
+# From any project directory
+npx @blueberry/design-system workflow:design-review
+npx @blueberry/design-system workflow:code-review
+npx @blueberry/design-system workflow:all
+
+# Get workflow reports
+npx @blueberry/design-system workflow:security-review
+```
+
+### 📊 Workflow Reports
+
+Each workflow generates detailed reports:
+- **📈 Metrics**: Code complexity, bundle size, performance
+- **🔍 Issues**: Actionable recommendations with severity levels
+- **📋 Coverage**: Test coverage, accessibility compliance
+- **🎨 Visual**: Screenshots, design consistency analysis
+
+## 📋 Publishing
+
+To publish a new version:
+
+```bash
+# Build and publish
+npm run publish:design-system
+
+# Or manually
+npm run build
+npm publish
+```
+
+## 🏗️ System Architecture
+
+```
+packages/blueberry-design-system/
+├── src/
+│   ├── components/
+│   │   ├── ui/           # 40+ UI components
+│   │   ├── fintech/      # Financial components
+│   │   └── theme/        # Theme providers
+│   ├── hooks/            # Custom React hooks
+│   ├── tokens/           # Design system tokens
+│   ├── lib/              # Utilities & helpers
+│   └── stories/          # Storybook documentation
+├── dist/                 # Optimized production build
+├── workflows/            # Developer workflow scripts
+└── public/               # Static assets & branding
+```
+
+## 🎯 Perfect For
+
+- **🚀 Startup Teams**: Rapid prototyping with enterprise quality
+- **🏢 Enterprise Teams**: Consistent design with developer tooling
+- **👥 Design Systems**: Comprehensive foundation for custom systems
+- **🔧 Developer Tools**: CLI workflows for any project type
+- **📱 Modern Web Apps**: React + TypeScript + Tailwind stack
+
+## 🌟 Why Choose Blueberry?
+
+| Feature | Blueberry | Others |
+|---------|-----------|---------|
+| **Components** | 40+ production-ready | Limited selection |
+| **Developer Workflows** | ✅ Built-in automation | ❌ Manual processes |
+| **CLI Tools** | ✅ Any project type | ❌ Framework-specific |
+| **Build Optimization** | ✅ Tree shaking, 443kB | ❌ Bloated bundles |
+| **Type Safety** | ✅ 100% TypeScript | ⚠️ Optional |
+| **Accessibility** | ✅ Radix UI foundation | ⚠️ Variable |
+
+## 🤝 Community & Support
+
+- **📖 Documentation**: Comprehensive Storybook + guides
+- **🛠️ CLI Tools**: Workflow automation for any project
+- **🔧 Developer Experience**: Hot reload, IntelliSense, testing
+- **📦 Enterprise Ready**: Production-tested, optimized, secure
+
+## 🔗 Ecosystem
+
+- **🫐 Blueberry Monorepo**: Complete development ecosystem
+- **⚡ Dev Flow App**: Independent development workflow tool
+- **🏪 Component Marketplace**: Share and discover components
+- **🔧 CLI Tools**: Developer workflow automation
+
+## 📄 License
+
+**MIT © Blueberry** - Build amazing things, give credit, share improvements!
+
+---
+
+<div align="center">
+  <p><strong>🫐 Blueberry - Design & Build System with Kick-Ass Developer Workflows</strong></p>
+  <p>Built with ❤️ for developers who demand quality and speed</p>
+</div>

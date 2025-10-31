@@ -1,28 +1,8 @@
 import type { Config } from "tailwindcss";
 import animate from "tailwindcss-animate";
 
-// Import design tokens
-import { 
-  colors, 
-  fontFamily, 
-  fontSize, 
-  fontWeight, 
-  lineHeight, 
-  letterSpacing,
-  textDecorationThickness,
-  textUnderlineOffset,
-  spacing,
-  maxWidth,
-  screens,
-  borderRadius,
-  boxShadow,
-  borderWidth,
-  opacity
-} from "./src/tokens";
-
-// Main configuration
 export default {
-  darkMode: 'class',
+  darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -32,86 +12,52 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: '1rem',
+      padding: "2rem",
       screens: {
-        '2xl': '1400px',
+        "2xl": "1400px",
       },
     },
     extend: {
-      // Layout
-      spacing: spacing as unknown as Record<string, string>,
-      screens: screens as unknown as Record<string, string>,
-      maxWidth: maxWidth as unknown as Record<string, string>,
-      
-      // Typography
-      fontFamily: fontFamily,
-      fontSize,
-      fontWeight,
-      lineHeight,
-      letterSpacing,
-      textDecorationThickness,
-      textUnderlineOffset,
-      
-      // Borders
-      borderRadius,
-      borderWidth,
-      
-      // Effects
-      boxShadow,
-      opacity,
-      
-      // Colors
       colors: {
-        // Base colors from design tokens
-        ...colors,
-        
-        // Semantic colors with CSS variables
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
-          foreground: 'hsl(var(--secondary-foreground))',
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
         },
         destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
         },
         muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          foreground: 'hsl(var(--muted-foreground))',
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
         },
         accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))',
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
         },
         popover: {
-          DEFAULT: 'hsl(var(--popover))',
-          foreground: 'hsl(var(--popover-foreground))',
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
         },
         card: {
-          DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))',
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
         },
       },
-      
-      // Background images
-      backgroundImage: {
-        'gradient-primary': 'var(--gradient-primary)',
-        'gradient-secondary': 'var(--gradient-secondary)',
-        'gradient-success': 'var(--gradient-success)',
-        'gradient-teal': 'var(--gradient-teal)',
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
-      
-      // Animation
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -126,25 +72,7 @@ export default {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
-      
-      transitionTimingFunction: {
-        'smooth': 'cubic-bezier(0.4, 0, 0.2, 1)',
-        'spring': 'cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-        'in-out': 'cubic-bezier(0.4, 0, 0.2, 1)',
-        'in': 'cubic-bezier(0.4, 0, 1, 1)',
-        'out': 'cubic-bezier(0, 0, 0.2, 1)',
-      },
-      transitionDuration: {
-        '150': '150ms',
-        '200': '200ms',
-        '250': '250ms',
-        '300': '300ms',
-        '350': '350ms',
-        '400': '400ms',
-        '450': '450ms',
-        '500': '500ms',
-      },
     },
   },
-  plugins: [animate],
+  plugins: [animate, require("@tailwindcss/typography")],
 } satisfies Config;

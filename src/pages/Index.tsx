@@ -5,7 +5,7 @@ import { SidebarNav } from '@/components/ui/SidebarNav';
 import BlueberryLogo from '@/components/ui/blueberry-logo';
 import { AlertsDropdown } from '@/components/fintech/AlertsDropdown';
 import { UserAvatar } from '@/components/fintech/UserAvatar';
-import { ThemeToggle } from '@/components/theme/ThemeToggle';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Menu } from 'lucide-react';
 import { useState } from 'react';
@@ -48,8 +48,8 @@ const Index = () => {
               <UserAvatar 
                 name="Marcus Björke" 
                 email="mbjorke@gmail.com"
-                imageUrl="/marcus-bjorke.jpeg"
-                resumeUrl="/Marcus_Bjorke_Resume.pdf"
+                imageUrl="/marcus-bjorke.png"
+                resumeUrl="https://mbjorke.cv"
               />
             </div>
           </div>

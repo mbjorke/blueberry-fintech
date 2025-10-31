@@ -3,7 +3,7 @@ import { Transaction } from "./types";
 import { getCategoryColorClasses } from "./constants";
 import { getCategoryIcon } from "@/utils/categoryIcons";
 import { AvatarWithIcon } from "@/components/ui/avatar-with-icon";
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 
 /**
  * TransactionItem Component

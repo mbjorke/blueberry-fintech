@@ -4,6 +4,7 @@ import { Avatar, AvatarImage } from './avatar';
 interface BlueberryLogoProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: 'sm' | 'md' | 'lg' | 'xl' | number;
   className?: string;
+  variant?: 'blueberry' | 'loppis';
 }
 
 const sizeMap = {
@@ -13,19 +14,26 @@ const sizeMap = {
   xl: 64,
 } as const;
 
-export function BlueberryLogo({ 
-  size = 'md', 
+const logoMap = {
+  blueberry: '/logo.png',
+  loppis: '/Loppis.png',
+} as const;
+
+export function BlueberryLogo({
+  size = 'md',
   className = '',
-  ...props 
+  variant = 'blueberry',
+  ...props
 }: BlueberryLogoProps) {
   const sizeValue = typeof size === 'string' ? sizeMap[size] : size;
-  
+  const logoSrc = logoMap[variant];
+
   return (
     <div className={`inline-block ${className}`} {...props}>
       <Avatar className="bg-transparent" style={{ width: sizeValue, height: sizeValue }}>
-        <AvatarImage 
-          src="/blueberry.svg" 
-          alt="Blueberry Logo"
+        <AvatarImage
+          src={logoSrc}
+          alt={`Blueberry ${variant === 'blueberry' ? 'Logo' : 'Marketplace Logo'}`}
           className="w-full h-full object-contain"
         />
       </Avatar>
@@ -33,4 +41,6 @@ export function BlueberryLogo({
   );
 }
 
+// Keep backward compatibility for existing lopify references
+export const LopifyLogo = BlueberryLogo;
 export default BlueberryLogo;
