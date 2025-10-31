@@ -133,6 +133,26 @@ npm run lint
 npm run type-check
 ```
 
+### 🌐 External Services
+
+#### Brandfetch API
+
+The project uses [Brandfetch](https://brandfetch.com) to fetch merchant logos for financial transactions in the demo. Brandfetch provides a CDN for brand assets (logos, icons) based on domain names.
+
+**Current Usage:**
+- Used in mock data (`src/mock/mockData.ts`) to display merchant logos in transaction lists
+- URLs follow the pattern: `https://cdn.brandfetch.io/{domain}/w/{width}/h/{height}?c={cacheKey}`
+- Example: `https://cdn.brandfetch.io/amazon.com/w/400/h/400?c=1idPVMDlQ6CTx2eeHQ0`
+
+**For Production:**
+- The demo currently uses public CDN URLs without authentication
+- For production use, consider:
+  - Registering for a Brandfetch API key if high-volume usage is expected
+  - Reviewing Brandfetch's [terms of service](https://brandfetch.com/terms) and rate limits
+  - Implementing fallback images for when logos are unavailable
+  - Caching strategies to reduce API calls
+
+**Note:** This is currently used for demo/mock data only. In production, you may want to integrate Brandfetch's API directly or use your own logo service.
 
 ## 🏗️ System Architecture
 
