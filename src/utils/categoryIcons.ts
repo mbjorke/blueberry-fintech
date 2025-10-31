@@ -1,8 +1,9 @@
 import { categoryIcons } from '@/components/fintech/constants';
 import { CreditCard } from 'lucide-react';
+import type { ComponentType, SVGProps } from 'react';
 
 // Fallback icons for common merchant types
-export const fallbackIcons: Record<string, React.ComponentType<any>> = {
+export const fallbackIcons: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
   'food': categoryIcons.food,
   'restaurant': categoryIcons.food,
   'coffee': categoryIcons.food,
@@ -24,7 +25,7 @@ export const fallbackIcons: Record<string, React.ComponentType<any>> = {
 };
 
 // Map of merchant names to their specific icons
-export const merchantIcons: Record<string, React.ComponentType<any>> = {
+export const merchantIcons: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
   'Blue Bottle Coffee': categoryIcons.food,
   'Local Restaurant': categoryIcons.food,
   'Whole Foods': categoryIcons.food,

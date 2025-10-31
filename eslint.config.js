@@ -7,7 +7,7 @@ import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 
-export default tseslint.config({ ignores: ["dist"] }, {
+export default tseslint.config({ ignores: ["dist", "storybook-static"] }, {
   extends: [js.configs.recommended, ...tseslint.configs.recommended],
   files: ["**/*.{ts,tsx}"],
   languageOptions: {
@@ -24,6 +24,8 @@ export default tseslint.config({ ignores: ["dist"] }, {
       "warn",
       { allowConstantExport: true },
     ],
+    // Disable noisy Storybook rule requiring framework-specific imports in stories
+    "storybook/no-renderer-packages": "off",
     "@typescript-eslint/no-unused-vars": "off",
   },
 }, storybook.configs["flat/recommended"], storybook.configs["flat/recommended"]);
