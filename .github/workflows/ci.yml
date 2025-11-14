@@ -26,8 +26,10 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: |
-          npm ci --legacy-peer-deps || (rm -rf node_modules package-lock.json && npm install --legacy-peer-deps)
+        run: npm install --legacy-peer-deps
+
+      - name: Install Rollup native binaries
+        run: npm install --no-save @rollup/rollup-linux-x64-gnu
 
       - name: Run type check
         run: npm run type-check
@@ -65,8 +67,10 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: |
-          npm ci --legacy-peer-deps || (rm -rf node_modules package-lock.json && npm install --legacy-peer-deps)
+        run: npm install --legacy-peer-deps
+
+      - name: Install Rollup native binaries
+        run: npm install --no-save @rollup/rollup-linux-x64-gnu
 
       - name: Build application
         run: npm run build
