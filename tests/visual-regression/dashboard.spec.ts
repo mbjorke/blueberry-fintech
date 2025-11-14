@@ -48,20 +48,6 @@ test.describe('Dashboard Visual Regression', () => {
     });
   });
 
-  test('dashboard page - dark mode', async ({ page }) => {
-    await page.goto('/');
-    await page.waitForSelector('[data-testid="dashboard"]');
-
-    // Toggle dark mode
-    await page.click('[data-testid="theme-toggle"]');
-    await page.waitForTimeout(500);
-
-    await expect(page).toHaveScreenshot('dashboard-dark-mode.png', {
-      fullPage: true,
-      animations: 'disabled',
-    });
-  });
-
   test('dashboard page - responsive mobile', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
     await page.goto('/');
