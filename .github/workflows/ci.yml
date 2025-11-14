@@ -28,8 +28,10 @@ jobs:
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
-      - name: Install Rollup native binaries
-        run: npm install --no-save @rollup/rollup-linux-x64-gnu
+      - name: Install native binaries for Linux
+        run: |
+          npm install --no-save @rollup/rollup-linux-x64-gnu
+          npm install --no-save @swc/core-linux-x64-gnu
 
       - name: Run type check
         run: npm run type-check
@@ -69,8 +71,10 @@ jobs:
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
-      - name: Install Rollup native binaries
-        run: npm install --no-save @rollup/rollup-linux-x64-gnu
+      - name: Install native binaries for Linux
+        run: |
+          npm install --no-save @rollup/rollup-linux-x64-gnu
+          npm install --no-save @swc/core-linux-x64-gnu
 
       - name: Build application
         run: npm run build
