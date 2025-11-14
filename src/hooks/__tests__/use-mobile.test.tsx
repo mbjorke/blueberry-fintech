@@ -63,7 +63,7 @@ describe('useIsMobile', () => {
       value: 1024, // Desktop width
     });
 
-    let matches = false;
+    const matches = false;
     let callback: ((event: { matches: boolean }) => void) | undefined;
 
     const addEventListener = vi.fn((event, cb) => {

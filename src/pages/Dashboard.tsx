@@ -93,14 +93,14 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <main className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6">
+    <main data-testid="dashboard" className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-2">
         <h1 className="text-xl sm:text-2xl font-bold">Accounts</h1>
       </div>
 
       {/* Account Cards */}
-      <div className="mb-6 sm:mb-8">
+      <div data-testid="account-cards" className="mb-6 sm:mb-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {mockAccounts.map((account) => (
             <AccountCard
@@ -162,7 +162,7 @@ const Dashboard: React.FC = () => {
             </div>
             
             {/* Transactions List */}
-            <div className="space-y-3 sm:space-y-4">
+            <div data-testid="transactions-list" className="space-y-3 sm:space-y-4">
                 {filteredTransactions.length > 0 ? (
                   filteredTransactions.map((transaction) => (
                     <TransactionItem
@@ -181,7 +181,7 @@ const Dashboard: React.FC = () => {
         </div>
         
         {/* Spending Insights - Responsive width */}
-        <div className="w-full lg:w-80 flex-shrink-0">
+        <div data-testid="spending-insights" className="w-full lg:w-80 flex-shrink-0">
           <div className="sticky top-4">
             <SpendingInsights 
               monthlyBudget={3000}
