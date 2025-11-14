@@ -1,0 +1,46 @@
+{
+  "mcpServers": {
+    "blueberry-design-system": {
+      "command": "node",
+      "args": ["./mcp-server/dist/index.js"],
+      "env": {
+        "BASE_URL": "http://localhost:8080"
+      }
+    }
+  },
+  "designSystem": {
+    "name": "Blueberry Design System",
+    "version": "1.0.0",
+    "description": "Expert assistant for Blueberry fintech design system",
+    "referenceDashboard": "/",
+    "knowledgeBasePath": "./mcp-knowledge-base"
+  },
+  "components": {
+    "ui": "./src/components/ui",
+    "fintech": "./src/components/fintech",
+    "count": 56
+  },
+  "tokens": {
+    "tailwindConfig": "./tailwind.config.ts",
+    "documentation": "./DESIGN_TOKENS.md",
+    "colorSystem": "HSL with CSS variables",
+    "spacingScale": "4px base (Tailwind default)",
+    "typography": "Montserrat Variable"
+  },
+  "testing": {
+    "playwright": {
+      "configPath": "./playwright.config.ts",
+      "baselineDir": "./tests/visual-regression/baselines",
+      "diffThreshold": 0.05
+    },
+    "vitest": {
+      "configPath": "./vitest.config.ts"
+    }
+  },
+  "rules": {
+    "enforceDesignTokens": true,
+    "requireAccessibility": true,
+    "strictComponentUsage": true,
+    "validateAgainstDashboard": true
+  }
+}

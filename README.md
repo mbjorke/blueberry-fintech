@@ -1,32 +1,37 @@
 <div align="center">
   <img src="./public/blueberry.svg" alt="Blueberry Logo" width="120" height="120" />
-  <h1>🫐 Blueberry Design & Build System</h1>
-  <p><strong>Enterprise-grade design system with kick-ass developer workflows</strong></p>
-  <p>Complete UI components + automated quality assurance + developer tooling</p>
+  <h1>🫐 Blueberry Design System</h1>
+  <p><strong>Enterprise-grade design system with AI-powered MCP assistance</strong></p>
+  <p>Complete UI components + Visual regression testing + AI design expert</p>
 </div>
 
 ---
 
 ## 🚀 What Makes Blueberry Special
 
-Blueberry is not just another component library—it's a **complete design and build system** engineered for modern development teams who demand quality, speed, and reliability.
+Blueberry is a **complete design system** with an integrated **MCP (Model Context Protocol) server** that acts as an AI-powered expert on your design system. It validates components, checks tokens, performs visual regression testing, and answers design questions.
 
 ### 🎯 Core Features
 
-- **🧩 40+ Production Components**: Complete UI component library with variants
-- **⚡ TypeScript First**: Full type safety, IntelliSense, and developer experience
-- **🎨 Tailwind CSS**: Utility-first styling with custom design tokens
-- **♿ Radix UI Foundation**: Accessible, unstyled primitives you can trust
-- **📚 Interactive Storybook**: Live component documentation and testing
-- **🏗️ Vite Build System**: Lightning-fast development and optimized production builds
+- **🧩 56+ Production Components**: Complete UI + Fintech component library
+- **🤖 MCP Design Expert**: AI assistant that validates design system usage
+- **🎭 Visual Regression**: Playwright-based testing against dashboard reference
+- **⚡ TypeScript First**: Full type safety and IntelliSense
+- **🎨 Design Tokens**: HSL-based color system with Tailwind CSS
+- **♿ Radix UI Foundation**: Accessible components you can trust
+- **📚 Knowledge Base**: Comprehensive design system documentation
 
-### 🔥 Developer Workflows
+### 🤖 MCP Server (NEW!)
 
-Blueberry includes developer workflows for quality assurance:
+AI-powered design system assistant with these tools:
 
-- **🧪 Testing Integration**: Comprehensive test suite with coverage reporting
-- **📦 Build Optimization**: Tree shaking and optimized production builds
-- **📚 Storybook**: Interactive component documentation and testing
+- **Component Analysis** - Validates React component usage against design system
+- **Token Validation** - Ensures proper Tailwind token usage (no hardcoded values)
+- **Visual Comparison** - Compares pages against dashboard reference with Playwright
+- **Accessibility Checks** - Validates ARIA attributes and Radix patterns
+- **Design System Query** - Natural language search of component docs
+
+See [MCP_SETUP.md](./MCP_SETUP.md) for detailed setup and usage.
 
 ## 📦 Quick Start
 
@@ -34,13 +39,17 @@ Blueberry includes developer workflows for quality assurance:
 # Install dependencies
 npm install
 
-# Start development with hot reloading
+# Start development server
 npm run dev
 
-# Build for production
-npm run build
+# View component library
+npm run storybook
 
+# Build MCP server (for AI assistance)
+cd mcp-server && npm install && npm run build
 ```
+
+Visit `http://localhost:8080` for the dashboard or `http://localhost:6006` for Storybook.
 
 ## 🏗️ Usage
 
@@ -114,11 +123,11 @@ npm run build
 Vitest is configured for testing. Run tests using:
 
 ```bash
-# Run tests with Vitest (if test script is added)
-npx vitest
+# Run tests in watch mode
+npm test
 
 # Run tests with coverage
-npx vitest --coverage
+npm run test:coverage
 ```
 
 ### 📝 Linting
@@ -132,6 +141,30 @@ npm run lint
 # Type check
 npm run type-check
 ```
+
+### 🤖 CI/CD
+
+GitHub Actions workflows are configured for automated testing and deployment:
+
+- **CI Workflow** (`.github/workflows/ci.yml`): Runs on every push and PR
+  - ✅ Type checking
+  - ✅ Linting
+  - ✅ Test suite with coverage reporting
+  - ✅ Build verification
+  - ✅ Storybook build verification
+
+- **Deploy to Netlify** (`.github/workflows/deploy-netlify.yml`): Optional
+  - Deploys to Netlify on pushes to main/master
+  - Requires `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` secrets
+
+- **Deploy to Fly.io** (`.github/workflows/deploy-fly.yml`): Optional
+  - Deploys to Fly.io on pushes to main/master
+  - Requires `FLY_API_TOKEN` secret
+
+**Setup Secrets:**
+1. Go to your repository Settings → Secrets and variables → Actions
+2. Add the required secrets for your deployment targets
+3. The CI workflow runs automatically, no secrets required
 
 ### 🌐 External Services
 
@@ -157,17 +190,27 @@ The project uses [Brandfetch](https://brandfetch.com) to fetch merchant logos fo
 ## 🏗️ System Architecture
 
 ```
-src/
-├── components/
-│   ├── ui/               # UI components
-│   └── fintech/          # Financial components
-├── hooks/                # Custom React hooks
-├── lib/                  # Utilities & helpers
-├── stories/              # Storybook documentation
-├── pages/                # Page components
-└── styles/               # Global styles and themes
-├── dist/                 # Optimized production build
-└── public/               # Static assets & branding
+blueberry-fintech/
+├── src/                          # Main application
+│   ├── components/
+│   │   ├── ui/                   # 56 base UI components
+│   │   └── fintech/              # Fintech-specific components
+│   ├── pages/                    # Dashboard and pages
+│   ├── mock/                     # Mock data for demo
+│   └── stories/                  # Storybook documentation
+├── mcp-server/                   # AI design expert server
+│   ├── src/
+│   │   ├── tools/                # MCP tool implementations
+│   │   └── index.ts              # Server entry point
+│   └── package.json
+├── mcp-knowledge-base/           # Design system docs
+│   ├── components/               # Component documentation
+│   ├── tokens/                   # Token specifications
+│   ├── patterns/                 # UI patterns
+│   └── reference/                # Dashboard reference spec
+├── tests/visual-regression/      # Playwright visual tests
+├── tailwind.config.ts            # Design tokens config
+└── playwright.config.ts          # Visual testing config
 ```
 
 ## 🎯 Perfect For

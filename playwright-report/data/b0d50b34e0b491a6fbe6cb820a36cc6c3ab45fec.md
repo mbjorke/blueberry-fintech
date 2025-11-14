@@ -1,0 +1,272 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - region "Notifications (F8)":
+    - list
+  - generic [ref=e4]:
+    - complementary [ref=e5]:
+      - navigation [ref=e6]:
+        - list [ref=e7]:
+          - listitem [ref=e8]:
+            - link "Home" [ref=e9] [cursor=pointer]:
+              - /url: /dashboard
+              - img [ref=e10]
+              - generic [ref=e13]: Home
+          - listitem [ref=e14]:
+            - link "Cards" [ref=e15] [cursor=pointer]:
+              - /url: /cards
+              - img [ref=e16]
+              - generic [ref=e18]: Cards
+          - listitem [ref=e19]:
+            - link "Transfers" [ref=e20] [cursor=pointer]:
+              - /url: /transfers
+              - img [ref=e21]
+              - generic [ref=e26]: Transfers
+          - listitem [ref=e27]:
+            - link "Treasury" [ref=e28] [cursor=pointer]:
+              - /url: /treasury
+              - img [ref=e29]
+              - generic [ref=e32]: Treasury
+          - listitem [ref=e33]:
+            - link "Expenses" [ref=e34] [cursor=pointer]:
+              - /url: /expenses
+              - img [ref=e35]
+              - generic [ref=e38]: Expenses
+          - listitem [ref=e39]:
+            - link "Team" [ref=e40] [cursor=pointer]:
+              - /url: /team
+              - img [ref=e41]
+              - generic [ref=e46]: Team
+          - listitem [ref=e47]:
+            - link "Rewards" [ref=e48] [cursor=pointer]:
+              - /url: /rewards
+              - img [ref=e49]
+              - generic [ref=e53]: Rewards
+          - listitem [ref=e54]:
+            - link "Analytics" [ref=e55] [cursor=pointer]:
+              - /url: /analytics
+              - img [ref=e56]
+              - generic [ref=e57]: Analytics
+    - generic [ref=e58]:
+      - banner [ref=e59]:
+        - generic [ref=e60]:
+          - heading "blueberry" [level=1] [ref=e64]
+          - generic [ref=e65]:
+            - button "2" [ref=e66] [cursor=pointer]:
+              - img
+              - generic [ref=e67]: "2"
+            - button "Marcus Björke" [ref=e68] [cursor=pointer]:
+              - img "Marcus Björke" [ref=e70]
+      - main [ref=e71]:
+        - heading "Accounts" [level=1] [ref=e73]
+        - generic [ref=e75]:
+          - button "Current Account, checking account" [pressed] [ref=e76] [cursor=pointer]:
+            - img [ref=e80]
+            - generic [ref=e83]:
+              - generic [ref=e85]:
+                - generic [ref=e86]: Current Account
+                - generic [ref=e87]: Checking
+              - generic [ref=e89]:
+                - generic [ref=e90]:
+                  - generic [ref=e91]: Available Balance
+                  - generic [ref=e92]: €12,500.75
+                - button "More account details" [ref=e93]:
+                  - generic [ref=e94]: More details
+                  - img [ref=e95]
+          - button "Savings Account, savings account" [ref=e98] [cursor=pointer]:
+            - img [ref=e102]
+            - generic [ref=e105]:
+              - generic [ref=e107]:
+                - generic [ref=e108]: Savings Account
+                - generic [ref=e109]: Savings
+              - generic [ref=e111]:
+                - generic [ref=e112]:
+                  - generic [ref=e113]: Available Balance
+                  - generic [ref=e114]: €50,000.00
+                - button "More account details" [ref=e115]:
+                  - generic [ref=e116]: More details
+                  - img [ref=e117]
+          - button "Investment Account, investment account" [ref=e120] [cursor=pointer]:
+            - img [ref=e124]
+            - generic [ref=e127]:
+              - generic [ref=e129]:
+                - generic [ref=e130]: Investment Account
+                - generic [ref=e131]: Investment
+              - generic [ref=e133]:
+                - generic [ref=e134]:
+                  - generic [ref=e135]: Available Balance
+                  - generic [ref=e136]: €250,000.00
+                - button "More account details" [ref=e137]:
+                  - generic [ref=e138]: More details
+                  - img [ref=e139]
+        - generic [ref=e142]:
+          - generic [ref=e144]:
+            - generic [ref=e145]:
+              - heading "Recent Transactions" [level=2] [ref=e146]
+              - generic [ref=e147]:
+                - button "Upcoming" [ref=e148] [cursor=pointer]:
+                  - img
+                  - text: Upcoming
+                - button "Filter" [ref=e149] [cursor=pointer]:
+                  - img
+                  - text: Filter
+                - button "Pay" [ref=e150] [cursor=pointer]:
+                  - img
+                  - text: Pay
+            - generic [ref=e151]:
+              - button "Unknown Merchant for -€75.25 on Thursday 22 June 2023" [ref=e152] [cursor=pointer]:
+                - img [ref=e158]
+                - generic [ref=e161]:
+                  - generic [ref=e162]:
+                    - heading "Unknown Merchant" [level=3] [ref=e163]
+                    - generic [ref=e164]:
+                      - time [ref=e165]: 22 Jun 23
+                      - generic [ref=e166]: •••• 1234
+                  - paragraph [ref=e168]:
+                    - generic [ref=e169]: "Debit:"
+                    - text: "-€75.25"
+              - button "Pizza Hut for -€15.99 on Thursday 15 June 2023" [ref=e170] [cursor=pointer]:
+                - img [ref=e175]
+                - generic [ref=e177]:
+                  - generic [ref=e178]:
+                    - heading "Pizza Hut" [level=3] [ref=e179]
+                    - time [ref=e181]: 15 Jun 23
+                  - paragraph [ref=e183]:
+                    - generic [ref=e184]: "Debit:"
+                    - text: "-€15.99"
+              - button "Blue Bottle Coffee for -€4.50 on Thursday 15 June 2023" [ref=e185] [cursor=pointer]:
+                - img [ref=e190]
+                - generic [ref=e192]:
+                  - generic [ref=e193]:
+                    - heading "Blue Bottle Coffee" [level=3] [ref=e194]
+                    - generic [ref=e195]:
+                      - time [ref=e196]: 15 Jun 23
+                      - generic [ref=e197]: •••• 1234
+                  - paragraph [ref=e199]:
+                    - generic [ref=e200]: "Debit:"
+                    - text: "-€4.50"
+              - button "Whole Foods for -€45.30 on Wednesday 14 June 2023" [ref=e201] [cursor=pointer]:
+                - img [ref=e206]
+                - generic [ref=e208]:
+                  - generic [ref=e209]:
+                    - heading "Whole Foods" [level=3] [ref=e210]
+                    - generic [ref=e211]:
+                      - time [ref=e212]: 14 Jun 23
+                      - generic [ref=e213]: •••• 1234
+                  - paragraph [ref=e215]:
+                    - generic [ref=e216]: "Debit:"
+                    - text: "-€45.30"
+              - button "Uber for -€12.50 on Wednesday 14 June 2023" [ref=e217] [cursor=pointer]:
+                - img [ref=e222]
+                - generic [ref=e224]:
+                  - generic [ref=e225]:
+                    - heading "Uber" [level=3] [ref=e226]
+                    - time [ref=e228]: 14 Jun 23
+                  - paragraph [ref=e230]:
+                    - generic [ref=e231]: "Debit:"
+                    - text: "-€12.50"
+              - button "Amazon for -€89.99 on Tuesday 13 June 2023" [ref=e232] [cursor=pointer]:
+                - img [ref=e237]
+                - generic [ref=e239]:
+                  - generic [ref=e240]:
+                    - heading "Amazon" [level=3] [ref=e241]
+                    - generic [ref=e242]:
+                      - time [ref=e243]: 13 Jun 23
+                      - generic [ref=e244]: •••• 1234
+                  - paragraph [ref=e246]:
+                    - generic [ref=e247]: "Debit:"
+                    - text: "-€89.99"
+              - button "Handelsbanken for +€2,500.00 on Saturday 10 June 2023" [ref=e248] [cursor=pointer]:
+                - img [ref=e253]
+                - generic [ref=e255]:
+                  - generic [ref=e256]:
+                    - heading "Handelsbanken" [level=3] [ref=e257]
+                    - generic [ref=e258]:
+                      - time [ref=e259]: 10 Jun 23
+                      - generic [ref=e260]: •••• 1234
+                  - paragraph [ref=e262]:
+                    - generic [ref=e263]: "Credit:"
+                    - text: +€2,500.00
+              - button "Bostadsportal for -€1,200.00 on Monday 5 June 2023" [ref=e264] [cursor=pointer]:
+                - img [ref=e269]
+                - generic [ref=e271]:
+                  - generic [ref=e272]:
+                    - heading "Bostadsportal" [level=3] [ref=e273]
+                    - generic [ref=e274]:
+                      - time [ref=e275]: 5 Jun 23
+                      - generic [ref=e276]: •••• 1234
+                  - paragraph [ref=e278]:
+                    - generic [ref=e279]: "Debit:"
+                    - text: "-€1,200.00"
+              - button "Vattenfall for -€125.00 on Saturday 3 June 2023" [ref=e280] [cursor=pointer]:
+                - img [ref=e285]
+                - generic [ref=e287]:
+                  - generic [ref=e288]:
+                    - heading "Vattenfall" [level=3] [ref=e289]
+                    - generic [ref=e290]:
+                      - time [ref=e291]: 3 Jun 23
+                      - generic [ref=e292]: •••• 1234
+                  - paragraph [ref=e294]:
+                    - generic [ref=e295]: "Debit:"
+                    - text: "-€125.00"
+          - generic [ref=e299]:
+            - generic [ref=e300]:
+              - generic [ref=e301]:
+                - heading "Spending Insights" [level=3] [ref=e302]
+                - paragraph [ref=e303]: This month's overview
+              - generic [ref=e305]:
+                - img [ref=e306]
+                - generic [ref=e309]: 12.5%
+            - generic [ref=e310]:
+              - generic [ref=e311]:
+                - generic [ref=e312]:
+                  - paragraph [ref=e313]: €1,569
+                  - paragraph [ref=e314]: of €3,000 budget
+                - generic [ref=e315]:
+                  - paragraph [ref=e316]: €1,431 left
+                  - generic [ref=e317]: 52% used
+              - progressbar [ref=e318]
+            - generic [ref=e320]:
+              - heading "Top Categories" [level=4] [ref=e321]
+              - generic [ref=e322]:
+                - generic [ref=e323]:
+                  - generic [ref=e324]:
+                    - generic [ref=e326]:
+                      - img [ref=e330]
+                      - generic [ref=e333]: housing
+                    - generic [ref=e334]:
+                      - paragraph [ref=e335]: €1,200
+                      - paragraph [ref=e336]: of €1,200
+                  - progressbar [ref=e337]
+                - generic [ref=e339]:
+                  - generic [ref=e340]:
+                    - generic [ref=e342]:
+                      - img [ref=e346]
+                      - generic [ref=e348]: other
+                    - generic [ref=e349]:
+                      - paragraph [ref=e350]: €125
+                      - paragraph [ref=e351]: of €200
+                  - progressbar [ref=e352]
+                - generic [ref=e354]:
+                  - generic [ref=e355]:
+                    - generic [ref=e357]:
+                      - img [ref=e361]
+                      - generic [ref=e364]: shopping
+                    - generic [ref=e365]:
+                      - paragraph [ref=e366]: €90
+                      - paragraph [ref=e367]: of €300
+                  - progressbar [ref=e368]
+                - generic [ref=e370]:
+                  - generic [ref=e371]:
+                    - generic [ref=e373]:
+                      - img [ref=e377]
+                      - generic [ref=e379]: food
+                    - generic [ref=e380]:
+                      - paragraph [ref=e381]: €66
+                      - paragraph [ref=e382]: of €500
+                  - progressbar [ref=e383]
+            - button "View detailed analytics" [ref=e385]:
+              - text: View detailed analytics
+              - img [ref=e386]
+```
