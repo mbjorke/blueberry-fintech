@@ -4,6 +4,8 @@ WORKDIR /app
 ARG CACHEBUST=1
 COPY package*.json ./
 RUN npm install --legacy-peer-deps
+# Install native binaries for Alpine Linux (musl)
+RUN npm install --no-save @rollup/rollup-linux-x64-musl @swc/core-linux-x64-musl lightningcss-linux-x64-musl @tailwindcss/oxide-linux-x64-musl || true
 COPY . .
 # Force rebuild of the app layer when CACHEBUST changes
 RUN echo "Cache bust: $CACHEBUST" >/dev/null
