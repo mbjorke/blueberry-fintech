@@ -43,7 +43,7 @@ const Index = () => {
             
             {/* Right side - Actions */}
             <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-              <ThemeToggle />
+              <ThemeToggle data-testid="theme-toggle" />
               <AlertsDropdown />
               <UserAvatar 
                 name="Marcus Björke" 

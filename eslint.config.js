@@ -8,9 +8,9 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["dist", "storybook-static"] },
+  { ignores: ["dist", "storybook-static", "coverage", "playwright-report", "test-results"] },
   // Include Storybook recommended first
-  storybook.configs["flat/recommended"],
+  ...storybook.configs["flat/recommended"],
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],
@@ -39,6 +39,28 @@ export default tseslint.config(
     files: ["src/stories/**/*.{ts,tsx}"],
     rules: {
       "react-hooks/rules-of-hooks": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+    },
+  },
+  // Allow any types in MCP server for Playwright page APIs
+  {
+    files: ["mcp-server/**/*.ts"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+    },
+  },
+  // Relax strict rules for UI components (shadcn/ui pattern exports helpers with components)
+  {
+    files: ["src/components/ui/**/*.{ts,tsx}"],
+    rules: {
+      "react-refresh/only-export-components": "warn",
+    },
+  },
+  // Relax strict rules for tailwind config
+  {
+    files: ["tailwind.config.ts"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
     },
   }
 );
