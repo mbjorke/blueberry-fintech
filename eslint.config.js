@@ -31,6 +31,8 @@ export default tseslint.config(
       // Disable noisy Storybook rule requiring framework-specific imports in stories
       "storybook/no-renderer-packages": "off",
       "@typescript-eslint/no-unused-vars": "off",
+      // Disable due to ESLint 9.39 incompatibility with @typescript-eslint
+      "@typescript-eslint/no-unused-expressions": "off",
     },
   }
   ,
