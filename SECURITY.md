@@ -15,9 +15,20 @@ We take the security of our project seriously. If you believe you have found a s
 
 **Please do not report security vulnerabilities through public GitHub issues.**
 
-Instead, please report them via email to: **marcus@blueberry.surf**
+### Preferred Reporting Methods
 
-You should receive a response within 48 hours. If for some reason you do not, please follow up via email to ensure we received your original message.
+We offer two ways to report security vulnerabilities:
+
+1. **GitHub Private Vulnerability Reporting (Recommended)**
+   - Click the "Security" tab at the top of this repository
+   - Click "Report a vulnerability"
+   - This allows private, coordinated disclosure through GitHub's interface
+
+2. **Email**
+   - Send your report to: **marcus@blueberry.surf**
+   - You should receive a response within 48 hours
+
+Both methods ensure your report remains private until we've addressed the issue.
 
 Please include the following information in your report (as much as you can provide):
 
