@@ -30,7 +30,7 @@ jobs:
 
       - name: Install native binaries for Linux
         run: |
-          npm install --no-save @rollup/rollup-linux-x64-gnu @swc/core-linux-x64-gnu lightningcss-linux-x64-gnu
+          npm install --no-save @rollup/rollup-linux-x64-gnu @swc/core-linux-x64-gnu lightningcss-linux-x64-gnu @tailwindcss/oxide-linux-x64-gnu
           # Also install in nested vitest/vite locations
           cd node_modules/vitest/node_modules/vite/node_modules/rollup && npm install --no-save @rollup/rollup-linux-x64-gnu || true
           cd $GITHUB_WORKSPACE
@@ -75,7 +75,7 @@ jobs:
 
       - name: Install native binaries for Linux
         run: |
-          npm install --no-save @rollup/rollup-linux-x64-gnu @swc/core-linux-x64-gnu lightningcss-linux-x64-gnu
+          npm install --no-save @rollup/rollup-linux-x64-gnu @swc/core-linux-x64-gnu lightningcss-linux-x64-gnu @tailwindcss/oxide-linux-x64-gnu
           # Also install in nested vitest/vite locations
           cd node_modules/vitest/node_modules/vite/node_modules/rollup && npm install --no-save @rollup/rollup-linux-x64-gnu || true
           cd $GITHUB_WORKSPACE
