@@ -30,8 +30,10 @@ jobs:
 
       - name: Install native binaries for Linux
         run: |
-          npm install --no-save @rollup/rollup-linux-x64-gnu
-          npm install --no-save @swc/core-linux-x64-gnu
+          npm install --no-save @rollup/rollup-linux-x64-gnu @swc/core-linux-x64-gnu
+          # Also install in nested vitest/vite locations
+          cd node_modules/vitest/node_modules/vite/node_modules/rollup && npm install --no-save @rollup/rollup-linux-x64-gnu || true
+          cd $GITHUB_WORKSPACE
 
       - name: Run type check
         run: npm run type-check
@@ -73,8 +75,10 @@ jobs:
 
       - name: Install native binaries for Linux
         run: |
-          npm install --no-save @rollup/rollup-linux-x64-gnu
-          npm install --no-save @swc/core-linux-x64-gnu
+          npm install --no-save @rollup/rollup-linux-x64-gnu @swc/core-linux-x64-gnu
+          # Also install in nested vitest/vite locations
+          cd node_modules/vitest/node_modules/vite/node_modules/rollup && npm install --no-save @rollup/rollup-linux-x64-gnu || true
+          cd $GITHUB_WORKSPACE
 
       - name: Build application
         run: npm run build
