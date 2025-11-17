@@ -11,7 +11,7 @@
  *   npx @blueberry/design-system workflow:all
  */
 
-import { execSync } from 'child_process';
+import { execFileSync } from 'child_process';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
@@ -101,19 +101,19 @@ try {
     console.log('🚀 Running all workflows...\n');
 
     console.log('📋 Running design review...');
-    execSync(`node ${path.join(workflowsDir, 'design-review/runner.js')}`, { stdio: 'inherit' });
+    execFileSync('node', [path.join(workflowsDir, 'design-review/runner.js')], { stdio: 'inherit' });
 
     console.log('\n📋 Running code review...');
-    execSync(`node ${path.join(workflowsDir, 'code-review/runner.js')}`, { stdio: 'inherit' });
+    execFileSync('node', [path.join(workflowsDir, 'code-review/runner.js')], { stdio: 'inherit' });
 
     console.log('\n📋 Running security review...');
-    execSync(`node ${path.join(workflowsDir, 'security-review/runner.js')}`, { stdio: 'inherit' });
+    execFileSync('node', [path.join(workflowsDir, 'security-review/runner.js')], { stdio: 'inherit' });
 
     console.log('\n✅ All workflows completed!');
   } else {
     const scriptPath = path.join(workflowsDir, workflows[command]);
     console.log(`🚀 Running ${command} workflow...\n`);
-    execSync(`node ${scriptPath}`, { stdio: 'inherit' });
+    execFileSync('node', [scriptPath], { stdio: 'inherit' });
     console.log(`\n✅ ${command} workflow completed!`);
   }
 } catch (error) {
