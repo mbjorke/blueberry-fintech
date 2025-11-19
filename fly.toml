@@ -1,5 +1,5 @@
 app = "blueberry-fintech"
-primary_region = "fra"  # Frankfurt, change to your preferred region
+primary_region = "arn"  # Stockholm, change to your preferred region
 
 [build]
   dockerfile = "Dockerfile"
