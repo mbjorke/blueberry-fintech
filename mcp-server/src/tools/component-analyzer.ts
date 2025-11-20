@@ -128,6 +128,9 @@ function checkPropsUsage(analysis: any, content: string): void {
         );
       }
     }
+
+    // Check button hierarchy (primary button overuse)
+    checkButtonHierarchy(analysis, content, buttonUsages);
   }
 
   // Check Card structure
@@ -138,6 +141,132 @@ function checkPropsUsage(analysis: any, content: string): void {
       );
     }
   }
+}
+
+function checkButtonHierarchy(analysis: any, content: string, buttonUsages: ComponentUsage[]): void {
+  // Count primary buttons (default variant or no variant)
+  const primaryButtons = buttonUsages.filter((u: ComponentUsage) => {
+    const variant = u.props.variant;
+    return !variant || variant === "default" || variant === '"default"';
+  });
+
+  // Count buttons by variant
+  const variantCounts: Record<string, number> = {};
+  buttonUsages.forEach((u: ComponentUsage) => {
+    const variant = u.props.variant || "default";
+    const cleanVariant = variant.replace(/"/g, "");
+    variantCounts[cleanVariant] = (variantCounts[cleanVariant] || 0) + 1;
+  });
+
+  // Strict rule: Only 1 primary button per screen
+  if (primaryButtons.length > 1) {
+    const buttonLines = primaryButtons.map((b: ComponentUsage) => b.location.line).join(", ");
+    analysis.issues.push(
+      `❌ Button Hierarchy Violation: Found ${primaryButtons.length} primary buttons on this screen (lines: ${buttonLines}). ` +
+      `Only 1 primary button should be visible per screen. Convert the others to 'outline' or 'ghost' variants to reduce cognitive overload and improve decision-making.`
+    );
+  } else if (primaryButtons.length === 1) {
+    analysis.suggestions.push(
+      `✅ Button Hierarchy: Found 1 primary button (line ${primaryButtons[0].location.line}). This follows the design rule.`
+    );
+  }
+
+  // Provide variant usage summary
+  if (Object.keys(variantCounts).length > 0) {
+    const variantSummary = Object.entries(variantCounts)
+      .map(([variant, count]) => `  - ${variant}: ${count}`)
+      .join("\n");
+    const primaryCount = variantCounts["default"] || 0;
+    const message = primaryCount > 1 
+      ? `\n⚠️ Remember: Only 1 primary button per screen total`
+      : `\n💡 Remember: Use button hierarchy to guide user decisions (1 primary per screen)`;
+    analysis.suggestions.push(
+      `📊 Button Variant Usage:\n${variantSummary}${message}`
+    );
+  }
+}
+
+interface LogicalSection {
+  type: string;
+  startLine: number;
+  endLine: number;
+}
+
+function detectLogicalSections(content: string): LogicalSection[] {
+  const sections: LogicalSection[] = [];
+  const lines = content.split("\n");
+  
+  let currentSection: { type: string; startLine: number } | null = null;
+  let depth = 0;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const lineNum = i + 1;
+
+    // Detect Card sections
+    if (line.includes("<Card") && !line.includes("</Card")) {
+      if (currentSection) {
+        sections.push({
+          type: currentSection.type,
+          startLine: currentSection.startLine,
+          endLine: lineNum - 1,
+        });
+      }
+      currentSection = { type: "Card", startLine: lineNum };
+      depth = 1;
+    }
+    // Detect Dialog/Modal sections
+    else if (line.includes("<Dialog") || line.includes("<AlertDialog") || line.includes("<Sheet")) {
+      if (currentSection) {
+        sections.push({
+          type: currentSection.type,
+          startLine: currentSection.startLine,
+          endLine: lineNum - 1,
+        });
+      }
+      currentSection = { type: "Dialog", startLine: lineNum };
+      depth = 1;
+    }
+    // Detect form sections
+    else if (line.includes("<form") || line.includes("<Form")) {
+      if (currentSection) {
+        sections.push({
+          type: currentSection.type,
+          startLine: currentSection.startLine,
+          endLine: lineNum - 1,
+        });
+      }
+      currentSection = { type: "Form", startLine: lineNum };
+      depth = 1;
+    }
+    // Track depth for closing tags
+    else if (line.includes("</Card>") || line.includes("</Dialog>") || line.includes("</form>")) {
+      if (currentSection && depth === 1) {
+        sections.push({
+          type: currentSection.type,
+          startLine: currentSection.startLine,
+          endLine: lineNum,
+        });
+        currentSection = null;
+      }
+      if (depth > 0) depth--;
+    }
+    // Track opening tags
+    else if (line.match(/<(Card|Dialog|form|Form)/) && !line.match(/<\/(Card|Dialog|form|Form)/)) {
+      depth++;
+    }
+  }
+
+  // Close any open section
+  if (currentSection) {
+    sections.push({
+      type: currentSection.type,
+      startLine: currentSection.startLine,
+      endLine: lines.length,
+    });
+  }
+
+  return sections;
 }
 
 function checkComposition(analysis: any, content: string): void {
