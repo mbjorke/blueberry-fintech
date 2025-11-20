@@ -15,7 +15,7 @@ const DESIGN_TOKENS = {
 };
 
 interface TokenIssue {
-  type: "color" | "spacing" | "typography" | "border";
+  type: "color" | "spacing" | "typography" | "border" | "emoji";
   line: number;
   className: string;
   suggestion?: string;
@@ -57,6 +57,12 @@ export async function validateTailwindTokens(
 
       // Check for non-standard spacing
       checkNonStandardSpacing(line, lineNumber, issues, strict);
+
+      // Check for typography violations
+      checkTypographyViolations(line, lineNumber, issues, strict);
+
+      // Check for emoji usage
+      checkEmojiUsage(line, lineNumber, issues);
     }
 
     return formatTokenReport(filePath, issues, content);
@@ -145,6 +151,131 @@ function checkNonStandardSpacing(
       });
     }
   }
+}
+
+function checkTypographyViolations(
+  line: string,
+  lineNumber: number,
+  issues: TokenIssue[],
+  strict: boolean
+): void {
+  // Check for arbitrary font sizes
+  const fontSizePattern = /text-\[(\d+)px\]/g;
+  let match;
+
+  while ((match = fontSizePattern.exec(line)) !== null) {
+    const pxValue = parseInt(match[1]);
+    issues.push({
+      type: "typography",
+      line: lineNumber,
+      className: match[0],
+      suggestion: `Use standard font size token (e.g., text-sm, text-base, text-lg) instead of ${match[0]}`,
+      severity: strict ? "error" : "warning",
+    });
+  }
+
+  // Check for arbitrary font weights
+  const fontWeightPattern = /font-\[(\d+)\]/g;
+  while ((match = fontWeightPattern.exec(line)) !== null) {
+    issues.push({
+      type: "typography",
+      line: lineNumber,
+      className: match[0],
+      suggestion: `Use standard font weight token (e.g., font-normal, font-medium, font-semibold, font-bold)`,
+      severity: strict ? "error" : "warning",
+    });
+  }
+}
+
+function checkEmojiUsage(
+  line: string,
+  lineNumber: number,
+  issues: TokenIssue[]
+): void {
+  // Skip comments
+  if (line.trim().startsWith("//") || line.trim().startsWith("*")) {
+    return;
+  }
+  
+  // Skip object literal mappings (like icon mapping objects: '🎯': Target,)
+  // Pattern: 'emoji': ComponentName, or "emoji": ComponentName,
+  const objectMappingPattern = /['"][\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F600}-\u{1F64F}\u{1F680}-\u{1F6FF}]+['"]\s*:\s*[A-Z][a-zA-Z]*/u;
+  if (objectMappingPattern.test(line)) {
+    return; // This is a mapping object, skip
+  }
+  
+  // Common emoji Unicode ranges (excluding currency symbols)
+  // This covers most common emojis: faces, symbols, objects, etc.
+  const emojiPattern = /[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]|[\u{1F600}-\u{1F64F}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{1F900}-\u{1F9FF}]|[\u{1FA00}-\u{1FA6F}]|[\u{1FA70}-\u{1FAFF}]|[\u{200D}]|[\u{203C}-\u{3299}]/gu;
+  
+  // Also check for common emoji characters (exclude currency symbols like €, £, $, ¥)
+  const commonEmojis = /[❤️⭐✅🎉🐛🔍⚙️📝🔔👤🏠📊💰🛒📧👍👎🔥💡✨🎯🚀💪🌟💯]/gu;
+  
+  let match;
+  const foundEmojis: string[] = [];
+  
+  // Check for Unicode emojis
+  while ((match = emojiPattern.exec(line)) !== null) {
+    foundEmojis.push(match[0]);
+  }
+  
+  // Check for common emojis
+  while ((match = commonEmojis.exec(line)) !== null) {
+    if (!foundEmojis.includes(match[0])) {
+      foundEmojis.push(match[0]);
+    }
+  }
+  
+  if (foundEmojis.length > 0) {
+    const emojiList = foundEmojis.join(", ");
+    const suggestion = getEmojiReplacementSuggestion(foundEmojis[0]);
+    
+    issues.push({
+      type: "emoji",
+      line: lineNumber,
+      className: line.trim().substring(0, 50) + (line.length > 50 ? "..." : ""),
+      suggestion: `Replace emoji(s) ${emojiList} with Lucide React icon: ${suggestion}`,
+      severity: "error",
+    });
+  }
+}
+
+function getEmojiReplacementSuggestion(emoji: string): string {
+  // Map common emojis to Lucide React icons
+  const emojiToIcon: Record<string, string> = {
+    "❤️": "Heart",
+    "⭐": "Star",
+    "✅": "Check",
+    "🎉": "PartyPopper",
+    "🐛": "Bug",
+    "🔍": "Search",
+    "⚙️": "Settings",
+    "📝": "FileText",
+    "🔔": "Bell",
+    "👤": "User",
+    "🏠": "Home",
+    "📊": "BarChart",
+    "💰": "DollarSign",
+    "🛒": "ShoppingCart",
+    "📧": "Mail",
+    "👍": "ThumbsUp",
+    "👎": "ThumbsDown",
+    "🔥": "Flame",
+    "💡": "Lightbulb",
+    "✨": "Sparkles",
+    "🎯": "Target",
+    "🚀": "Rocket",
+    "💪": "Zap",
+    "🌟": "Star",
+    "💯": "Award",
+  };
+  
+  const icon = emojiToIcon[emoji];
+  if (icon) {
+    return `import { ${icon} } from "lucide-react"; <${icon} className="w-4 h-4" />`;
+  }
+  
+  return "Use appropriate Lucide React icon from https://lucide.dev/icons/";
 }
 
 function formatTokenReport(filePath: string, issues: TokenIssue[], content: string): string {

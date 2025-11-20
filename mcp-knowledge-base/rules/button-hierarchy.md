@@ -28,9 +28,20 @@ Overusing primary buttons or CSS tokens on a single screen creates cognitive ove
    - Secondary buttons should be visually distinct but less prominent
    - Use spacing and grouping to separate action hierarchies
 
-## Examples
+## Visual Examples
 
 ### ❌ Bad: Multiple Primary Buttons
+
+**Visual Representation:**
+```
+┌─────────────────────────────────┐
+│  [Save Changes]  ← Primary      │  ❌ Too many primary buttons
+│  [Submit Form]   ← Primary      │     compete for attention
+│  [Continue]      ← Primary      │
+└─────────────────────────────────┘
+```
+
+**Code:**
 ```tsx
 <div className="space-y-4">
   <Button variant="default">Save Changes</Button>
@@ -39,7 +50,23 @@ Overusing primary buttons or CSS tokens on a single screen creates cognitive ove
 </div>
 ```
 
+**Problems:**
+- ❌ Multiple primary buttons create cognitive overload
+- ❌ Users can't identify the most important action
+- ❌ Violates the "one primary action per screen" rule
+
 ### ✅ Good: Proper Hierarchy
+
+**Visual Representation:**
+```
+┌─────────────────────────────────┐
+│  [Save Changes]  ← Primary      │  ✅ Clear hierarchy:
+│  [Cancel]        ← Secondary    │     One primary action
+│  Reset           ← Tertiary     │     stands out
+└─────────────────────────────────┘
+```
+
+**Code:**
 ```tsx
 <div className="space-y-4">
   <Button variant="default">Save Changes</Button>
@@ -48,7 +75,24 @@ Overusing primary buttons or CSS tokens on a single screen creates cognitive ove
 </div>
 ```
 
+**Benefits:**
+- ✅ Single primary action is clear
+- ✅ Secondary actions are visually distinct
+- ✅ Follows design system hierarchy
+
 ### ✅ Good: Single Primary Across Multiple Sections
+
+**Visual Representation:**
+```
+┌──────────────┐  ┌──────────────┐
+│ Card 1       │  │ Card 2       │
+│              │  │              │
+│ [Primary]    │  │ [Secondary]  │  ✅ Only one primary
+│ [Secondary]  │  │ [Tertiary]   │     across entire screen
+└──────────────┘  └──────────────┘
+```
+
+**Code:**
 ```tsx
 <div className="grid grid-cols-2 gap-4">
   <Card>
@@ -64,6 +108,41 @@ Overusing primary buttons or CSS tokens on a single screen creates cognitive ove
     </CardContent>
   </Card>
 </div>
+```
+
+**Benefits:**
+- ✅ Only one primary button on entire screen
+- ✅ Clear visual hierarchy maintained
+- ✅ Each card has appropriate button variants
+
+### ✅ Good: Form with Proper Button Hierarchy
+
+**Visual Representation:**
+```
+┌─────────────────────────────────┐
+│  Form Fields                    │
+│  ┌───────────────────────────┐  │
+│  │ Name: [____________]      │  │
+│  │ Email: [____________]     │  │
+│  └───────────────────────────┘  │
+│                                 │
+│  [Submit]  ← Primary            │  ✅ Single primary
+│  [Cancel]  ← Secondary          │     action in footer
+└─────────────────────────────────┘
+```
+
+**Code:**
+```tsx
+<form>
+  <div className="space-y-4">
+    <Input name="name" />
+    <Input name="email" />
+  </div>
+  <div className="flex gap-4 mt-6">
+    <Button type="submit" variant="default">Submit</Button>
+    <Button type="button" variant="outline">Cancel</Button>
+  </div>
+</form>
 ```
 
 ## Validation Criteria

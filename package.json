@@ -19,7 +19,10 @@
     "build-storybook": "storybook build",
     "mcp:build": "cd mcp-server && npm install && npm run build",
     "mcp:dev": "cd mcp-server && npm run dev",
-    "mcp:test": "node mcp-server/test-tools.js"
+    "mcp:test": "node mcp-server/test-tools.js",
+    "validate:design": "node scripts/validate-design-system.js",
+    "fix:design": "node scripts/fix-design-system.js",
+    "fix:design:dry-run": "node scripts/fix-design-system.js --dry-run"
   },
   "dependencies": {
     "@fontsource-variable/montserrat": "^5.2.8",

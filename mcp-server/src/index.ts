@@ -11,6 +11,7 @@ import { validateTailwindTokens } from "./tools/token-validator.js";
 import { compareWithDashboard } from "./tools/visual-comparator.js";
 import { checkAccessibility } from "./tools/accessibility-checker.js";
 import { queryDesignSystem } from "./tools/design-system-query.js";
+import { fixDesignViolations } from "./tools/design-fixer.js";
 
 const server = new Server(
   {
@@ -120,11 +121,29 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
           },
           category: {
             type: "string",
-            enum: ["components", "tokens", "patterns", "examples"],
+            enum: ["components", "tokens", "patterns", "examples", "rules"],
             description: "Optional: Narrow search to specific category",
           },
         },
         required: ["query"],
+      },
+    },
+    {
+      name: "fix_design_violations",
+      description: "Automatically fixes common design system violations including hardcoded colors, arbitrary spacing, typography issues, and button hierarchy violations.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          filePath: {
+            type: "string",
+            description: "Path to the file to fix",
+          },
+          dryRun: {
+            type: "boolean",
+            description: "If true, only shows what would be fixed without making changes (default: false)",
+          },
+        },
+        required: ["filePath"],
       },
     },
   ],
@@ -185,6 +204,16 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         const result = await queryDesignSystem(
           args.query as string,
           args.category as string | undefined
+        );
+        return {
+          content: [{ type: "text", text: result }],
+        };
+      }
+
+      case "fix_design_violations": {
+        const result = await fixDesignViolations(
+          args.filePath as string,
+          args.dryRun as boolean | undefined || false
         );
         return {
           content: [{ type: "text", text: result }],
