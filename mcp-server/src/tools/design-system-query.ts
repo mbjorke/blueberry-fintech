@@ -31,7 +31,7 @@ export async function queryDesignSystem(
 
 async function loadKnowledgeBase(category?: string): Promise<KnowledgeDoc[]> {
   const docs: KnowledgeDoc[] = [];
-  const categories = category ? [category] : ["components", "tokens", "patterns", "reference"];
+  const categories = category ? [category] : ["components", "tokens", "patterns", "reference", "rules"];
 
   for (const cat of categories) {
     const categoryPath = path.join(KNOWLEDGE_BASE_PATH, cat);
@@ -117,6 +117,7 @@ function formatQueryResponse(query: string, results: KnowledgeDoc[]): string {
     response += `- tokens: Design tokens (colors, spacing, typography)\n`;
     response += `- patterns: Common UI patterns\n`;
     response += `- reference: Reference implementations\n`;
+    response += `- rules: Design rules and validation guidelines\n`;
     return response;
   }
 

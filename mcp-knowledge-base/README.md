@@ -8,7 +8,7 @@ This directory contains the complete documentation and guidelines for the Bluebe
 - `tokens/` - Design token specifications and usage rules
 - `patterns/` - Common UI patterns and best practices
 - `reference/` - Reference implementations (dashboard as golden standard)
-- `rules/` - Enforcement rules for consistency
+- `rules/` - Design rules and validation guidelines (e.g., button hierarchy, cognitive load)
 
 ## Usage by MCP Server
 
