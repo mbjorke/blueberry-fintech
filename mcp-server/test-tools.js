@@ -119,7 +119,7 @@ console.log('✅ MCP server build found\n');
     console.log('Next steps:\n');
     console.log('1. Review the output above');
     console.log('2. Fix any issues found');
-    console.log('3. Configure Claude Code (see QUICKSTART.md)');
+    console.log('3. Configure Claude Code (see ../docs/QUICKSTART.md)');
     console.log('4. Start using MCP tools!\n');
 
   } catch (error) {

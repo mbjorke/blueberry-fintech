@@ -22,7 +22,7 @@
   },
   "tokens": {
     "tailwindConfig": "./tailwind.config.ts",
-    "documentation": "./DESIGN_TOKENS.md",
+    "documentation": "./docs/DESIGN_TOKENS.md",
     "colorSystem": "HSL with CSS variables",
     "spacingScale": "4px base (Tailwind default)",
     "typography": "Montserrat Variable"

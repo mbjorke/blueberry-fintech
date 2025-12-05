@@ -1,0 +1,64 @@
+{
+  "name": "Lovable",
+  "version": "1.0.0",
+  "description": "Lovable brand kit - Official brand assets and design tokens",
+  "colors": {
+    "primary": "#00A2EA",
+    "primaryHover": "#0088cc",
+    "secondary": "#2167DB",
+    "accent": "#00A2EA",
+    "background": "#0F0F0F",
+    "backgroundSecondary": "#1C1C1C",
+    "backgroundTertiary": "#272725",
+    "foreground": "rgba(255, 255, 255, 0.9)",
+    "foregroundSecondary": "rgba(255, 255, 255, 0.7)",
+    "foregroundTertiary": "rgba(255, 255, 255, 0.5)",
+    "border": "rgba(255, 255, 255, 0.15)",
+    "inputBg": "#2D2D2D",
+    "buttonPrimary": "#00A2EA",
+    "buttonHover": "#0088cc",
+    "buttonSecondary": "#272725",
+    "buttonSecondaryHover": "#2167DB",
+    "buttonTertiaryHover": "#5F5F5E",
+    "error": "rgba(239, 68, 68, 0.95)",
+    "success": "#22c55e",
+    "warning": "#FE7B02",
+    "gradient": {
+      "start": "#FF8E63",
+      "middle": "#FF7EB0",
+      "end": "#4B73FF"
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "sans": ["Inter", "system-ui", "-apple-system", "sans-serif"]
+    }
+  },
+  "spacing": {
+    "base": "4px"
+  },
+  "borderRadius": {
+    "base": "0.5rem"
+  },
+  "assets": {
+    "logos": {
+      "primary": "/lovable-brand/logoblack.svg",
+      "primaryLight": "/lovable-brand/logowhite.svg",
+      "icon": "/lovable-brand/lovable-logo-icon.svg",
+      "iconPng": "/lovable-brand/lovable-logo-icon.png",
+      "light": "/lovable-brand/lovable-light-png.png",
+      "dark": "/lovable-brand/lovable-dark-png.png",
+      "logoBgLight": "/lovable-brand/lovable-logo-bg-light.png",
+      "logoBgDark": "/lovable-brand/lovable-logo-bg-dark.png",
+      "iconBgLight": "/lovable-brand/lovable-icon-bg-light.png",
+      "iconBgDark": "/lovable-brand/lovable-icon-bg-dark.png"
+    }
+  },
+  "metadata": {
+    "author": "Lovable",
+    "website": "https://lovable.dev",
+    "license": "Proprietary - Lovable Brand Assets",
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

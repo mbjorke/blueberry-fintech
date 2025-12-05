@@ -27,7 +27,7 @@ if (!externalProjectPath) {
 
 const projectRoot = path.resolve(externalProjectPath);
 
-// Import validation functions from blueberry-fintech MCP server
+// Import validation functions from blueberry MCP server
 const { analyzeComponentUsage } = await import(
   path.join(blueberryRoot, "mcp-server/dist/tools/component-analyzer.js")
 );

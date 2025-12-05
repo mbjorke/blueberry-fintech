@@ -11,6 +11,12 @@
 
 Blueberry is a **complete design system** with an integrated **MCP (Model Context Protocol) server** that acts as an AI-powered expert on your design system. It validates components, checks tokens, performs visual regression testing, and answers design questions.
 
+### 🎨 Built on Excellent Foundations
+
+- **🎯 Design Tokens**: Inspired by [Lovable](https://lovable.dev)'s excellent token architecture - a clean, semantic system that makes theming effortless
+- **♿ Accessibility**: Built on [Radix UI](https://www.radix-ui.com)'s accessible primitives - production-ready components with world-class accessibility
+- **🫐 Themeability**: Switch entire color schemes instantly with our token-based theming system (Blueberry, Lovable, Raspberry, Lingonberry, Strawberry themes included!)
+
 ### 🎯 Core Features
 
 - **🧩 56+ Production Components**: Complete UI + Fintech component library
@@ -31,7 +37,7 @@ AI-powered design system assistant with these tools:
 - **Accessibility Checks** - Validates ARIA attributes and Radix patterns
 - **Design System Query** - Natural language search of component docs
 
-See [MCP_SETUP.md](./MCP_SETUP.md) for detailed setup and usage.
+See [MCP_SETUP.md](./docs/MCP_SETUP.md) for detailed setup and usage.
 
 ## 📦 Quick Start
 
@@ -49,7 +55,7 @@ npm run storybook
 cd mcp-server && npm install && npm run build
 ```
 
-Visit `http://localhost:8080` for the dashboard or `http://localhost:6006` for Storybook.
+Visit `http://localhost:8080` for the dashboard, `http://localhost:8080/themes` for the theme showcase, or `http://localhost:6006` for Storybook.
 
 ## 🏗️ Usage
 
@@ -98,6 +104,20 @@ function App() {
 - **Shadows**: Elevation system for depth
 - **Border Radius**: Consistent corner rounding
 - **Brand Elements**: Logo, gradients, animations
+
+### 🎨 Themeability (NEW!)
+
+Switch entire color schemes instantly! Our token-based theming system demonstrates the power of semantic design tokens:
+
+- **🫐 Blueberry** - Classic purple-blueberry theme (default)
+- **💙 Lovable** - Clean, modern theme inspired by Lovable's excellent token system
+- **🫐 Raspberry** - Bold, vibrant red-raspberry theme
+- **🫐 Lingonberry** - Deep, rich red-orange Scandinavian theme
+- **🍓 Strawberry** - Fresh, bright pink-red theme
+
+All themes support both light and dark modes. Switch themes programmatically or via the theme toggle component - no component code changes needed!
+
+**Try it out:** Visit `/themes` to see all themes showcased side-by-side with interactive previews!
 
 ## 🔧 Development
 
@@ -190,7 +210,7 @@ The project uses [Brandfetch](https://brandfetch.com) to fetch merchant logos fo
 ## 🏗️ System Architecture
 
 ```
-blueberry-fintech/
+blueberry/
 ├── src/                          # Main application
 │   ├── components/
 │   │   ├── ui/                   # 56 base UI components
@@ -235,6 +255,28 @@ blueberry-fintech/
 - **📖 Documentation**: Comprehensive Storybook + guides
 - **🔧 Developer Experience**: Hot reload, IntelliSense, testing
 - **📦 Production Ready**: Production-tested, optimized builds
+
+## 🎨 Brand Kit Support
+
+Blueberry supports brand kit integration, allowing you to import brand kits (like Lovable's brand kit) and generate themes that match your brand standards.
+
+**Features:**
+- Import brand kits from JSON
+- Convert brand kits to themes
+- Export themes as brand kits
+- Validate brand kit structure
+- Support for multiple color formats (hex, rgb, hsl)
+
+See [BRAND_KIT_GUIDE.md](./docs/BRAND_KIT_GUIDE.md) for detailed documentation.
+
+## 🙏 Credits & Acknowledgments
+
+Blueberry Design System is built on excellent foundations:
+
+- **[Lovable](https://lovable.dev)** - Inspired by their excellent design token architecture. The semantic token system makes theming effortless and demonstrates best practices in design system architecture. Compatible with Lovable brand kits.
+- **[Radix UI](https://www.radix-ui.com)** - Built on Radix UI's accessible primitives. These production-ready components provide world-class accessibility out of the box, making it easy to build inclusive interfaces.
+
+We're grateful to these projects for their excellent work and open-source contributions!
 
 ## 📄 License
 

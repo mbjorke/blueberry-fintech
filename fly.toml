@@ -1,4 +1,4 @@
-app = "blueberry-fintech"
+app = "blueberry"
 primary_region = "arn"  # Stockholm, change to your preferred region
 
 [build]

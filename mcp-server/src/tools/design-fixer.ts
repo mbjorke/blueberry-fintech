@@ -248,9 +248,10 @@ function fixButtonHierarchy(lines: string[], fixes: Fix[]): void {
   
   lines.forEach((line, index) => {
     if (line.includes("<Button")) {
-      const isPrimary = !line.includes('variant="') || 
-                       line.includes('variant="default"') ||
-                       (line.includes("<Button") && !line.match(/variant="(outline|ghost|destructive)"/));
+      // Explicitly check for primary: variant="default" or no variant attribute
+      const hasVariant = line.includes('variant="');
+      const isDefaultVariant = line.includes('variant="default"');
+      const isPrimary = !hasVariant || isDefaultVariant;
       buttonLines.push({
         line: index + 1,
         content: line,
@@ -399,8 +400,10 @@ function applyFixes(content: string, fixes: Fix[]): { content: string; applied: 
       const lineIndex = fix.line - 1;
       if (lineIndex >= 0 && lineIndex < lines.length) {
         const originalLine = lines[lineIndex];
-        // Replace the line content
-        lines[lineIndex] = fix.fixed;
+        // Preserve leading whitespace/indentation from original line
+        const leadingWhitespace = originalLine.match(/^\s*/)?.[0] || '';
+        // Apply the fix while preserving indentation
+        lines[lineIndex] = leadingWhitespace + fix.fixed.trim();
         applied++;
       } else {
         errors.push(`Line ${fix.line} out of range`);

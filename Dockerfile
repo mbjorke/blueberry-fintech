@@ -2,6 +2,8 @@
 FROM node:20-alpine AS build
 WORKDIR /app
 ARG CACHEBUST=1
+ARG VITE_GEMINI_API_KEY
+ENV VITE_GEMINI_API_KEY=$VITE_GEMINI_API_KEY
 COPY package*.json ./
 RUN npm install --legacy-peer-deps
 # Install native binaries for Alpine Linux (musl)
